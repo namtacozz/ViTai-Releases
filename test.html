@@ -271,7 +271,8 @@
       color: #1E293B;
       line-height: 1.5;
       cursor: pointer;
-      user-select: none;
+      user-select: text;
+      -webkit-user-select: text;
       transition: all 0.18s ease;
     }
 
@@ -338,6 +339,8 @@
     .option-text {
       flex: 1;
       padding-right: 70px;
+      user-select: text;
+      -webkit-user-select: text;
     }
 
     /* Verdict Badge in Top-Right Corner (Đúng / Sai) */
@@ -1040,7 +1043,13 @@ print(result)`,
 
       const rows = container.querySelectorAll('.option-row');
       rows.forEach(row => {
-        row.addEventListener('click', () => {
+        row.addEventListener('click', (e) => {
+          // If user was selecting/highlighting text for ViTai (Alt+Q), do not toggle checkbox
+          const selection = window.getSelection();
+          if (selection && selection.toString().trim().length > 0) {
+            return;
+          }
+
           const label = row.getAttribute('data-label');
           if (userSelections[q.id].has(label)) {
             userSelections[q.id].delete(label);
