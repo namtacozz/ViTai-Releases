@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ViTai Benchmark - Kiểm thử độ chính xác AI (10 câu)</title>
+  <title>ViTai Benchmark - Kiểm thử độ chính xác AI (10 câu tương tác)</title>
   <link rel="icon" type="image/x-icon" href="assets/icon.ico">
   
   <!-- Typography matching ViTai baseline -->
@@ -13,8 +13,8 @@
 
   <style>
     /* ==========================================================================
-       ViTai Benchmark Suite - High-Contrast Pure White Examination Layout
-       Targeted for AI OCR & Text-Selection Accuracy Validation
+       ViTai Interactive Benchmark Suite - High Contrast Examination Layout
+       Tương thích trắc nghiệm: Ô vuông chọn đáp án, Viền Xanh/Đỏ & Tag Đúng/Sai
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -116,14 +116,14 @@
     /* Main Benchmark Area */
     .test-container {
       flex: 1;
-      max-width: 760px;
+      max-width: 780px;
       width: 100%;
       margin: 0 auto;
-      padding: 40px 24px 120px;
+      padding: 36px 24px 130px;
     }
 
     .progress-track-wrapper {
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -131,7 +131,7 @@
     }
 
     .progress-label {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 700;
       color: #E0562D;
       font-family: 'Instrument Sans', sans-serif;
@@ -168,7 +168,7 @@
       border: 1px solid #E2E8F0;
       border-radius: 16px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03);
-      padding: 36px 32px;
+      padding: 34px 30px;
       margin-bottom: 28px;
     }
 
@@ -187,13 +187,13 @@
       font-weight: 700;
       color: #0F172A;
       line-height: 1.5;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .question-prompt {
       font-size: 15px;
       color: #334155;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     /* Code Container */
@@ -202,7 +202,7 @@
       border: 1px solid #E2E8F0;
       border-radius: 10px;
       padding: 18px 20px;
-      margin: 18px 0 24px;
+      margin: 16px 0 22px;
       overflow-x: auto;
     }
 
@@ -216,7 +216,7 @@
 
     /* Canvas Display (Question 2 & 7) */
     .canvas-wrapper {
-      margin: 18px 0 24px;
+      margin: 16px 0 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -250,34 +250,78 @@
       cursor: crosshair;
     }
 
-    /* Options List */
+    /* Options List & Interactive Checkbox Boxes */
     .options-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       margin-top: 20px;
     }
 
     .option-row {
+      position: relative;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 14px;
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: #F8FAFC;
-      border: 1px solid #E2E8F0;
+      border: 1.5px solid #E2E8F0;
       border-radius: 10px;
       font-size: 14.5px;
       color: #1E293B;
       line-height: 1.5;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.18s ease;
     }
 
-    .option-badge {
+    .option-row:hover {
+      background: #FFFFFF;
+      border-color: #CBD5E1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Checked State */
+    .option-row.is-selected {
+      background: #FFF7ED;
+      border-color: #E0562D;
+    }
+
+    /* Square Checkbox [ ] */
+    .option-checkbox-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      border: 2px solid #94A3B8;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+      color: transparent;
+    }
+
+    .option-row.is-selected .option-checkbox-box {
+      background: #E0562D;
+      border-color: #E0562D;
+      color: #FFFFFF;
+    }
+
+    .option-checkbox-box svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 3;
+    }
+
+    /* Option Letter Badge (A, B, C, D, E, F) */
+    .option-letter-badge {
       width: 26px;
       height: 26px;
       border-radius: 6px;
       background: #FFFFFF;
       border: 1px solid #CBD5E1;
-      color: #E0562D;
+      color: #0F172A;
       font-weight: 700;
       font-size: 13px;
       display: flex;
@@ -286,21 +330,157 @@
       flex-shrink: 0;
     }
 
-    .option-text {
-      flex: 1;
-      padding-top: 2px;
+    .option-row.is-selected .option-letter-badge {
+      border-color: #E0562D;
+      color: #E0562D;
     }
 
-    /* Empty options box (Question 5) */
+    .option-text {
+      flex: 1;
+      padding-right: 70px;
+    }
+
+    /* Verdict Badge in Top-Right Corner (Đúng / Sai) */
+    .verdict-tag {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: none;
+    }
+
+    /* Highlighted States after Verification */
+    .option-row.verified-correct {
+      border: 2px solid #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+
+    .option-row.verified-correct .verdict-tag {
+      display: inline-block;
+      background: #10B981;
+      color: #FFFFFF;
+    }
+
+    .option-row.verified-correct .option-checkbox-box {
+      border-color: #10B981 !important;
+      background: #10B981 !important;
+      color: #FFFFFF !important;
+    }
+
+    .option-row.verified-wrong {
+      border: 2px solid #EF4444 !important;
+      background: #FEF2F2 !important;
+    }
+
+    .option-row.verified-wrong .verdict-tag {
+      display: inline-block;
+      background: #EF4444;
+      color: #FFFFFF;
+    }
+
+    .option-row.verified-neutral-wrong {
+      border-color: #E2E8F0;
+      opacity: 0.75;
+    }
+
+    .option-row.verified-neutral-wrong .verdict-tag {
+      display: inline-block;
+      background: #F1F5F9;
+      color: #64748B;
+      border: 1px solid #CBD5E1;
+    }
+
+    /* Verification Actions Area */
+    .verify-action-row {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-verify-submit {
+      background: #0F172A;
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-verify-submit:hover {
+      background: #1E293B;
+      transform: translateY(-1px);
+    }
+
+    .btn-verify-reset {
+      background: #F1F5F9;
+      color: #475569;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid #CBD5E1;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-verify-reset:hover {
+      background: #E2E8F0;
+      color: #0F172A;
+    }
+
+    /* Explanation Callout */
+    .explanation-callout {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #CBD5E1;
+      background: #F8FAFC;
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .explanation-callout.show {
+      display: block;
+    }
+
+    .explanation-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .explanation-body {
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    /* Banner for Question 5 (No Options) */
     .no-options-banner {
       background: #FEF3C7;
       border: 1px solid #FDE68A;
       color: #92400E;
-      padding: 14px 18px;
-      border-radius: 8px;
-      font-size: 13.5px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-size: 14px;
       font-weight: 500;
-      margin-top: 18px;
+      margin: 18px 0;
     }
 
     /* Fixed Bottom Action Bar */
@@ -362,26 +542,18 @@
       box-shadow: 0 6px 18px rgba(224, 86, 45, 0.45);
     }
 
-    .btn-next-question:active {
-      transform: translateY(0);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 640px) {
-      .test-header {
-        padding: 0 16px;
-      }
-      .test-footer-bar {
-        padding: 0 16px;
-      }
-      .hint-footer-text {
-        display: none;
-      }
-      .question-card {
-        padding: 24px 18px;
-      }
-      .test-container {
-        padding: 24px 16px 110px;
-      }
+      .test-header { padding: 0 16px; }
+      .test-footer-bar { padding: 0 16px; }
+      .hint-footer-text { display: none; }
+      .question-card { padding: 22px 16px; }
+      .test-container { padding: 24px 16px 120px; }
+      .option-text { padding-right: 50px; font-size: 13.5px; }
     }
   </style>
 </head>
@@ -410,7 +582,7 @@
 
   <!-- HINT BAR -->
   <div class="top-instruction-bar">
-    Công cụ để bạn mở song song <strong>ViTai</strong> và kiểm chứng độ chính xác: <strong>Alt+Q</strong> (Bôi đen câu hỏi) hoặc <strong>Alt+S</strong> (Khoanh vùng ảnh).
+    Mở song song <strong>ViTai</strong>: <strong>Alt+Q</strong> (Bôi đen câu hỏi) hoặc <strong>Alt+S</strong> (Khoanh vùng ảnh). Bấm chọn đáp án rồi nhấn <strong>Xác nhận kết quả</strong> để kiểm tra!
   </div>
 
   <!-- MAIN TEST AREA -->
@@ -426,14 +598,14 @@
 
     <!-- Active Question Card Content -->
     <div class="question-card" id="question-card">
-      <!-- Dynamic Question Content Injected by JS -->
+      <!-- Injected by JS -->
     </div>
   </main>
 
   <!-- FIXED BOTTOM NAVIGATION BAR -->
   <footer class="test-footer-bar">
     <div class="hint-footer-text">
-      <span>Thao tác: Bôi đen text bấm <kbd>Alt + Q</kbd> • Câu hỏi dạng ảnh bấm <kbd>Alt + S</kbd> để quét vùng</span>
+      <span>Thao tác: Bôi đen text bấm <kbd>Alt + Q</kbd> • Câu hỏi ảnh bấm <kbd>Alt + S</kbd> để quét vùng</span>
     </div>
 
     <button type="button" class="btn-next-question" id="btn-next">
@@ -447,11 +619,11 @@
 
   <script>
     /* ==========================================================================
-       ViTai 10-Question Benchmark Suite Data & Renderer
-       Order: 1, 2, 3, 4, 5, 1', 2', 3', 4', 1''
+       ViTai 10-Question Interactive Benchmark Suite
+       Each question expanded to 5-6 options with Checkboxes & Verification logic
        ========================================================================== */
     const BENCHMARK_QUESTIONS = [
-      // 1. Dạng 1: Code dạng chữ (C pointer arithmetic)
+      // 1. Dạng 1: Code dạng chữ (C pointer arithmetic - 6 options)
       {
         id: 1,
         typeLabel: "Dạng 1 — Code dạng chữ",
@@ -473,21 +645,26 @@ int main() {
 }`,
         questionText: "Kết quả in ra màn hình của chương trình là gì?",
         isCanvas: false,
+        correctAnswers: ["B"],
+        expectedSummary: "Đáp án đúng là: B (10, 21, 30)",
+        explanation: "*ptr++ lấy giá trị a = 10 rồi mới tăng ptr lên trỏ &arr[1]. ++*ptr tăng trực tiếp giá trị của arr[1] từ 20 lên 21 và gán b = 21. *++ptr tăng ptr lên trỏ &arr[2] trước rồi lấy giá trị 30 gán cho c. Kết quả in ra: 10, 21, 30.",
         options: [
           { label: "A", text: "10, 20, 30" },
           { label: "B", text: "10, 21, 30" },
           { label: "C", text: "11, 21, 40" },
-          { label: "D", text: "10, 21, 40" }
+          { label: "D", text: "10, 21, 40" },
+          { label: "E", text: "10, 20, 40" },
+          { label: "F", text: "11, 20, 30" }
         ]
       },
 
-      // 2. Dạng 2: Code dạng ảnh canvas (Python Generator)
+      // 2. Dạng 2: Code dạng ảnh canvas (Python Generator - 5 options)
       {
         id: 2,
         typeLabel: "Dạng 2 — Code dạng ảnh (Canvas)",
         subject: "Python Core",
         title: "Câu 2: Đoạn mã Python sau đây được dựng dạng hình ảnh:",
-        prompt: "Không thể bôi đen chữ bằng chuột. Hãy dùng phím tắt Alt+S (Vision Mode) của ViTai để quét vùng hình ảnh:",
+        prompt: "Đoạn code nằm trong Canvas hình ảnh (không thể bôi đen chữ). Dùng phím tắt Alt+S (Vision Mode) của ViTai để khoanh vùng ảnh:",
         code: `def number_stream(n):
     for i in range(1, n + 1):
         if i % 2 == 0:
@@ -500,15 +677,19 @@ result = [next(gen) for _ in range(3)]
 print(result)`,
         questionText: "Kết quả in ra khi chạy chương trình là gì?",
         isCanvas: true,
+        correctAnswers: ["C"],
+        expectedSummary: "Đáp án đúng là: C ([2, 4, 4])",
+        explanation: "Vòng lặp chạy: i=1 (lẻ) -> yield 1 + 1 = 2; i=2 (chẵn) -> yield 2 * 2 = 4; i=3 (lẻ) -> yield 3 + 1 = 4. Danh sách 3 phần tử lấy qua next() là [2, 4, 4].",
         options: [
           { label: "A", text: "[2, 4, 6]" },
           { label: "B", text: "[1, 4, 3]" },
           { label: "C", text: "[2, 4, 4]" },
-          { label: "D", text: "[2, 4, 8]" }
+          { label: "D", text: "[2, 4, 8]" },
+          { label: "E", text: "[1, 2, 3]" }
         ]
       },
 
-      // 3. Dạng 3: Lý thuyết CSDL có thể nhiều đáp án đúng
+      // 3. Dạng 3: Lý thuyết CSDL đa đáp án đúng (6 options)
       {
         id: 3,
         typeLabel: "Dạng 3 — Lý thuyết (Đa đáp án)",
@@ -518,15 +699,20 @@ print(result)`,
         code: null,
         questionText: null,
         isCanvas: false,
+        correctAnswers: ["A", "B", "D", "F"],
+        expectedSummary: "Đáp án đúng là: A, B, D, F",
+        explanation: "A (Atomicity), B (Isolation), D (Durability) và F (Consistency) là các phát biểu đúng theo chuẩn ACID. C sai vì transaction không được phép vi phạm ràng buộc toàn vẹn sau khi commit. E sai vì mức Read Uncommitted vẫn có thể xảy ra Dirty Read.",
         options: [
-          { label: "A", text: "Tính nguyên tố (Atomicity): Đảm bảo toàn bộ các thao tác trong giao dịch phải hoàn tất thành công, hoặc nếu xảy ra sự cố thì phải hoàn tác (rollback) toàn bộ về trạng thái ban đầu." },
+          { label: "A", text: "Tính nguyên tố (Atomicity): Toàn bộ các thao tác trong giao dịch phải hoàn tất thành công, hoặc nếu lỗi thì phải hoàn tác (rollback) toàn bộ về trạng thái ban đầu." },
           { label: "B", text: "Tính cô lập (Isolation): Các transaction thực thi đồng thời không được can thiệp vào nhau và không nhìn thấy dữ liệu trung gian chưa commit của transaction khác." },
           { label: "C", text: "Tính nhất quán (Consistency): Cho phép tạm thời bỏ qua các ràng buộc khóa ngoại trong suốt quá trình ghi dữ liệu mà không cần kiểm tra lại trước khi commit." },
-          { label: "D", text: "Tính bền vững (Durability): Đảm bảo các thay đổi của transaction đã commit sẽ được lưu trữ vĩnh viễn trong hệ thống ngay cả khi xảy ra sự cố sập nguồn hoặc mất điện." }
+          { label: "D", text: "Tính bền vững (Durability): Đảm bảo các thay đổi của transaction đã commit sẽ được lưu trữ vĩnh viễn trong hệ thống ngay cả khi xảy ra sự cố sập nguồn hoặc mất điện." },
+          { label: "E", text: "Mức cô lập Read Uncommitted loại bỏ hoàn toàn hiện tượng Đọc dữ liệu rác (Dirty Read) giữa các transaction đồng thời." },
+          { label: "F", text: "Tính nhất quán (Consistency): Đảm bảo cơ sở dữ liệu chuyển từ một trạng thái hợp lệ sang một trạng thái hợp lệ khác thỏa mãn toàn bộ các ràng buộc nghiệp vụ." }
         ]
       },
 
-      // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn
+      // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn (6 options - all wrong)
       {
         id: 4,
         typeLabel: "Dạng 4 — Không có đáp án đúng (NONE)",
@@ -536,11 +722,16 @@ print(result)`,
         code: null,
         questionText: "Chọn một phương án chính xác nhất trong các phương án sau:",
         isCanvas: false,
+        correctAnswers: ["NONE"],
+        expectedSummary: "Đáp án đúng là: NONE (Không có phương án nào đúng)",
+        explanation: "Trường hợp tốt nhất của QuickSort khi chia đều mảng là O(n log n). Cả 6 phương án đưa ra (O(1), O(n²), O(2ⁿ), O(n³), O(n!), O(√n)) đều sai. ViTai được thiết kế để phát hiện và trả về NONE.",
         options: [
           { label: "A", text: "O(1)" },
           { label: "B", text: "O(n²)" },
           { label: "C", text: "O(2ⁿ)" },
-          { label: "D", text: "O(n³)" }
+          { label: "D", text: "O(n³)" },
+          { label: "E", text: "O(n!)" },
+          { label: "F", text: "O(√n)" }
         ]
       },
 
@@ -555,10 +746,13 @@ print(result)`,
         questionText: null,
         isCanvas: false,
         isNoOptions: true,
+        correctAnswers: ["NONE"],
+        expectedSummary: "Kỳ vọng AI trả về: NONE",
+        explanation: "Câu hỏi này hoàn toàn không cung cấp danh sách phương án trắc nghiệm A-F. ViTai nhận diện đây là câu hỏi không có lựa chọn để chọn và trả về kết quả NONE. Thuật ngữ đúng của câu hỏi là Tính Đóng gói (Encapsulation).",
         options: []
       },
 
-      // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static)
+      // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static - 6 options)
       {
         id: 6,
         typeLabel: "Dạng 1' — Code dạng chữ (Biến thể)",
@@ -581,15 +775,20 @@ int main() {
 }`,
         questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
         isCanvas: false,
+        correctAnswers: ["A"],
+        expectedSummary: "Đáp án đúng là: A (24)",
+        explanation: "Biến static factor duy trì giá trị qua các lần gọi đệ quy: calc(3) cộng n=3 vào factor (factor=4), trả về calc(2)*2. calc(2) cộng n=2 vào factor (factor=6), trả về calc(1)*2. calc(1) gặp điều kiện dừng trả về factor=6. Thu được 6 * 2 * 2 = 24.",
         options: [
           { label: "A", text: "24" },
           { label: "B", text: "12" },
           { label: "C", text: "18" },
-          { label: "D", text: "36" }
+          { label: "D", text: "36" },
+          { label: "E", text: "16" },
+          { label: "F", text: "48" }
         ]
       },
 
-      // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động)
+      // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động - 5 options)
       {
         id: 7,
         typeLabel: "Dạng 2' — Code dạng ảnh (Canvas)",
@@ -614,15 +813,19 @@ int main() {
 }`,
         questionText: "Giá trị in ra của chương trình trên là bao nhiêu?",
         isCanvas: true,
+        correctAnswers: ["D"],
+        expectedSummary: "Đáp án đúng là: D (22)",
+        explanation: "Hàm allocate nhận địa chỉ con trỏ ptr, cấp phát động và gán **p = 5 * 3 = 15. Sau khi gọi hàm, *ptr có giá trị 15. Biến result = 15 + 7 = 22. In ra 22.",
         options: [
           { label: "A", text: "15" },
           { label: "B", text: "12" },
           { label: "C", text: "7" },
-          { label: "D", text: "22" }
+          { label: "D", text: "22" },
+          { label: "E", text: "35" }
         ]
       },
 
-      // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface)
+      // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface - 6 options)
       {
         id: 8,
         typeLabel: "Dạng 3' — Lý thuyết (Đa đáp án)",
@@ -632,16 +835,20 @@ int main() {
         code: null,
         questionText: null,
         isCanvas: false,
+        correctAnswers: ["B", "C", "F"],
+        expectedSummary: "Đáp án đúng là: B, C, F",
+        explanation: "B đúng vì Java 8+ cho phép default và static method trong Interface. C đúng vì cả hai đều là kiểu trừu tượng, không thể tạo instance bằng new. F đúng vì Java hỗ trợ đa triển khai interface. A sai (Java chỉ hỗ trợ đơn kế thừa class), D sai (biến trong interface là public static final), E sai (chỉ bắt buộc override abstract method).",
         options: [
           { label: "A", text: "Một lớp thông thường có thể đồng thời kế thừa (extends) từ nhiều Abstract Class khác nhau." },
           { label: "B", text: "Interface có thể chứa phương thức có phần thân xử lý thông qua từ khóa default hoặc static." },
           { label: "C", text: "Cả Abstract Class và Interface đều không thể khởi tạo đối tượng trực tiếp bằng toán tử new." },
           { label: "D", text: "Tất cả các biến khai báo trong Interface mặc định đều có phạm vi truy cập là private static final." },
-          { label: "E", text: "Một lớp con kế thừa từ Abstract Class bắt buộc phải override lại toàn bộ phương thức dù phương thức đó đã có mã cài đặt sẵn ở lớp cha." }
+          { label: "E", text: "Một lớp con kế thừa từ Abstract Class bắt buộc phải override lại toàn bộ phương thức dù phương thức đó đã có mã cài đặt sẵn ở lớp cha." },
+          { label: "F", text: "Một lớp có thể triển khai (implements) đồng thời nhiều Interface khác nhau." }
         ]
       },
 
-      // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL)
+      // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL - 6 options all wrong)
       {
         id: 9,
         typeLabel: "Dạng 4' — Không có đáp án đúng (NONE)",
@@ -651,15 +858,20 @@ int main() {
         code: null,
         questionText: "Chọn mức dạng chuẩn cao nhất mà quan hệ R đạt được:",
         isCanvas: false,
+        correctAnswers: ["NONE"],
+        expectedSummary: "Đáp án đúng là: NONE (Không có phương án nào đúng)",
+        explanation: "Quan hệ R có khóa chính A. Phụ thuộc hàm A->B->C->D chứa phụ thuộc bắc cầu A->C và A->D với B, C không phải siêu khóa. Do đó R chỉ đạt chuẩn 2 (2NF), không đạt chuẩn 3 (3NF). Cả 6 lựa chọn (3NF, BCNF, 4NF, 5NF, DKNF, 6NF) đều sai.",
         options: [
           { label: "A", text: "Dạng chuẩn 3 (3NF)" },
           { label: "B", text: "Dạng chuẩn Boyce-Codd (BCNF)" },
           { label: "C", text: "Dạng chuẩn 4 (4NF)" },
-          { label: "D", text: "Dạng chuẩn 5 (5NF)" }
+          { label: "D", text: "Dạng chuẩn 5 (5NF)" },
+          { label: "E", text: "Dạng chuẩn miền - khóa (DKNF)" },
+          { label: "F", text: "Dạng chuẩn 6 (6NF)" }
         ]
       },
 
-      // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice)
+      // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice - 6 options)
       {
         id: 10,
         typeLabel: "Dạng 1'' — Code dạng chữ (Biến thể)",
@@ -672,16 +884,23 @@ result = sum(filtered[::2])
 print(result)`,
         questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
         isCanvas: false,
+        correctAnswers: ["B"],
+        expectedSummary: "Đáp án đúng là: B (15)",
+        explanation: "filtered lọc ra danh sách các số lẻ: [1, 3, 5, 7, 9]. filtered[::2] lấy các phần tử ở chỉ số chẵn 0, 2, 4 là [1, 5, 9]. Tổng sum([1, 5, 9]) = 1 + 5 + 9 = 15.",
         options: [
           { label: "A", text: "25" },
           { label: "B", text: "15" },
           { label: "C", text: "10" },
-          { label: "D", text: "16" }
+          { label: "D", text: "16" },
+          { label: "E", text: "21" },
+          { label: "F", text: "9" }
         ]
       }
     ];
 
     let currentQuestionIndex = 0;
+    // Map to store user selected options per question id: { 1: Set(['B']), ... }
+    const userSelections = {};
 
     function renderCurrentQuestion() {
       const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
@@ -690,6 +909,11 @@ print(result)`,
       const progressFill = document.getElementById('progress-fill');
       const progressTag = document.getElementById('progress-tag');
       const btnNextText = document.getElementById('btn-next-text');
+
+      // Ensure a Set exists for current question
+      if (!userSelections[q.id]) {
+        userSelections[q.id] = new Set();
+      }
 
       // Update Header Progress
       progressText.textContent = `Câu ${currentQuestionIndex + 1} / ${BENCHMARK_QUESTIONS.length}`;
@@ -703,11 +927,15 @@ print(result)`,
         btnNextText.textContent = "Câu tiếp theo";
       }
 
-      // Check if canvas question
+      let html = `
+        <div class="question-subject-badge">${q.subject}</div>
+        <h2 class="question-title">${q.title}</h2>
+        <p class="question-prompt">${q.prompt}</p>
+      `;
+
+      // Canvas Question (Q2 & Q7)
       if (q.isCanvas) {
-        card.innerHTML = `
-          <div class="question-subject-badge">${q.subject}</div>
-          <h2 class="question-title">${q.title}</h2>
+        html += `
           <div class="canvas-wrapper">
             <div class="canvas-notice">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -715,66 +943,207 @@ print(result)`,
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
-              <span>Vùng hình ảnh Canvas thuần (Không thể bôi đen chữ) • Dùng phím tắt Alt + S của ViTai để khoanh vùng:</span>
+              <span>Vùng hình ảnh Canvas (Không thể bôi đen chữ) • Dùng phím tắt Alt + S của ViTai để khoanh vùng:</span>
             </div>
             <canvas id="benchmark-canvas-element" class="benchmark-canvas"></canvas>
           </div>
         `;
-        // Draw to canvas on next tick
-        setTimeout(() => {
-          renderCanvasQuestion(q);
-        }, 10);
-      } else {
-        // Text HTML Question
-        let html = `
-          <div class="question-subject-badge">${q.subject}</div>
-          <h2 class="question-title">${q.title}</h2>
-          <p class="question-prompt">${q.prompt}</p>
+      } else if (q.code) {
+        html += `
+          <div class="code-box">
+            <pre><code>${escapeHtml(q.code)}</code></pre>
+          </div>
         `;
-
-        if (q.code) {
-          html += `
-            <div class="code-box">
-              <pre><code>${escapeHtml(q.code)}</code></pre>
-            </div>
-          `;
-        }
-
-        if (q.questionText) {
-          html += `<p class="question-prompt" style="font-weight: 600; color: #0F172A; margin-top: 14px;">${q.questionText}</p>`;
-        }
-
-        if (q.isNoOptions) {
-          html += `
-            <div class="no-options-banner">
-              ⚠️ <strong>Lưu ý:</strong> Câu hỏi này không cung cấp các phương án A, B, C, D để chọn. ViTai được kỳ vọng sẽ phân tích và trả về kết quả <strong>NONE</strong>.
-            </div>
-          `;
-        } else if (q.options && q.options.length) {
-          html += `<div class="options-list">`;
-          q.options.forEach(opt => {
-            html += `
-              <div class="option-row">
-                <div class="option-badge">${opt.label}</div>
-                <div class="option-text">${escapeHtml(opt.text)}</div>
-              </div>
-            `;
-          });
-          html += `</div>`;
-        }
-
-        card.innerHTML = html;
       }
 
-      // Scroll smoothly to top of question card
+      if (q.questionText) {
+        html += `<p class="question-prompt" style="font-weight: 600; color: #0F172A; margin-top: 14px;">${q.questionText}</p>`;
+      }
+
+      // Render Options with square checkboxes
+      if (q.isNoOptions) {
+        html += `
+          <div class="no-options-banner">
+            ⚠️ <strong>Lưu ý:</strong> Câu hỏi này không cung cấp các phương án A, B, C, D... để chọn. Hãy thử dùng <strong>Alt + Q</strong> của ViTai để kiểm tra khả năng trả về <strong>NONE</strong>.
+          </div>
+        `;
+      } else if (q.options && q.options.length) {
+        html += `<div class="options-list" id="options-container">`;
+        q.options.forEach(opt => {
+          const isSelected = userSelections[q.id].has(opt.label);
+          html += `
+            <div class="option-row ${isSelected ? 'is-selected' : ''}" data-label="${opt.label}">
+              <div class="option-checkbox-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="option-letter-badge">${opt.label}</div>
+              <div class="option-text">${escapeHtml(opt.text)}</div>
+              <span class="verdict-tag" id="verdict-${opt.label}"></span>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      // Verification Buttons
+      html += `
+        <div class="verify-action-row">
+          <button type="button" class="btn-verify-submit" id="btn-verify">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Xác nhận kết quả</span>
+          </button>
+          <button type="button" class="btn-verify-reset" id="btn-reset">Bỏ chọn lại</button>
+        </div>
+
+        <div class="explanation-callout" id="explanation-box">
+          <div class="explanation-title" id="explanation-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span id="explanation-heading">Kết quả đối chiếu</span>
+          </div>
+          <div class="explanation-body" id="explanation-text"></div>
+        </div>
+      `;
+
+      card.innerHTML = html;
+
+      // Draw canvas if needed
+      if (q.isCanvas) {
+        setTimeout(() => {
+          renderCanvasCodeOnly(q);
+        }, 10);
+      }
+
+      // Bind interactive click handlers on options
+      bindOptionClickEvents(q);
+
+      // Bind verify and reset button handlers
+      bindVerifyActionHandlers(q);
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /**
-     * Renders crisp 2x Canvas for image questions (Q2 and Q7)
-     * Guarantee: ZERO text DOM elements inside or underneath
+     * Binds click handlers to toggle checkbox square on each option
      */
-    function renderCanvasQuestion(q) {
+    function bindOptionClickEvents(q) {
+      const container = document.getElementById('options-container');
+      if (!container) return;
+
+      const rows = container.querySelectorAll('.option-row');
+      rows.forEach(row => {
+        row.addEventListener('click', () => {
+          const label = row.getAttribute('data-label');
+          if (userSelections[q.id].has(label)) {
+            userSelections[q.id].delete(label);
+            row.classList.remove('is-selected');
+          } else {
+            userSelections[q.id].add(label);
+            row.classList.add('is-selected');
+          }
+        });
+      });
+    }
+
+    /**
+     * Binds "Xác nhận kết quả" and "Bỏ chọn lại"
+     */
+    function bindVerifyActionHandlers(q) {
+      const btnVerify = document.getElementById('btn-verify');
+      const btnReset = document.getElementById('btn-reset');
+      const explanationBox = document.getElementById('explanation-box');
+      const explanationHeading = document.getElementById('explanation-heading');
+      const explanationText = document.getElementById('explanation-text');
+
+      if (btnVerify) {
+        btnVerify.addEventListener('click', () => {
+          const selectedSet = userSelections[q.id] || new Set();
+          const correctSet = new Set(q.correctAnswers);
+
+          // If no options question (Q5)
+          if (q.isNoOptions) {
+            explanationBox.classList.add('show');
+            explanationHeading.textContent = "Kết quả: " + q.expectedSummary;
+            explanationText.innerHTML = `<strong>Giải thích:</strong> ${q.explanation}`;
+            return;
+          }
+
+          // Evaluate each option row
+          const rows = document.querySelectorAll('.option-row');
+          rows.forEach(row => {
+            const label = row.getAttribute('data-label');
+            const isUserPicked = selectedSet.has(label);
+            const isCorrectOption = correctSet.has(label);
+            const verdictSpan = document.getElementById(`verdict-${label}`);
+
+            // Reset previous verification classes
+            row.classList.remove('verified-correct', 'verified-wrong', 'verified-neutral-wrong');
+
+            if (isCorrectOption) {
+              // Tô viền xanh nếu đúng
+              row.classList.add('verified-correct');
+              if (verdictSpan) {
+                verdictSpan.textContent = "Đúng ✓";
+              }
+            } else {
+              // Option is wrong
+              if (isUserPicked) {
+                // User picked wrong option -> Tô viền đỏ
+                row.classList.add('verified-wrong');
+                if (verdictSpan) {
+                  verdictSpan.textContent = "Sai ✗";
+                }
+              } else {
+                row.classList.add('verified-neutral-wrong');
+                if (verdictSpan) {
+                  verdictSpan.textContent = "Sai ✗";
+                }
+              }
+            }
+          });
+
+          // Special case for NONE questions (Q4 & Q9)
+          if (q.correctAnswers.includes("NONE")) {
+            explanationBox.classList.add('show');
+            explanationHeading.innerHTML = `<span style="color: #E0562D;">⚠️ Lưu ý: ${q.expectedSummary}</span>`;
+            explanationText.innerHTML = `Tất cả các phương án hiển thị ở trên đều là phương án SAI. ViTai cần nhận diện và trả về kết quả <strong>NONE</strong>.<br><br><strong>Chi tiết:</strong> ${q.explanation}`;
+          } else {
+            explanationBox.classList.add('show');
+            explanationHeading.textContent = q.expectedSummary;
+            explanationText.innerHTML = `<strong>Giải thích chi tiết:</strong> ${q.explanation}`;
+          }
+        });
+      }
+
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          userSelections[q.id].clear();
+          const rows = document.querySelectorAll('.option-row');
+          rows.forEach(row => {
+            row.classList.remove('is-selected', 'verified-correct', 'verified-wrong', 'verified-neutral-wrong');
+            const label = row.getAttribute('data-label');
+            const verdictSpan = document.getElementById(`verdict-${label}`);
+            if (verdictSpan) verdictSpan.textContent = '';
+          });
+          if (explanationBox) {
+            explanationBox.classList.remove('show');
+          }
+        });
+      }
+    }
+
+    /**
+     * Renders crisp 2x Canvas for image questions (Code block only, options are interactive DOM)
+     */
+    function renderCanvasCodeOnly(q) {
       const canvas = document.getElementById('benchmark-canvas-element');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -782,9 +1151,8 @@ print(result)`,
 
       const codeLines = q.code ? q.code.split('\n') : [];
       const logicalWidth = Math.min(680, window.innerWidth - 80);
-      const codeBoxHeight = (codeLines.length * 22) + 32;
-      const optionsHeight = q.options ? q.options.length * 42 : 0;
-      const logicalHeight = 120 + codeBoxHeight + optionsHeight + 40;
+      const codeBoxHeight = (codeLines.length * 22) + 36;
+      const logicalHeight = 60 + codeBoxHeight + 20;
 
       canvas.width = logicalWidth * dpr;
       canvas.height = logicalHeight * dpr;
@@ -804,70 +1172,30 @@ print(result)`,
 
       // Top title bar simulation
       ctx.fillStyle = '#F8FAFC';
-      ctx.fillRect(0, 0, logicalWidth, 36);
+      ctx.fillRect(0, 0, logicalWidth, 34);
       ctx.strokeStyle = '#E2E8F0';
-      ctx.strokeRect(0, 0, logicalWidth, 36);
+      ctx.strokeRect(0, 0, logicalWidth, 34);
 
       // Window dots
-      ctx.fillStyle = '#EF4444'; ctx.beginPath(); ctx.arc(16, 18, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#F59E0B'; ctx.beginPath(); ctx.arc(32, 18, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.arc(48, 18, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#EF4444'; ctx.beginPath(); ctx.arc(16, 17, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#F59E0B'; ctx.beginPath(); ctx.arc(32, 17, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.arc(48, 17, 5, 0, Math.PI * 2); ctx.fill();
 
       // Window title
       ctx.fillStyle = '#64748B';
       ctx.font = '600 12px "Inter", sans-serif';
-      ctx.fillText(`${q.subject} - Code Preview (Alt+S Vision)`, 68, 22);
-
-      let curY = 62;
-
-      // Question sub-heading inside canvas
-      ctx.fillStyle = '#0F172A';
-      ctx.font = '600 14px "Inter", sans-serif';
-      ctx.fillText("Mã nguồn:", 20, curY);
-      curY += 16;
+      ctx.fillText(`${q.subject} - Code Image (Quét bằng Alt+S)`, 68, 21);
 
       // Code block background
       ctx.fillStyle = '#0F172A';
-      ctx.fillRect(20, curY, logicalWidth - 40, codeBoxHeight);
+      ctx.fillRect(16, 48, logicalWidth - 32, codeBoxHeight);
 
       // Code text
       ctx.fillStyle = '#F8FAFC';
       ctx.font = '500 13px "JetBrains Mono", Consolas, monospace';
       codeLines.forEach((line, idx) => {
-        ctx.fillText(line, 36, curY + 24 + (idx * 22));
+        ctx.fillText(line, 32, 74 + (idx * 22));
       });
-
-      curY += codeBoxHeight + 28;
-
-      // Question text
-      if (q.questionText) {
-        ctx.fillStyle = '#0F172A';
-        ctx.font = '700 14.5px "Inter", sans-serif';
-        ctx.fillText(q.questionText, 20, curY);
-        curY += 22;
-      }
-
-      // Options inside canvas
-      if (q.options) {
-        q.options.forEach(opt => {
-          ctx.fillStyle = '#F8FAFC';
-          ctx.fillRect(20, curY, logicalWidth - 40, 32);
-          ctx.strokeStyle = '#CBD5E1';
-          ctx.strokeRect(20, curY, logicalWidth - 40, 32);
-
-          // Letter badge
-          ctx.fillStyle = '#E0562D';
-          ctx.font = '700 13px "Inter", sans-serif';
-          ctx.fillText(opt.label, 32, curY + 21);
-
-          // Option text
-          ctx.fillStyle = '#1E293B';
-          ctx.font = '500 13.5px "Inter", sans-serif';
-          ctx.fillText(opt.text, 58, curY + 21);
-
-          curY += 40;
-        });
-      }
     }
 
     function escapeHtml(str) {
@@ -891,17 +1219,15 @@ print(result)`,
             currentQuestionIndex++;
             renderCurrentQuestion();
           } else {
-            // Completed 10 questions -> navigate back to index
             window.location.href = 'index.html';
           }
         });
       }
 
-      // Resize event to redraw canvas crisply
       window.addEventListener('resize', () => {
         const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
         if (q.isCanvas) {
-          renderCanvasQuestion(q);
+          renderCanvasCodeOnly(q);
         }
       });
     });
