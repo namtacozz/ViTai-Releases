@@ -5,9 +5,11 @@
  */
 
 const APP_VERSION = "3.9.0";
+const DISCLAIMER_STORAGE_KEY = "vitai_disclaimer_accepted";
 
 document.addEventListener('DOMContentLoaded', () => {
   renderAppVersion();
+  initDisclaimerModal();
   initSmoothScroll();
   initSubtleAnimations();
   initBenchoImageCompare();
@@ -30,6 +32,122 @@ function renderAppVersion() {
   versionPrefixTargets.forEach(el => {
     el.textContent = `v${APP_VERSION}`;
   });
+}
+
+/* --------------------------------------------------------------------------
+   MANDATORY FIRST-TIME DISCLAIMER MODAL
+   Enforces user responsibility confirmation before interacting with the site.
+   Escape and backdrop clicks disabled. Focus trapped inside modal.
+   -------------------------------------------------------------------------- */
+function initDisclaimerModal() {
+  const modal = document.getElementById('disclaimer-modal');
+  if (!modal) return;
+
+  // Check if previously accepted
+  try {
+    const stored = localStorage.getItem(DISCLAIMER_STORAGE_KEY);
+    if (stored) {
+      modal.style.display = 'none';
+      return;
+    }
+  } catch (e) {
+    // If localStorage unavailable, allow modal to proceed
+  }
+
+  const acceptBtn = document.getElementById('disclaimer-accept-btn');
+  const termsLink = modal.querySelector('a');
+
+  // Lock body scroll
+  document.body.style.overflow = 'hidden';
+  if (typeof lenisInstance !== 'undefined' && lenisInstance) {
+    lenisInstance.stop();
+  }
+
+  // Display modal and trigger entrance transition
+  modal.style.display = 'flex';
+  void modal.offsetWidth; // Force reflow
+  modal.classList.add('active');
+
+  // Focus the accept button
+  setTimeout(() => {
+    if (acceptBtn) acceptBtn.focus();
+  }, 60);
+
+  // Focus trap & Escape key blocker (capture phase)
+  function handleKeyDown(e) {
+    if (!modal.classList.contains('active')) return;
+
+    // Block Escape key unconditionally
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
+    // Trap focus between focusable elements inside modal
+    if (e.key === 'Tab') {
+      const focusables = [termsLink, acceptBtn].filter(Boolean);
+      if (focusables.length === 0) {
+        e.preventDefault();
+        return;
+      }
+
+      const firstEl = focusables[0];
+      const lastEl = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    }
+  }
+
+  window.addEventListener('keydown', handleKeyDown, true);
+
+  // Accept button click handler
+  if (acceptBtn) {
+    acceptBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // Store acceptance in localStorage with timestamp
+      try {
+        localStorage.setItem(DISCLAIMER_STORAGE_KEY, JSON.stringify({
+          accepted: true,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (err) {
+        console.warn('[ViTai Disclaimer] LocalStorage write failed:', err);
+      }
+
+      // Remove focus trap listener
+      window.removeEventListener('keydown', handleKeyDown, true);
+
+      // Restore scroll
+      document.body.style.overflow = '';
+      if (typeof lenisInstance !== 'undefined' && lenisInstance) {
+        lenisInstance.start();
+      }
+
+      // Handle exit transition respecting prefers-reduced-motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+      } else {
+        modal.classList.remove('active');
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 260);
+      }
+    });
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -376,6 +494,12 @@ function initSmoothScroll() {
         requestAnimationFrame(raf);
       }
       requestAnimationFrame(raf);
+    }
+
+    // If disclaimer modal is open, pause Lenis until user accepts
+    const disclaimerModal = document.getElementById('disclaimer-modal');
+    if (disclaimerModal && disclaimerModal.classList.contains('active')) {
+      lenisInstance.stop();
     }
   } catch (err) {
     console.warn('[ViTai Animation] Lenis initialization skipped:', err);

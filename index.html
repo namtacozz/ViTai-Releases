@@ -24,6 +24,37 @@
 </head>
 <body>
 
+  <!-- BẮT BUỘC: POPUP XÁC NHẬN TRÁCH NHIỆM KHI MỞ TRANG LẦN ĐẦU -->
+  <div id="disclaimer-modal" class="disclaimer-overlay" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" style="display: none;">
+    <div class="disclaimer-dialog">
+      <div class="disclaimer-icon-wrap" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M12 8v4"/>
+          <path d="M12 16h.01"/>
+        </svg>
+      </div>
+
+      <h2 id="disclaimer-title" class="disclaimer-title">Trước khi bắt đầu</h2>
+
+      <div class="disclaimer-body">
+        <p>ViTai được tạo ra để hỗ trợ việc nghiên cứu, tự học và tra cứu tri thức — giúp bạn học nhanh hơn, hiểu sâu hơn, không phải để thay thế quá trình học tập của bạn.</p>
+        <p>Chúng tôi không khuyến khích và không chịu trách nhiệm đối với bất kỳ hành vi sử dụng sai mục đích nào, bao gồm nhưng không giới hạn ở việc gian lận trong thi cử hoặc vi phạm quy chế của bất kỳ cơ sở giáo dục nào.</p>
+        <p>ViTai là bên cung cấp công cụ. Mọi quyết định sử dụng, và trách nhiệm đi kèm với quyết định đó, thuộc về bạn — người sử dụng.</p>
+      </div>
+
+      <p class="disclaimer-sub-note">
+        Xem đầy đủ tại <a href="terms.html" target="_blank" rel="noopener noreferrer">Điều khoản sử dụng</a>
+      </p>
+
+      <div class="disclaimer-actions">
+        <button type="button" id="disclaimer-accept-btn" class="disclaimer-btn-accept">
+          Tôi đã hiểu và chấp nhận mọi trách nhiệm thuộc về bản thân khi sử dụng ứng dụng
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Background Ambient Glow & Grid -->
   <div class="ambient-glow" aria-hidden="true">
     <div class="glow-orb orb-primary"></div>
