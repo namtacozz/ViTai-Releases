@@ -1,0 +1,97 @@
+{
+  "test_title": "ViTai Benchmark - Bộ 10 Câu Hỏi Kiểm Thử Độ Chính Xác AI",
+  "version": "3.9.0",
+  "instructions": "Dùng để đối chiếu sau khi chạy phím tắt Alt+Q (Text Mode) hoặc Alt+S (Vision Mode) trên từng câu hỏi tại test.html.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "Dạng 1 — Code dạng chữ",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Kỹ thuật lập trình C (Con trỏ & toán tử tăng giảm)",
+      "correct_answer": "B",
+      "expected_output": "10, 21, 30",
+      "explanation": "*ptr++ gán a = 10 rồi tăng ptr lên &arr[1]. ++*ptr tăng arr[1] từ 20 lên 21 và gán b = 21. *++ptr tăng ptr lên &arr[2] rồi lấy giá trị 30 gán cho c. In ra 10, 21, 30."
+    },
+    {
+      "id": 2,
+      "type": "Dạng 2 — Code dạng ảnh (Canvas)",
+      "mode_recommended": "Alt+S (Khoanh vùng ảnh)",
+      "subject": "Python Core (Hàm Generator & yield)",
+      "correct_answer": "C",
+      "expected_output": "[2, 4, 4]",
+      "explanation": "Khi lặp: i=1 (lẻ) sinh 1+1=2; i=2 (chẵn) sinh 2*2=4; i=3 (lẻ) sinh 3+1=4. Gọi next() 3 lần thu được danh sách [2, 4, 4]."
+    },
+    {
+      "id": 3,
+      "type": "Dạng 3 — Lý thuyết, có thể nhiều đáp án đúng",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Cơ sở dữ liệu (Tính chất Transaction ACID)",
+      "correct_answer": "A, B, D",
+      "expected_output": "A, B, D",
+      "explanation": "A (Atomicity - tính nguyên tố), B (Isolation - tính cô lập) và D (Durability - tính bền vững) là các phát biểu chính xác. C sai vì tính nhất quán (Consistency) không cho phép vi phạm ràng buộc toàn vẹn sau khi hoàn tất transaction."
+    },
+    {
+      "id": 4,
+      "type": "Dạng 4 — Không có đáp án đúng trong các lựa chọn",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Cấu trúc dữ liệu & Thuật toán (Độ phức tạp QuickSort)",
+      "correct_answer": "NONE",
+      "expected_output": "NONE",
+      "explanation": "Trường hợp tốt nhất của QuickSort khi chia đều mảng là O(n log n). 4 phương án đề bài đưa ra (O(1), O(n^2), O(2^n), O(n^3)) đều sai. AI cần nhận diện và trả về NONE."
+    },
+    {
+      "id": 5,
+      "type": "Dạng 5 — Không có phương án nào để chọn",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Lập trình hướng đối tượng (Tính Đóng gói - Encapsulation)",
+      "correct_answer": "NONE",
+      "expected_output": "NONE",
+      "explanation": "Câu hỏi không đưa ra bất kỳ lựa chọn A, B, C, D nào để người dùng chọn. AI cần nhận diện đây là câu hỏi không có phương án trắc nghiệm và trả về NONE."
+    },
+    {
+      "id": 6,
+      "type": "Dạng 1' — Code dạng chữ (Biến thể)",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "C++ / Kỹ thuật lập trình (Đệ quy & Biến Static)",
+      "correct_answer": "A",
+      "expected_output": "24",
+      "explanation": "Biến static factor duy trì qua các lần gọi đệ quy: calc(3) cộng 3 (factor=4), gọi calc(2)*2. calc(2) cộng 2 (factor=6), gọi calc(1)*2. calc(1) trả về factor=6. Thu được 6 * 2 * 2 = 24."
+    },
+    {
+      "id": 7,
+      "type": "Dạng 2' — Code dạng ảnh (Canvas, Biến thể)",
+      "mode_recommended": "Alt+S (Khoanh vùng ảnh)",
+      "subject": "Kỹ thuật lập trình C (Cấp phát động & con trỏ cấp 2)",
+      "correct_answer": "D",
+      "expected_output": "22",
+      "explanation": "Hàm allocate nhận địa chỉ con trỏ ptr, cấp phát động và gán **p = 5 * 3 = 15. Trong main, *ptr = 15; result = 15 + 7 = 22."
+    },
+    {
+      "id": 8,
+      "type": "Dạng 3' — Lý thuyết, có thể nhiều đáp án đúng (Biến thể)",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Lập trình hướng đối tượng Java (Abstract Class & Interface)",
+      "correct_answer": "B, C",
+      "expected_output": "B, C",
+      "explanation": "B đúng vì Interface trong Java 8+ hỗ trợ default và static method. C đúng vì cả hai đều là kiểu trừu tượng, không khởi tạo trực tiếp bằng new. A sai (Java không đa kế thừa class), D sai (biến trong interface mặc định là public static final), E sai (chỉ bắt buộc override abstract method)."
+    },
+    {
+      "id": 9,
+      "type": "Dạng 4' — Không có đáp án đúng (Biến thể)",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Cơ sở dữ liệu (Chuẩn hóa lược đồ quan hệ)",
+      "correct_answer": "NONE",
+      "expected_output": "NONE",
+      "explanation": "Với quan hệ R(A,B,C,D) và khóa chính A, phụ thuộc hàm A->B->C->D chứa phụ thuộc bắc cầu A->C và A->D nên lược đồ chỉ đạt Chuẩn 2 (2NF), không đạt Chuẩn 3 (3NF). 4 phương án (3NF, BCNF, 4NF, 5NF) đều sai. Kỳ vọng AI trả về NONE."
+    },
+    {
+      "id": 10,
+      "type": "Dạng 1'' — Code dạng chữ (Biến thể)",
+      "mode_recommended": "Alt+Q (Bôi đen)",
+      "subject": "Python (List Comprehension lồng nhau & Slicing)",
+      "correct_answer": "B",
+      "expected_output": "15",
+      "explanation": "filtered lọc các phần tử lẻ: [1, 3, 5, 7, 9]. filtered[::2] lấy phần tử tại các chỉ số chẵn 0, 2, 4 là [1, 5, 9]. Tổng sum([1, 5, 9]) = 15."
+    }
+  ]
+}

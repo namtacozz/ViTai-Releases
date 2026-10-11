@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViTai Benchmark - Kiểm thử độ chính xác AI (10 câu)</title>
+  <link rel="icon" type="image/x-icon" href="assets/icon.ico">
+  
+  <!-- Typography matching ViTai baseline -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       ViTai Benchmark Suite - High-Contrast Pure White Examination Layout
+       Targeted for AI OCR & Text-Selection Accuracy Validation
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Top Fixed Header */
+    .test-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-tag {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      color: #E0562D;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .test-mode-pill {
+      background: #F1F5F9;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      border: 1px solid #CBD5E1;
+    }
+
+    .btn-return-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #F8FAFC;
+      color: #334155;
+      border: 1px solid #CBD5E1;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-return-home:hover {
+      background: #0F172A;
+      color: #FFFFFF;
+      border-color: #0F172A;
+    }
+
+    /* Sub-bar Alert */
+    .top-instruction-bar {
+      margin-top: 64px;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      padding: 10px 24px;
+      font-size: 13px;
+      color: #64748B;
+      text-align: center;
+    }
+
+    .top-instruction-bar strong {
+      color: #0F172A;
+    }
+
+    /* Main Benchmark Area */
+    .test-container {
+      flex: 1;
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px 120px;
+    }
+
+    .progress-track-wrapper {
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #E0562D;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .progress-type-tag {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
+      background: #F1F5F9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: #E2E8F0;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: #E0562D;
+      width: 10%;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Card Wrapper */
+    .question-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+      padding: 36px 32px;
+      margin-bottom: 28px;
+    }
+
+    .question-subject-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748B;
+      margin-bottom: 12px;
+    }
+
+    .question-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0F172A;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .question-prompt {
+      font-size: 15px;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+
+    /* Code Container */
+    .code-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 18px 0 24px;
+      overflow-x: auto;
+    }
+
+    .code-box pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #0F172A;
+    }
+
+    /* Canvas Display (Question 2 & 7) */
+    .canvas-wrapper {
+      margin: 18px 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #FAFAFA;
+      border: 1px dashed #CBD5E1;
+      border-radius: 12px;
+      padding: 16px;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .canvas-notice {
+      font-size: 12.5px;
+      color: #E0562D;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    canvas.benchmark-canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      background: #FFFFFF;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: crosshair;
+    }
+
+    /* Options List */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 16px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      font-size: 14.5px;
+      color: #1E293B;
+      line-height: 1.5;
+    }
+
+    .option-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      color: #E0562D;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-text {
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    /* Empty options box (Question 5) */
+    .no-options-banner {
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-top: 18px;
+    }
+
+    /* Fixed Bottom Action Bar */
+    .test-footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: #FFFFFF;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 100;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .hint-footer-text {
+      font-size: 13px;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hint-footer-text kbd {
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .btn-next-question {
+      background: #E0562D;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(224, 86, 45, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-next-question:hover {
+      background: #FF5722;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(224, 86, 45, 0.45);
+    }
+
+    .btn-next-question:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .test-header {
+        padding: 0 16px;
+      }
+      .test-footer-bar {
+        padding: 0 16px;
+      }
+      .hint-footer-text {
+        display: none;
+      }
+      .question-card {
+        padding: 24px 18px;
+      }
+      .test-container {
+        padding: 24px 16px 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="test-header">
+    <div class="header-left">
+      <div class="brand-tag">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>ViTai Benchmark</span>
+      </div>
+      <span class="test-mode-pill">Độ chính xác AI (10 câu)</span>
+    </div>
+
+    <a href="index.html" class="btn-return-home">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Về trang chủ</span>
+    </a>
+  </header>
+
+  <!-- HINT BAR -->
+  <div class="top-instruction-bar">
+    Công cụ để bạn mở song song <strong>ViTai</strong> và kiểm chứng độ chính xác: <strong>Alt+Q</strong> (Bôi đen câu hỏi) hoặc <strong>Alt+S</strong> (Khoanh vùng ảnh).
+  </div>
+
+  <!-- MAIN TEST AREA -->
+  <main class="test-container">
+    <!-- Progress Indicator -->
+    <div class="progress-track-wrapper">
+      <div class="progress-label" id="progress-text">Câu 1 / 10</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-type-tag" id="progress-tag">Dạng 1 — Code chữ</div>
+    </div>
+
+    <!-- Active Question Card Content -->
+    <div class="question-card" id="question-card">
+      <!-- Dynamic Question Content Injected by JS -->
+    </div>
+  </main>
+
+  <!-- FIXED BOTTOM NAVIGATION BAR -->
+  <footer class="test-footer-bar">
+    <div class="hint-footer-text">
+      <span>Thao tác: Bôi đen text bấm <kbd>Alt + Q</kbd> • Câu hỏi dạng ảnh bấm <kbd>Alt + S</kbd> để quét vùng</span>
+    </div>
+
+    <button type="button" class="btn-next-question" id="btn-next">
+      <span id="btn-next-text">Câu tiếp theo</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </button>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       ViTai 10-Question Benchmark Suite Data & Renderer
+       Order: 1, 2, 3, 4, 5, 1', 2', 3', 4', 1''
+       ========================================================================== */
+    const BENCHMARK_QUESTIONS = [
+      // 1. Dạng 1: Code dạng chữ (C pointer arithmetic)
+      {
+        id: 1,
+        typeLabel: "Dạng 1 — Code dạng chữ",
+        subject: "Kỹ thuật lập trình C",
+        title: "Câu 1: Cho đoạn mã nguồn C sau đây:",
+        prompt: "Quan sát đoạn mã xử lý con trỏ và toán tử tăng giảm trên mảng:",
+        code: `#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr;
+    
+    int a = *ptr++;
+    int b = ++*ptr;
+    int c = *++ptr;
+    
+    printf("%d, %d, %d", a, b, c);
+    return 0;
+}`,
+        questionText: "Kết quả in ra màn hình của chương trình là gì?",
+        isCanvas: false,
+        options: [
+          { label: "A", text: "10, 20, 30" },
+          { label: "B", text: "10, 21, 30" },
+          { label: "C", text: "11, 21, 40" },
+          { label: "D", text: "10, 21, 40" }
+        ]
+      },
+
+      // 2. Dạng 2: Code dạng ảnh canvas (Python Generator)
+      {
+        id: 2,
+        typeLabel: "Dạng 2 — Code dạng ảnh (Canvas)",
+        subject: "Python Core",
+        title: "Câu 2: Đoạn mã Python sau đây được dựng dạng hình ảnh:",
+        prompt: "Không thể bôi đen chữ bằng chuột. Hãy dùng phím tắt Alt+S (Vision Mode) của ViTai để quét vùng hình ảnh:",
+        code: `def number_stream(n):
+    for i in range(1, n + 1):
+        if i % 2 == 0:
+            yield i * 2
+        else:
+            yield i + 1
+
+gen = number_stream(4)
+result = [next(gen) for _ in range(3)]
+print(result)`,
+        questionText: "Kết quả in ra khi chạy chương trình là gì?",
+        isCanvas: true,
+        options: [
+          { label: "A", text: "[2, 4, 6]" },
+          { label: "B", text: "[1, 4, 3]" },
+          { label: "C", text: "[2, 4, 4]" },
+          { label: "D", text: "[2, 4, 8]" }
+        ]
+      },
+
+      // 3. Dạng 3: Lý thuyết CSDL có thể nhiều đáp án đúng
+      {
+        id: 3,
+        typeLabel: "Dạng 3 — Lý thuyết (Đa đáp án)",
+        subject: "Cơ sở dữ liệu",
+        title: "Câu 3: Các tính chất của Transaction trong mô hình ACID",
+        prompt: "Trong hệ quản trị cơ sở dữ liệu quan hệ (RDBMS), xét các đặc điểm của một Giao dịch (Transaction) theo chuẩn ACID. Chọn các phát biểu ĐÚNG dưới đây (có thể có nhiều đáp án đúng):",
+        code: null,
+        questionText: null,
+        isCanvas: false,
+        options: [
+          { label: "A", text: "Tính nguyên tố (Atomicity): Đảm bảo toàn bộ các thao tác trong giao dịch phải hoàn tất thành công, hoặc nếu xảy ra sự cố thì phải hoàn tác (rollback) toàn bộ về trạng thái ban đầu." },
+          { label: "B", text: "Tính cô lập (Isolation): Các transaction thực thi đồng thời không được can thiệp vào nhau và không nhìn thấy dữ liệu trung gian chưa commit của transaction khác." },
+          { label: "C", text: "Tính nhất quán (Consistency): Cho phép tạm thời bỏ qua các ràng buộc khóa ngoại trong suốt quá trình ghi dữ liệu mà không cần kiểm tra lại trước khi commit." },
+          { label: "D", text: "Tính bền vững (Durability): Đảm bảo các thay đổi của transaction đã commit sẽ được lưu trữ vĩnh viễn trong hệ thống ngay cả khi xảy ra sự cố sập nguồn hoặc mất điện." }
+        ]
+      },
+
+      // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn
+      {
+        id: 4,
+        typeLabel: "Dạng 4 — Không có đáp án đúng (NONE)",
+        subject: "Cấu trúc dữ liệu & Thuật toán",
+        title: "Câu 4: Độ phức tạp thuật toán QuickSort",
+        prompt: "Trong trường hợp tốt nhất (Best-case scenario), độ phức tạp thời gian của thuật toán sắp xếp nhanh (QuickSort) khi phần tử chốt (pivot) luôn chia mảng thành hai nửa bằng nhau là bao nhiêu?",
+        code: null,
+        questionText: "Chọn một phương án chính xác nhất trong các phương án sau:",
+        isCanvas: false,
+        options: [
+          { label: "A", text: "O(1)" },
+          { label: "B", text: "O(n²)" },
+          { label: "C", text: "O(2ⁿ)" },
+          { label: "D", text: "O(n³)" }
+        ]
+      },
+
+      // 5. Dạng 5: Không có phương án nào để chọn (kỳ vọng NONE)
+      {
+        id: 5,
+        typeLabel: "Dạng 5 — Không có phương án (NONE)",
+        subject: "Lập trình hướng đối tượng (OOP)",
+        title: "Câu 5: Nguyên lý Đóng gói trong OOP",
+        prompt: "Trong lập trình hướng đối tượng (OOP), hãy nêu tên tính chất cho phép ẩn giấu thông tin và dữ liệu nội tại của đối tượng, ngăn chặn truy cập trực tiếp từ bên ngoài và chỉ cho phép tương tác thông qua các phương thức công khai (getter/setter).",
+        code: null,
+        questionText: null,
+        isCanvas: false,
+        isNoOptions: true,
+        options: []
+      },
+
+      // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static)
+      {
+        id: 6,
+        typeLabel: "Dạng 1' — Code dạng chữ (Biến thể)",
+        subject: "Kỹ thuật lập trình C++",
+        title: "Câu 6: Cho đoạn mã nguồn C++ sau đây:",
+        prompt: "Quan sát hàm đệ quy có sử dụng biến tĩnh (static variable):",
+        code: `#include <iostream>
+using namespace std;
+
+int calc(int n) {
+    static int factor = 1;
+    if (n <= 1) return factor;
+    factor += n;
+    return calc(n - 1) * 2;
+}
+
+int main() {
+    cout << calc(3);
+    return 0;
+}`,
+        questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
+        isCanvas: false,
+        options: [
+          { label: "A", text: "24" },
+          { label: "B", text: "12" },
+          { label: "C", text: "18" },
+          { label: "D", text: "36" }
+        ]
+      },
+
+      // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động)
+      {
+        id: 7,
+        typeLabel: "Dạng 2' — Code dạng ảnh (Canvas)",
+        subject: "Kỹ thuật lập trình C",
+        title: "Câu 7: Quản lý bộ nhớ động và con trỏ cấp 2 trong C:",
+        prompt: "Hình ảnh mã nguồn được kết xuất trên Canvas (không có text DOM). Dùng Alt+S để quét vùng ảnh:",
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+void allocate(int **p, int val) {
+    *p = (int*)malloc(sizeof(int));
+    **p = val * 3;
+}
+
+int main() {
+    int *ptr = NULL;
+    allocate(&ptr, 5);
+    int result = *ptr + 7;
+    printf("%d", result);
+    free(ptr);
+    return 0;
+}`,
+        questionText: "Giá trị in ra của chương trình trên là bao nhiêu?",
+        isCanvas: true,
+        options: [
+          { label: "A", text: "15" },
+          { label: "B", text: "12" },
+          { label: "C", text: "7" },
+          { label: "D", text: "22" }
+        ]
+      },
+
+      // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface)
+      {
+        id: 8,
+        typeLabel: "Dạng 3' — Lý thuyết (Đa đáp án)",
+        subject: "Lập trình hướng đối tượng Java",
+        title: "Câu 8: So sánh Abstract Class và Interface trong Java",
+        prompt: "Trong ngôn ngữ Java (từ Java 8 trở lên), xét các quy tắc về Lớp trừu tượng (Abstract Class) và Giao diện (Interface). Chọn các phát biểu ĐÚNG (có thể có nhiều đáp án đúng):",
+        code: null,
+        questionText: null,
+        isCanvas: false,
+        options: [
+          { label: "A", text: "Một lớp thông thường có thể đồng thời kế thừa (extends) từ nhiều Abstract Class khác nhau." },
+          { label: "B", text: "Interface có thể chứa phương thức có phần thân xử lý thông qua từ khóa default hoặc static." },
+          { label: "C", text: "Cả Abstract Class và Interface đều không thể khởi tạo đối tượng trực tiếp bằng toán tử new." },
+          { label: "D", text: "Tất cả các biến khai báo trong Interface mặc định đều có phạm vi truy cập là private static final." },
+          { label: "E", text: "Một lớp con kế thừa từ Abstract Class bắt buộc phải override lại toàn bộ phương thức dù phương thức đó đã có mã cài đặt sẵn ở lớp cha." }
+        ]
+      },
+
+      // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL)
+      {
+        id: 9,
+        typeLabel: "Dạng 4' — Không có đáp án đúng (NONE)",
+        subject: "Cơ sở dữ liệu quan hệ",
+        title: "Câu 9: Chuẩn hóa quan hệ và dạng chuẩn cao nhất",
+        prompt: "Xét lược đồ quan hệ R(A, B, C, D) với tập phụ thuộc hàm F = { A -> B, B -> C, C -> D }. Biết A là khóa chính duy nhất của R. Lược đồ R đạt mức dạng chuẩn cao nhất là dạng chuẩn nào?",
+        code: null,
+        questionText: "Chọn mức dạng chuẩn cao nhất mà quan hệ R đạt được:",
+        isCanvas: false,
+        options: [
+          { label: "A", text: "Dạng chuẩn 3 (3NF)" },
+          { label: "B", text: "Dạng chuẩn Boyce-Codd (BCNF)" },
+          { label: "C", text: "Dạng chuẩn 4 (4NF)" },
+          { label: "D", text: "Dạng chuẩn 5 (5NF)" }
+        ]
+      },
+
+      // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice)
+      {
+        id: 10,
+        typeLabel: "Dạng 1'' — Code dạng chữ (Biến thể)",
+        subject: "Python Thuật toán & Mảng",
+        title: "Câu 10: Xử lý ma trận bằng List Comprehension trong Python:",
+        prompt: "Cho đoạn mã nguồn Python sau đây:",
+        code: `matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+filtered = [val for row in matrix for val in row if val % 2 != 0]
+result = sum(filtered[::2])
+print(result)`,
+        questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
+        isCanvas: false,
+        options: [
+          { label: "A", text: "25" },
+          { label: "B", text: "15" },
+          { label: "C", text: "10" },
+          { label: "D", text: "16" }
+        ]
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function renderCurrentQuestion() {
+      const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
+      const card = document.getElementById('question-card');
+      const progressText = document.getElementById('progress-text');
+      const progressFill = document.getElementById('progress-fill');
+      const progressTag = document.getElementById('progress-tag');
+      const btnNextText = document.getElementById('btn-next-text');
+
+      // Update Header Progress
+      progressText.textContent = `Câu ${currentQuestionIndex + 1} / ${BENCHMARK_QUESTIONS.length}`;
+      progressFill.style.width = `${((currentQuestionIndex + 1) / BENCHMARK_QUESTIONS.length) * 100}%`;
+      progressTag.textContent = q.typeLabel;
+
+      // Update Button Text
+      if (currentQuestionIndex === BENCHMARK_QUESTIONS.length - 1) {
+        btnNextText.textContent = "Hoàn tất & Về trang chủ";
+      } else {
+        btnNextText.textContent = "Câu tiếp theo";
+      }
+
+      // Check if canvas question
+      if (q.isCanvas) {
+        card.innerHTML = `
+          <div class="question-subject-badge">${q.subject}</div>
+          <h2 class="question-title">${q.title}</h2>
+          <div class="canvas-wrapper">
+            <div class="canvas-notice">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>Vùng hình ảnh Canvas thuần (Không thể bôi đen chữ) • Dùng phím tắt Alt + S của ViTai để khoanh vùng:</span>
+            </div>
+            <canvas id="benchmark-canvas-element" class="benchmark-canvas"></canvas>
+          </div>
+        `;
+        // Draw to canvas on next tick
+        setTimeout(() => {
+          renderCanvasQuestion(q);
+        }, 10);
+      } else {
+        // Text HTML Question
+        let html = `
+          <div class="question-subject-badge">${q.subject}</div>
+          <h2 class="question-title">${q.title}</h2>
+          <p class="question-prompt">${q.prompt}</p>
+        `;
+
+        if (q.code) {
+          html += `
+            <div class="code-box">
+              <pre><code>${escapeHtml(q.code)}</code></pre>
+            </div>
+          `;
+        }
+
+        if (q.questionText) {
+          html += `<p class="question-prompt" style="font-weight: 600; color: #0F172A; margin-top: 14px;">${q.questionText}</p>`;
+        }
+
+        if (q.isNoOptions) {
+          html += `
+            <div class="no-options-banner">
+              ⚠️ <strong>Lưu ý:</strong> Câu hỏi này không cung cấp các phương án A, B, C, D để chọn. ViTai được kỳ vọng sẽ phân tích và trả về kết quả <strong>NONE</strong>.
+            </div>
+          `;
+        } else if (q.options && q.options.length) {
+          html += `<div class="options-list">`;
+          q.options.forEach(opt => {
+            html += `
+              <div class="option-row">
+                <div class="option-badge">${opt.label}</div>
+                <div class="option-text">${escapeHtml(opt.text)}</div>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
+
+        card.innerHTML = html;
+      }
+
+      // Scroll smoothly to top of question card
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * Renders crisp 2x Canvas for image questions (Q2 and Q7)
+     * Guarantee: ZERO text DOM elements inside or underneath
+     */
+    function renderCanvasQuestion(q) {
+      const canvas = document.getElementById('benchmark-canvas-element');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 2;
+
+      const codeLines = q.code ? q.code.split('\n') : [];
+      const logicalWidth = Math.min(680, window.innerWidth - 80);
+      const codeBoxHeight = (codeLines.length * 22) + 32;
+      const optionsHeight = q.options ? q.options.length * 42 : 0;
+      const logicalHeight = 120 + codeBoxHeight + optionsHeight + 40;
+
+      canvas.width = logicalWidth * dpr;
+      canvas.height = logicalHeight * dpr;
+      canvas.style.width = logicalWidth + 'px';
+      canvas.style.height = logicalHeight + 'px';
+
+      ctx.scale(dpr, dpr);
+
+      // Clean background
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+
+      // Outer border
+      ctx.strokeStyle = '#E2E8F0';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0, 0, logicalWidth, logicalHeight);
+
+      // Top title bar simulation
+      ctx.fillStyle = '#F8FAFC';
+      ctx.fillRect(0, 0, logicalWidth, 36);
+      ctx.strokeStyle = '#E2E8F0';
+      ctx.strokeRect(0, 0, logicalWidth, 36);
+
+      // Window dots
+      ctx.fillStyle = '#EF4444'; ctx.beginPath(); ctx.arc(16, 18, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#F59E0B'; ctx.beginPath(); ctx.arc(32, 18, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.arc(48, 18, 5, 0, Math.PI * 2); ctx.fill();
+
+      // Window title
+      ctx.fillStyle = '#64748B';
+      ctx.font = '600 12px "Inter", sans-serif';
+      ctx.fillText(`${q.subject} - Code Preview (Alt+S Vision)`, 68, 22);
+
+      let curY = 62;
+
+      // Question sub-heading inside canvas
+      ctx.fillStyle = '#0F172A';
+      ctx.font = '600 14px "Inter", sans-serif';
+      ctx.fillText("Mã nguồn:", 20, curY);
+      curY += 16;
+
+      // Code block background
+      ctx.fillStyle = '#0F172A';
+      ctx.fillRect(20, curY, logicalWidth - 40, codeBoxHeight);
+
+      // Code text
+      ctx.fillStyle = '#F8FAFC';
+      ctx.font = '500 13px "JetBrains Mono", Consolas, monospace';
+      codeLines.forEach((line, idx) => {
+        ctx.fillText(line, 36, curY + 24 + (idx * 22));
+      });
+
+      curY += codeBoxHeight + 28;
+
+      // Question text
+      if (q.questionText) {
+        ctx.fillStyle = '#0F172A';
+        ctx.font = '700 14.5px "Inter", sans-serif';
+        ctx.fillText(q.questionText, 20, curY);
+        curY += 22;
+      }
+
+      // Options inside canvas
+      if (q.options) {
+        q.options.forEach(opt => {
+          ctx.fillStyle = '#F8FAFC';
+          ctx.fillRect(20, curY, logicalWidth - 40, 32);
+          ctx.strokeStyle = '#CBD5E1';
+          ctx.strokeRect(20, curY, logicalWidth - 40, 32);
+
+          // Letter badge
+          ctx.fillStyle = '#E0562D';
+          ctx.font = '700 13px "Inter", sans-serif';
+          ctx.fillText(opt.label, 32, curY + 21);
+
+          // Option text
+          ctx.fillStyle = '#1E293B';
+          ctx.font = '500 13.5px "Inter", sans-serif';
+          ctx.fillText(opt.text, 58, curY + 21);
+
+          curY += 40;
+        });
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Navigation logic
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCurrentQuestion();
+
+      const btnNext = document.getElementById('btn-next');
+      if (btnNext) {
+        btnNext.addEventListener('click', () => {
+          if (currentQuestionIndex < BENCHMARK_QUESTIONS.length - 1) {
+            currentQuestionIndex++;
+            renderCurrentQuestion();
+          } else {
+            // Completed 10 questions -> navigate back to index
+            window.location.href = 'index.html';
+          }
+        });
+      }
+
+      // Resize event to redraw canvas crisply
+      window.addEventListener('resize', () => {
+        const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
+        if (q.isCanvas) {
+          renderCanvasQuestion(q);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
