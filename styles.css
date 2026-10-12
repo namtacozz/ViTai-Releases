@@ -1006,13 +1006,15 @@ button {
 }
 
 .download-cards-grid {
-  display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 32px;
+  display: flex;
+  justify-content: center;
   align-items: stretch;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .download-card {
+  width: 100%;
   background: var(--bg-surface);
   border: 1px solid var(--bg-surface-border);
   border-radius: var(--radius-xl);
@@ -1021,6 +1023,33 @@ button {
   flex-direction: column;
   position: relative;
   transition: all 0.3s ease;
+}
+
+.download-card[hidden] {
+  display: none !important;
+}
+
+.dl-switch-os-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  align-self: center;
+  transition: all 0.2s ease;
+}
+
+.dl-switch-os-link:hover {
+  color: var(--accent-hover);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .download-card:hover {

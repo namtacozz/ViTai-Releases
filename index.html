@@ -724,7 +724,7 @@
       <div class="download-cards-grid">
         
         <!-- Windows Card -->
-        <div class="download-card featured-download">
+        <div class="download-card featured-download" id="dl-card-windows">
           <div class="download-badge">Khuyên dùng cho Windows</div>
           <div class="dl-os-row">
             <div class="dl-os-icon win-icon">
@@ -769,10 +769,15 @@
           <p class="dl-guide-note">
             Hướng dẫn: Tải tệp <code>.zip</code> trực tiếp về máy, giải nén vào thư mục bạn chọn rồi mở tệp <code>ViTai.exe</code> để dùng ngay.
           </p>
+
+          <button type="button" class="dl-switch-os-link" id="switch-to-linux-btn">
+            <span>Bạn đang dùng Linux? Xem bản Linux (.tar.gz) →</span>
+          </button>
         </div>
 
         <!-- Linux Card -->
-        <div class="download-card">
+        <div class="download-card featured-download" id="dl-card-linux" hidden>
+          <div class="download-badge">Dành cho Linux</div>
           <div class="dl-os-row">
             <div class="dl-os-icon linux-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
@@ -820,6 +825,10 @@
           <p class="dl-guide-note">
             Lưu ý trên Wayland: Chạy lệnh <code>sudo usermod -aG input $USER</code> một lần để ứng dụng nhận sự kiện chuột ngoài nền.
           </p>
+
+          <button type="button" class="dl-switch-os-link" id="switch-to-windows-btn">
+            <span>Bạn đang dùng Windows? Xem bản Windows (.zip) →</span>
+          </button>
         </div>
 
       </div>

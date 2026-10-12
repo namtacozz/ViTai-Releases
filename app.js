@@ -48,6 +48,8 @@ function initDisclaimerModal() {
     const stored = localStorage.getItem(DISCLAIMER_STORAGE_KEY);
     if (stored) {
       modal.style.display = 'none';
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       return;
     }
   } catch (e) {
@@ -57,7 +59,7 @@ function initDisclaimerModal() {
   const acceptBtn = document.getElementById('disclaimer-accept-btn');
   const termsLink = modal.querySelector('a');
 
-  // Lock body scroll
+  // Lock body scroll only while modal is visible
   document.body.style.overflow = 'hidden';
   if (typeof lenisInstance !== 'undefined' && lenisInstance) {
     lenisInstance.stop();
@@ -129,19 +131,19 @@ function initDisclaimerModal() {
       // Remove focus trap listener
       window.removeEventListener('keydown', handleKeyDown, true);
 
-      // Restore scroll
+      // Restore scroll immediately and comprehensively
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       if (typeof lenisInstance !== 'undefined' && lenisInstance) {
         lenisInstance.start();
       }
 
       // Handle exit transition respecting prefers-reduced-motion
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      modal.classList.remove('active');
       if (prefersReduced) {
-        modal.classList.remove('active');
         modal.style.display = 'none';
       } else {
-        modal.classList.remove('active');
         setTimeout(() => {
           modal.style.display = 'none';
         }, 260);
@@ -445,18 +447,58 @@ function showToast(message) {
 function detectUserOS() {
   const userAgent = window.navigator.userAgent.toLowerCase();
   const heroDlBtn = document.getElementById('hero-dl-btn');
-  
-  if (!heroDlBtn) return;
+  const winCard = document.getElementById('dl-card-windows');
+  const linuxCard = document.getElementById('dl-card-linux');
+  const switchToLinuxBtn = document.getElementById('switch-to-linux-btn');
+  const switchToWinBtn = document.getElementById('switch-to-windows-btn');
 
-  if (userAgent.includes('linux')) {
-    const mainText = heroDlBtn.querySelector('.cta-main');
-    const subText = heroDlBtn.querySelector('.cta-sub');
-    if (mainText && subText) {
-      mainText.textContent = `Tải ViTai v${APP_VERSION} (Linux)`;
-      subText.textContent = 'Bản .tar.gz (X11 & Wayland) • Portable';
-      heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Linux-x86_64.tar.gz`;
-      heroDlBtn.removeAttribute('download');
+  const isLinux = userAgent.includes('linux') && !userAgent.includes('android');
+
+  // Helper to activate specific OS card
+  function setDownloadOS(targetOS) {
+    if (targetOS === 'linux') {
+      if (winCard) winCard.hidden = true;
+      if (linuxCard) linuxCard.hidden = false;
+
+      if (heroDlBtn) {
+        const mainText = heroDlBtn.querySelector('.cta-main');
+        const subText = heroDlBtn.querySelector('.cta-sub');
+        if (mainText) mainText.textContent = `Tải ViTai v${APP_VERSION} (Linux)`;
+        if (subText) subText.textContent = 'Bản .tar.gz (X11 & Wayland) • Portable';
+        heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Linux-x86_64.tar.gz`;
+        heroDlBtn.removeAttribute('download');
+      }
+    } else {
+      if (linuxCard) linuxCard.hidden = true;
+      if (winCard) winCard.hidden = false;
+
+      if (heroDlBtn) {
+        const mainText = heroDlBtn.querySelector('.cta-main');
+        const subText = heroDlBtn.querySelector('.cta-sub');
+        if (mainText) mainText.textContent = `Tải ViTai v${APP_VERSION} (Windows)`;
+        if (subText) subText.textContent = 'Bản 64-bit chạy ngay, không cần cài đặt';
+        heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
+        heroDlBtn.removeAttribute('download');
+      }
     }
+  }
+
+  // Set initial OS view based on client detection
+  setDownloadOS(isLinux ? 'linux' : 'windows');
+
+  // Manual switch event handlers
+  if (switchToLinuxBtn) {
+    switchToLinuxBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setDownloadOS('linux');
+    });
+  }
+
+  if (switchToWinBtn) {
+    switchToWinBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setDownloadOS('windows');
+    });
   }
 }
 
@@ -621,7 +663,7 @@ function initSubtleAnimations() {
   }
 
   // --- D. DOWNLOAD CARDS & PRICING CARDS: Subtle Entry ---
-  const cardGroups = ['.download-card', '.pricing-card'];
+  const cardGroups = ['.download-card:not([hidden])', '.pricing-card'];
   cardGroups.forEach((selector) => {
     const cards = document.querySelectorAll(selector);
     if (cards.length && typeof ScrollTrigger !== 'undefined') {
