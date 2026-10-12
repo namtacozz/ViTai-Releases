@@ -1,10 +1,10 @@
 /**
- * ViTai v3.9.1 - Interactive Landing Page Engine
+ * ViTai v3.9.0 - Interactive Landing Page Engine
  * Incorporates Bencho UI Image Compare Slider, Scrollspy, VietQR modal, and OS detection.
  * Zero-dependency, modern ES6 vanilla JavaScript
  */
 
-const APP_VERSION = "3.9.1";
+const APP_VERSION = "3.9.0";
 const DISCLAIMER_STORAGE_KEY = "vitai_disclaimer_accepted";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,9 +61,6 @@ function initDisclaimerModal() {
 
   // Lock body scroll only while modal is visible
   document.body.style.overflow = 'hidden';
-  if (typeof lenisInstance !== 'undefined' && lenisInstance) {
-    lenisInstance.stop();
-  }
 
   // Display modal and trigger entrance transition
   modal.style.display = 'flex';
@@ -134,8 +131,8 @@ function initDisclaimerModal() {
       // Restore scroll immediately and comprehensively
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
-      if (typeof lenisInstance !== 'undefined' && lenisInstance) {
-        lenisInstance.start();
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
       }
 
       // Handle exit transition respecting prefers-reduced-motion
@@ -457,8 +454,18 @@ function detectUserOS() {
   // Helper to activate specific OS card
   function setDownloadOS(targetOS) {
     if (targetOS === 'linux') {
-      if (winCard) winCard.hidden = true;
-      if (linuxCard) linuxCard.hidden = false;
+      if (winCard) {
+        winCard.hidden = true;
+        winCard.setAttribute('hidden', '');
+        winCard.style.display = 'none';
+      }
+      if (linuxCard) {
+        linuxCard.hidden = false;
+        linuxCard.removeAttribute('hidden');
+        linuxCard.style.display = 'flex';
+        linuxCard.style.opacity = '1';
+        linuxCard.style.visibility = 'visible';
+      }
 
       if (heroDlBtn) {
         const mainText = heroDlBtn.querySelector('.cta-main');
@@ -469,8 +476,18 @@ function detectUserOS() {
         heroDlBtn.removeAttribute('download');
       }
     } else {
-      if (linuxCard) linuxCard.hidden = true;
-      if (winCard) winCard.hidden = false;
+      if (linuxCard) {
+        linuxCard.hidden = true;
+        linuxCard.setAttribute('hidden', '');
+        linuxCard.style.display = 'none';
+      }
+      if (winCard) {
+        winCard.hidden = false;
+        winCard.removeAttribute('hidden');
+        winCard.style.display = 'flex';
+        winCard.style.opacity = '1';
+        winCard.style.visibility = 'visible';
+      }
 
       if (heroDlBtn) {
         const mainText = heroDlBtn.querySelector('.cta-main');
@@ -503,49 +520,10 @@ function detectUserOS() {
 }
 
 /* --------------------------------------------------------------------------
-   Lenis Smooth Scrolling Engine
+   Native Smooth Scrolling Engine (100% reliable across all hardware & browsers)
    -------------------------------------------------------------------------- */
-let lenisInstance = null;
-
 function initSmoothScroll() {
-  // Check prefers-reduced-motion
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced || typeof Lenis === 'undefined') return;
-
-  try {
-    lenisInstance = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Linear-style exponential easing
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.5,
-    });
-
-    // Synchronize Lenis with GSAP ScrollTrigger
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      lenisInstance.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        lenisInstance.raf(time * 1000);
-      });
-      gsap.ticker.lagSmoothing(0);
-    } else {
-      function raf(time) {
-        lenisInstance.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-    }
-
-    // If disclaimer modal is open, pause Lenis until user accepts
-    const disclaimerModal = document.getElementById('disclaimer-modal');
-    if (disclaimerModal && disclaimerModal.classList.contains('active')) {
-      lenisInstance.stop();
-    }
-  } catch (err) {
-    console.warn('[ViTai Animation] Lenis initialization skipped:', err);
-  }
+  document.documentElement.style.scrollBehavior = 'smooth';
 }
 
 /* --------------------------------------------------------------------------
@@ -642,6 +620,7 @@ function initSubtleAnimations() {
             start: 'top 82%',
             once: true,
           },
+          clearProps: 'all',
         });
       }
 
@@ -657,30 +636,29 @@ function initSubtleAnimations() {
             start: 'top 82%',
             once: true,
           },
+          clearProps: 'all',
         });
       }
     });
   }
 
-  // --- D. DOWNLOAD CARDS & PRICING CARDS: Subtle Entry ---
-  const cardGroups = ['.download-card:not([hidden])', '.pricing-card'];
-  cardGroups.forEach((selector) => {
-    const cards = document.querySelectorAll(selector);
-    if (cards.length && typeof ScrollTrigger !== 'undefined') {
-      gsap.from(cards, {
-        opacity: 0,
-        y: 20,
-        duration: 0.55,
-        stagger: 0.1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: cards[0].parentElement,
-          start: 'top 85%',
-          once: true,
-        },
-      });
-    }
-  });
+  // --- D. PRICING CARDS ---
+  const pricingCards = document.querySelectorAll('.pricing-card');
+  if (pricingCards.length && typeof ScrollTrigger !== 'undefined') {
+    gsap.from(pricingCards, {
+      opacity: 0,
+      y: 20,
+      duration: 0.55,
+      stagger: 0.1,
+      ease: 'power2.out',
+      clearProps: 'all',
+      scrollTrigger: {
+        trigger: pricingCards[0].parentElement,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  }
 
   // --- E. DISCORD COMMUNITY BANNER ---
   const discordCard = document.querySelector('.discord-community-card');
@@ -690,6 +668,7 @@ function initSubtleAnimations() {
       y: 18,
       duration: 0.55,
       ease: 'power2.out',
+      clearProps: 'all',
       scrollTrigger: {
         trigger: discordCard,
         start: 'top 88%',
@@ -697,5 +676,12 @@ function initSubtleAnimations() {
       },
     });
   }
+
+  // Refresh ScrollTrigger once full assets (fonts, images) settle
+  window.addEventListener('load', () => {
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.refresh();
+    }
+  });
 }
 

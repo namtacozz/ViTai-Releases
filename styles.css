@@ -1023,10 +1023,13 @@ button {
   flex-direction: column;
   position: relative;
   transition: all 0.3s ease;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .download-card[hidden] {
   display: none !important;
+  visibility: hidden !important;
 }
 
 .dl-switch-os-link {
