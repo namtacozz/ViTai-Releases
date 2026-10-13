@@ -1,6 +1,6 @@
 {
   "test_title": "ViTai Benchmark - Bộ 10 Câu Hỏi Kiểm Thử Độ Chính Xác AI",
-  "version": "3.9.1",
+  "version": "3.9.2",
   "instructions": "Dùng để đối chiếu sau khi chạy phím tắt Alt+Q (Text Mode) hoặc Alt+S (Vision Mode) trên từng câu hỏi tại test.html.",
   "questions": [
     {
