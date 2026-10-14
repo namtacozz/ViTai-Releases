@@ -495,6 +495,7 @@ function detectUserOS() {
 
       if (drawerDlBtn) {
         drawerDlBtn.textContent = 'Tải về cho Linux x86_64';
+        drawerDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Linux-x86_64.tar.gz`;
       }
     } else {
       if (linuxCard) {
@@ -532,6 +533,7 @@ function detectUserOS() {
 
       if (drawerDlBtn) {
         drawerDlBtn.textContent = 'Tải về cho Windows x64';
+        drawerDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
       }
     }
   }
