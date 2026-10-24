@@ -4,7 +4,7 @@
  * Zero-dependency, modern ES6 vanilla JavaScript
  */
 
-const APP_VERSION = "4.1.2";
+const APP_VERSION = "4.1.3";
 const DISCLAIMER_STORAGE_KEY = "vitai_disclaimer_accepted";
 
 document.addEventListener('DOMContentLoaded', () => {
