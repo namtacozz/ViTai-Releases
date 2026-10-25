@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ViTai v4.1.2 - Official Theme & Bencho UI System Specification
+   ViTai v4.1.4 - Official Theme & Bencho UI System Specification
    Design Tokens matching ViTai src/vitai/ui/theme.py:
    - Dark Theme: Sleek Carbon (#111216, #181A22, #1E212B, #242836)
    - Signature ViTai Accent: #E0562D / #FF5722 (Coral / Burnt Orange)
@@ -1693,6 +1693,38 @@ button {
   color: var(--text-white);
 }
 
+.disclaimer-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  text-align: left;
+  user-select: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.disclaimer-checkbox-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(224, 86, 45, 0.4);
+}
+
+.disclaimer-checkbox-row input[type="checkbox"] {
+  margin-top: 2px;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
 .disclaimer-actions {
   display: flex;
   flex-direction: column;
@@ -1711,23 +1743,66 @@ button {
   cursor: pointer;
   text-align: center;
   box-shadow: 0 4px 16px var(--accent-glow);
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   border: none;
 }
 
-.disclaimer-btn-accept:hover {
+.disclaimer-btn-accept:hover:not(:disabled) {
   background: var(--accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 22px var(--accent-glow);
 }
 
-.disclaimer-btn-accept:active {
+.disclaimer-btn-accept:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.disclaimer-btn-accept:disabled {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.55;
+  border: 1px solid var(--border-subtle);
 }
 
 .disclaimer-btn-accept:focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 3px;
+}
+
+/* Download Card & Footer Disclaimer Boxes */
+.dl-disclaimer-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.dl-disclaimer-box p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #FCD34D;
+}
+
+.footer-legal-notice {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.footer-legal-notice p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #FCD34D;
 }
 
 @media (max-width: 480px) {

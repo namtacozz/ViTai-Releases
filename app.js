@@ -1,5 +1,5 @@
 /**
- * ViTai v4.1.2 - Interactive Landing Page Engine
+ * ViTai v4.1.4 - Interactive Landing Page Engine
  * Incorporates Bencho UI Image Compare Slider, Scrollspy, VietQR modal, and OS detection.
  * Zero-dependency, modern ES6 vanilla JavaScript
  */
@@ -57,7 +57,16 @@ function initDisclaimerModal() {
   }
 
   const acceptBtn = document.getElementById('disclaimer-accept-btn');
+  const confirmCheck = document.getElementById('disclaimer-confirm-check');
   const termsLink = modal.querySelector('a');
+
+  // Active consent binding: button is disabled until checkbox is checked
+  if (confirmCheck && acceptBtn) {
+    acceptBtn.disabled = !confirmCheck.checked;
+    confirmCheck.addEventListener('change', () => {
+      acceptBtn.disabled = !confirmCheck.checked;
+    });
+  }
 
   // Lock body scroll only while modal is visible
   document.body.style.overflow = 'hidden';
@@ -67,9 +76,13 @@ function initDisclaimerModal() {
   void modal.offsetWidth; // Force reflow
   modal.classList.add('active');
 
-  // Focus the accept button
+  // Focus the checkbox or terms link
   setTimeout(() => {
-    if (acceptBtn) acceptBtn.focus();
+    if (confirmCheck) {
+      confirmCheck.focus();
+    } else if (acceptBtn) {
+      acceptBtn.focus();
+    }
   }, 60);
 
   // Focus trap & Escape key blocker (capture phase)
@@ -85,7 +98,7 @@ function initDisclaimerModal() {
 
     // Trap focus between focusable elements inside modal
     if (e.key === 'Tab') {
-      const focusables = [termsLink, acceptBtn].filter(Boolean);
+      const focusables = [termsLink, confirmCheck, acceptBtn].filter(el => el && !el.disabled);
       if (focusables.length === 0) {
         e.preventDefault();
         return;
@@ -114,6 +127,7 @@ function initDisclaimerModal() {
   if (acceptBtn) {
     acceptBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      if (confirmCheck && !confirmCheck.checked) return;
 
       // Store acceptance in localStorage with timestamp
       try {
