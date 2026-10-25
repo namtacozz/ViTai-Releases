@@ -2031,3 +2031,530 @@ button {
     margin-bottom: 28px;
   }
 }
+
+/* ==========================================================================
+   Nusa-Inspired Modern Layout Components:
+   1. Bento Features Grid
+   2. Windows Task Manager Performance Mockup
+   3. Windows SmartScreen & Trust Center
+   4. Developer Note (An Honest Note)
+   5. Native FAQ Accordion
+   ========================================================================== */
+
+/* --- 1. Bento Features Grid --- */
+.bento-section {
+  padding: 100px 0;
+  background: var(--bg-canvas);
+  border-bottom: 1px solid var(--bg-surface-border);
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.bento-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-surface-border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 22px;
+  align-items: start;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(224, 86, 45, 0.45);
+  box-shadow: var(--shadow-lg);
+}
+
+.bento-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--c1, #FF5722), var(--c2, #E0562D));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.bento-icon-wrap svg {
+  width: 26px;
+  height: 26px;
+}
+
+.bento-content h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.bento-content p {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.bento-content code {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFA07A;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* --- 2. Windows Task Manager Performance Mockup --- */
+.perf-section {
+  padding: 100px 0;
+  background: #13141A;
+  border-bottom: 1px solid var(--bg-surface-border);
+}
+
+.perf-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.tm-mockup-window {
+  background: #181920;
+  border: 1px solid #2B2F3D;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 0, 0, 0.5);
+  margin-bottom: 32px;
+}
+
+.tm-window-header {
+  background: #1E202A;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2B2F3D;
+}
+
+.tm-window-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tm-window-controls {
+  display: flex;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.tm-tabs-bar {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  background: #14151B;
+  border-bottom: 1px solid #252834;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tm-tab.active {
+  color: var(--accent-hover);
+  font-weight: 700;
+  position: relative;
+}
+
+.tm-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-primary);
+}
+
+.tm-table-wrap {
+  overflow-x: auto;
+}
+
+.tm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.tm-table th {
+  padding: 10px 18px;
+  color: var(--text-subtle);
+  font-weight: 600;
+  border-bottom: 1px solid #262936;
+  background: #181920;
+  white-space: nowrap;
+}
+
+.tm-table td {
+  padding: 12px 18px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+}
+
+.tm-row-highlight {
+  background: rgba(224, 86, 45, 0.12) !important;
+  font-weight: 600;
+}
+
+.tm-row-highlight td {
+  color: var(--text-white);
+  border-color: rgba(224, 86, 45, 0.25);
+}
+
+.tm-app-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tm-app-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.tm-badge-highlight {
+  background: var(--status-green);
+  color: #042F2E;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  margin-left: 6px;
+}
+
+.tm-val-zero {
+  color: var(--status-green) !important;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.tm-row-dimmed td {
+  opacity: 0.45;
+}
+
+.perf-bullets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.perf-bullet-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-surface-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.perf-bullet-item h4 {
+  font-size: 16px;
+  color: var(--text-white);
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.perf-bullet-item p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- 3. SmartScreen & Trust Center --- */
+.trust-center-box {
+  margin-top: 50px;
+  padding: 40px;
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-surface-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  text-align: left;
+}
+
+.trust-header {
+  margin-bottom: 28px;
+}
+
+.trust-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+
+.trust-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.warn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.warn-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: relative;
+}
+
+.warn-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(224, 86, 45, 0.15);
+  color: var(--accent-hover);
+  margin-bottom: 12px;
+}
+
+.warn-card h4 {
+  font-size: 17px;
+  color: var(--text-white);
+  margin: 0 0 14px 0;
+}
+
+.warn-steps {
+  padding-left: 20px;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.warn-steps li {
+  margin-bottom: 8px;
+}
+
+.warn-steps strong {
+  color: #FFA07A;
+}
+
+.why-trust-list {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+}
+
+.why-trust-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 0 14px 0;
+}
+
+.why-trust-list ul {
+  padding-left: 20px;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.why-trust-list li {
+  margin-bottom: 8px;
+}
+
+.why-trust-list strong {
+  color: var(--status-green);
+}
+
+/* --- 4. Developer Note (An Honest Note) --- */
+.honest-note-section {
+  padding: 90px 0;
+  background: var(--bg-canvas);
+  border-bottom: 1px solid var(--bg-surface-border);
+}
+
+.honest-note-card {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 44px 48px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--bg-surface-border);
+  background: var(--bg-surface);
+  position: relative;
+  box-shadow: var(--shadow-md);
+}
+
+.honest-note-card::before {
+  content: "“";
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 90px;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.note-heading {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-white);
+  margin: 0 0 6px 0;
+}
+
+.note-author {
+  font-size: 14px;
+  color: var(--accent-hover);
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+.note-body p {
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+.note-body p strong {
+  color: var(--text-white);
+}
+
+.note-signature {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* --- 5. Native FAQ Accordion --- */
+.faq-section {
+  padding: 100px 0;
+  background: #14161C;
+  border-bottom: 1px solid var(--bg-surface-border);
+}
+
+.faq-container {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  border-top: 1px solid var(--bg-card-border);
+  padding: 22px 0;
+  transition: all 0.2s ease;
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--bg-card-border);
+}
+
+.faq-summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-white);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  user-select: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-icon-arrow {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.faq-item[open] .faq-icon-arrow {
+  transform: rotate(180deg);
+  color: var(--accent-hover);
+}
+
+.faq-content {
+  margin-top: 14px;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.faq-content p {
+  margin: 0 0 10px 0;
+}
+
+.faq-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive updates for new sections */
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .bento-card {
+    padding: 24px;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+  }
+  .perf-bullets-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .warn-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .trust-center-box {
+    padding: 24px;
+  }
+  .honest-note-card {
+    padding: 28px 22px;
+  }
+}

@@ -673,6 +673,41 @@ function initSubtleAnimations() {
     });
   }
 
+  // --- BENTO CARDS ---
+  const bentoCards = document.querySelectorAll('.bento-card');
+  if (bentoCards.length && typeof ScrollTrigger !== 'undefined') {
+    gsap.from(bentoCards, {
+      opacity: 0,
+      y: 22,
+      duration: 0.55,
+      stagger: 0.08,
+      ease: 'power2.out',
+      clearProps: 'all',
+      scrollTrigger: {
+        trigger: bentoCards[0].parentElement,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  }
+
+  // --- TASK MANAGER MOCKUP ---
+  const tmMockup = document.querySelector('.tm-mockup-window');
+  if (tmMockup && typeof ScrollTrigger !== 'undefined') {
+    gsap.from(tmMockup, {
+      opacity: 0,
+      y: 24,
+      duration: 0.65,
+      ease: 'power2.out',
+      clearProps: 'all',
+      scrollTrigger: {
+        trigger: tmMockup,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  }
+
   // --- D. PRICING CARDS ---
   const pricingCards = document.querySelectorAll('.pricing-card');
   if (pricingCards.length && typeof ScrollTrigger !== 'undefined') {
