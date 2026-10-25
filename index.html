@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>ViTai v4.1.4 - Trợ lý AI Ghost Overlay cho máy tính</title>
-  <meta name="description" content="ViTai v4.1.4: Trợ lý AI chạy trên Windows và Linux. Bôi đen lấy đáp án câu hỏi trắc nghiệm, tra cứu tài liệu học tập bằng RAG BM25 cục bộ, hỗ trợ chuỗi dự phòng đa tài khoản AI không gián đoạn.">
+  <meta name="description" content="ViTai v4.1.4: Trợ lý AI chuyên dụng cho Windows 10/11. Bôi đen lấy đáp án câu hỏi trắc nghiệm, tra cứu tài liệu học tập bằng RAG BM25 cục bộ, hỗ trợ chuỗi dự phòng đa tài khoản AI không gián đoạn.">
   
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -163,26 +163,15 @@
             </div>
           </a>
 
-          <a href="#download" class="btn-hero-secondary" id="hero-secondary-btn">
-            <svg class="cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.007 0C9.697 0 7.824 1.77 7.747 4.081c-.035 1.05.21 2.083.714 2.977C6.012 8.358 4.417 11.235 4.417 14.54c0 3.313 1.83 5.484 4.148 6.554-.258.625-.567 1.228-.938 1.777-.32.476-.089 1.13.486 1.13h7.774c.575 0 .806-.654.486-1.13-.371-.549-.68-1.152-.938-1.777 2.318-1.07 4.148-3.241 4.148-6.554 0-3.305-1.595-6.182-4.044-7.482.504-.894.749-1.927.714-2.977C16.19 1.77 14.317 0 12.007 0z"/>
-            </svg>
-            <div class="cta-text-group">
-              <span class="cta-main">Bản Linux</span>
-              <span class="cta-sub">Ubuntu, Fedora, Arch</span>
-            </div>
-          </a>
-        </div>
-
-        <!-- Nút Test Thử ViTai Benchmark -->
-        <div class="hero-benchmark-callout" style="margin-top: 18px; margin-bottom: 28px;">
-          <a href="test.html" class="btn-benchmark-link" style="display: inline-flex; align-items: center; gap: 9px; background: rgba(224, 86, 45, 0.1); border: 1px solid rgba(224, 86, 45, 0.35); padding: 9px 20px; border-radius: 9999px; color: #FFFFFF; font-size: 13.5px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-hover);">
+          <a href="test.html" class="btn-hero-secondary" id="hero-secondary-btn">
+            <svg class="cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-hover);">
               <polyline points="9 11 12 14 22 4"></polyline>
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
             </svg>
-            <span>Test thử ViTai (10 câu benchmark độ chính xác)</span>
-            <span style="color: var(--accent-hover); font-weight: 700;">→</span>
+            <div class="cta-text-group">
+              <span class="cta-main">Test thử 10 câu Benchmark</span>
+              <span class="cta-sub">Kiểm tra độ chính xác trực quan →</span>
+            </div>
           </a>
         </div>
 
@@ -428,6 +417,9 @@
               Phím tắt quét ảnh chụp màn hình mặc định là <code>Alt + S</code>: Kéo chọn vùng màn hình chứa hình ảnh hoặc sơ đồ để phân tích qua mô hình thị giác.
             </li>
             <li>
+              Hỗ trợ chuyển đổi linh hoạt giữa <strong>Chế độ Thi</strong> (chỉ hiển thị chữ cái đáp án tối giản) và <strong>Chế độ Ôn tập</strong> (hiển thị đáp án kèm lời giải thích ngắn gọn giúp hiểu sâu bản chất câu hỏi).
+            </li>
+            <li>
               Hỗ trợ gán hành động vào các nút chuột phụ như chuột phải, chuột giữa hoặc hai nút cạnh bên hông.
             </li>
             <li>
@@ -644,7 +636,7 @@
               Hệ thống webhook nhận diện giao dịch VietQR và kích hoạt bản quyền tự động trong vài giây.
             </li>
             <li>
-              Liên hệ hỗ trợ để chuyển bản quyền sang máy tính mới khi bạn đổi thiết bị.
+              Mỗi tài khoản hoạt động trên 01 thiết bị tại một thời điểm (Single Active Device). Khi bạn đăng nhập trên máy tính mới, hệ thống sẽ tự động chuyển phiên hoạt động sang máy mới và đăng xuất thiết bị cũ (lưu ý: không chia sẻ tài khoản cho nhiều người cùng dùng chung để tránh bị khóa tự động).
             </li>
           </ul>
         </div>
@@ -770,76 +762,10 @@
             Hướng dẫn: Tải tệp <code>.zip</code> trực tiếp về máy, giải nén vào thư mục bạn chọn rồi mở tệp <code>ViTai.exe</code> để dùng ngay.
           </p>
 
-          <button type="button" class="dl-switch-os-link" id="switch-to-linux-btn">
-            <span>Bạn đang dùng Linux? Xem bản Linux (.tar.gz) →</span>
-          </button>
+
         </div>
 
-        <!-- Linux Card -->
-        <div class="download-card featured-download" id="dl-card-linux" hidden>
-          <div class="download-badge">Dành cho Linux</div>
-          <div class="dl-os-row">
-            <div class="dl-os-icon linux-icon">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.007 0C9.697 0 7.824 1.77 7.747 4.081c-.035 1.05.21 2.083.714 2.977C6.012 8.358 4.417 11.235 4.417 14.54c0 3.313 1.83 5.484 4.148 6.554-.258.625-.567 1.228-.938 1.777-.32.476-.089 1.13.486 1.13h7.774c.575 0 .806-.654.486-1.13-.371-.549-.68-1.152-.938-1.777 2.318-1.07 4.148-3.241 4.148-6.554 0-3.305-1.595-6.182-4.044-7.482.504-.894.749-1.927.714-2.977C16.19 1.77 14.317 0 12.007 0z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="dl-title">Linux (x86_64)</h3>
-              <p class="dl-sub">Ubuntu, Fedora, Debian, Arch Linux</p>
-            </div>
           </div>
-
-          <div class="dl-specs-box">
-            <div class="spec-item">
-              <span>Tên tệp:</span>
-              <strong>ViTai-Linux-x86_64.tar.gz</strong>
-            </div>
-            <div class="spec-item">
-              <span>Dung lượng nén:</span>
-              <strong>Khoảng 115 MB</strong>
-            </div>
-            <div class="spec-item">
-              <span>Máy chủ đồ họa:</span>
-              <strong>Hỗ trợ cả X11 và Wayland</strong>
-            </div>
-            <div class="spec-item">
-              <span>Gói phần mềm:</span>
-              <strong>Chứa đủ các tệp nhị phân cần thiết, không cần cài Python</strong>
-            </div>
-            <div class="spec-item">
-              <span>Thời gian khởi động:</span>
-              <strong>Dưới 1 giây sau khi chạy lệnh</strong>
-            </div>
-          </div>
-
-          <div class="dl-btn-group">
-            <a href="https://github.com/namtacozz/ViTai-Releases/releases/download/v4.1.4/ViTai-Linux-x86_64.tar.gz" class="btn-dl-primary">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.007 0C9.697 0 7.824 1.77 7.747 4.081c-.035 1.05.21 2.083.714 2.977C6.012 8.358 4.417 11.235 4.417 14.54c0 3.313 1.83 5.484 4.148 6.554-.258.625-.567 1.228-.938 1.777-.32.476-.089 1.13.486 1.13h7.774c.575 0 .806-.654.486-1.13-.371-.549-.68-1.152-.938-1.777 2.318-1.07 4.148-3.241 4.148-6.554 0-3.305-1.595-6.182-4.044-7.482.504-.894.749-1.927.714-2.977C16.19 1.77 14.317 0 12.007 0z"/>
-              </svg>
-              <span>Tải trực tiếp ViTai-Linux-x86_64.tar.gz</span>
-            </a>
-
-            <button class="btn-dl-secondary" onclick="navigator.clipboard.writeText('tar -xvf ViTai-Linux-x86_64.tar.gz && cd ViTai && ./ViTai'); showToast('Đã chép lệnh giải nén vào bộ nhớ tạm');">
-              <span>Sao chép lệnh giải nén trong Terminal</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            </button>
-          </div>
-
-          <p class="dl-guide-note">
-            Lưu ý trên Wayland: Chạy lệnh <code>sudo usermod -aG input $USER</code> một lần để ứng dụng nhận sự kiện chuột ngoài nền.
-          </p>
-
-          <button type="button" class="dl-switch-os-link" id="switch-to-windows-btn">
-            <span>Bạn đang dùng Windows? Xem bản Windows (.zip) →</span>
-          </button>
-        </div>
-
-      </div>
 
       <!-- Discord Community Hub Banner -->
       <div class="discord-community-card">
@@ -878,6 +804,14 @@
         <p class="pricing-note-sub">Kích hoạt gói bằng mã VietQR được thực hiện ngay trong ứng dụng sau khi bạn tải về và mở ViTai.</p>
       </div>
 
+      <!-- Thông báo Ưu đãi Mã giới thiệu -->
+      <div class="pricing-referral-banner">
+        <span class="referral-gift-icon" aria-hidden="true">🎁</span>
+        <div class="referral-banner-content">
+          <strong>Ưu đãi giới thiệu bạn bè:</strong> Nhập mã giới thiệu khi đăng ký để được <strong>giảm trực tiếp 10.000 VNĐ</strong> cho mọi gói cước. Người giới thiệu nhận ngay <strong>ưu đãi giảm 5%</strong> cho lần gia hạn tiếp theo!
+        </div>
+      </div>
+
       <div class="pricing-grid">
         
         <!-- Gói Vỏ (Cơ bản) -->
@@ -897,9 +831,10 @@
             <li>✓ Giao diện tùy biến đầy đủ màu sắc, cỡ chữ và phím tắt</li>
             <li>✓ Nguồn AI chế độ đơn (1 tài khoản ChatGPT, Gemini, Claude...)</li>
             <li>✓ Lưu trữ và tra cứu lịch sử hỏi đáp trong Nhật ký</li>
+            <li>✓ 🎁 <strong>Ưu đãi mã giới thiệu:</strong> Giảm trực tiếp 10.000 VNĐ khi đăng ký</li>
             <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">✕ Chuỗi dự phòng AI Failover đa tài khoản</li>
             <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">✕ Cấu hình chuyên sâu (Tốc độ, Trí nhớ AI, Đồng bộ Desktop)</li>
-            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">✕ Kho Tài liệu RAG BM25, Trang phục & Thư viện Ảnh</li>
+            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">✕ Kho Tài liệu RAG BM25, Tùy biến giao diện chuyên sâu & Thư viện Ảnh học tập</li>
           </ul>
 
           <a href="#download" class="btn-pricing">
@@ -925,7 +860,8 @@
             <li>✓ Chuỗi dự phòng AI Failover tự chuyển tài khoản khi quá tải</li>
             <li>✓ Kho Tài liệu RAG BM25 phân nhóm thư mục theo môn học & chủ đề</li>
             <li>✓ Đầy đủ cấu hình: Tối ưu Tốc độ, Trí nhớ Context & Đồng bộ Desktop</li>
-            <li>✓ Mở khóa tab Trang phục Stealth & Thư viện Ảnh học tập</li>
+            <li>✓ Mở khóa Tùy biến giao diện chuyên sâu & Thư viện Ảnh học tập</li>
+            <li>✓ 🎁 <strong>Ưu đãi mã giới thiệu:</strong> Giảm trực tiếp 10.000 VNĐ khi đăng ký</li>
             <li>✓ Hỗ trợ chuyển mã bản quyền và hỗ trợ kỹ thuật trực tiếp qua Discord</li>
           </ul>
 

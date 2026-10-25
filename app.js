@@ -442,118 +442,33 @@ function showToast(message) {
    OS Auto-Detection
    -------------------------------------------------------------------------- */
 function detectUserOS() {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const platform = (window.navigator.userAgentData?.platform || window.navigator.platform || '').toLowerCase();
   const heroDlBtn = document.getElementById('hero-dl-btn');
-  const heroSecondaryBtn = document.getElementById('hero-secondary-btn');
   const drawerDlBtn = document.getElementById('drawer-dl-btn');
   const winCard = document.getElementById('dl-card-windows');
-  const linuxCard = document.getElementById('dl-card-linux');
-  const switchToLinuxBtn = document.getElementById('switch-to-linux-btn');
-  const switchToWinBtn = document.getElementById('switch-to-windows-btn');
-
   const WIN_ICON_PATH = 'M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.949-1.801';
-  const LINUX_ICON_PATH = 'M12.007 0C9.697 0 7.824 1.77 7.747 4.081c-.035 1.05.21 2.083.714 2.977C6.012 8.358 4.417 11.235 4.417 14.54c0 3.313 1.83 5.484 4.148 6.554-.258.625-.567 1.228-.938 1.777-.32.476-.089 1.13.486 1.13h7.774c.575 0 .806-.654.486-1.13-.371-.549-.68-1.152-.938-1.777 2.318-1.07 4.148-3.241 4.148-6.554 0-3.305-1.595-6.182-4.044-7.482.504-.894.749-1.927.714-2.977C16.19 1.77 14.317 0 12.007 0z';
 
-  const isLinux = (userAgent.includes('linux') || platform.includes('linux')) && !userAgent.includes('android');
-
-  // Helper to activate specific OS card
-  function setDownloadOS(targetOS) {
-    if (targetOS === 'linux') {
-      if (winCard) {
-        winCard.hidden = true;
-        winCard.setAttribute('hidden', '');
-        winCard.style.display = 'none';
-      }
-      if (linuxCard) {
-        linuxCard.hidden = false;
-        linuxCard.removeAttribute('hidden');
-        linuxCard.style.display = 'flex';
-        linuxCard.style.opacity = '1';
-        linuxCard.style.visibility = 'visible';
-      }
-
-      if (heroDlBtn) {
-        const iconPath = heroDlBtn.querySelector('.cta-icon path');
-        if (iconPath) iconPath.setAttribute('d', LINUX_ICON_PATH);
-        const mainText = heroDlBtn.querySelector('.cta-main');
-        const subText = heroDlBtn.querySelector('.cta-sub');
-        if (mainText) mainText.textContent = `Tải ViTai v${APP_VERSION} (Linux)`;
-        if (subText) subText.textContent = 'Bản .tar.gz (X11 & Wayland) • Portable';
-        heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Linux-x86_64.tar.gz`;
-        heroDlBtn.removeAttribute('download');
-      }
-
-      if (heroSecondaryBtn) {
-        const iconPath = heroSecondaryBtn.querySelector('.cta-icon path');
-        if (iconPath) iconPath.setAttribute('d', WIN_ICON_PATH);
-        const mainText = heroSecondaryBtn.querySelector('.cta-main');
-        const subText = heroSecondaryBtn.querySelector('.cta-sub');
-        if (mainText) mainText.textContent = 'Bản Windows (.zip)';
-        if (subText) subText.textContent = 'Win 10/11 64-bit';
-      }
-
-      if (drawerDlBtn) {
-        drawerDlBtn.textContent = 'Tải về cho Linux x86_64';
-        drawerDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Linux-x86_64.tar.gz`;
-      }
-    } else {
-      if (linuxCard) {
-        linuxCard.hidden = true;
-        linuxCard.setAttribute('hidden', '');
-        linuxCard.style.display = 'none';
-      }
-      if (winCard) {
-        winCard.hidden = false;
-        winCard.removeAttribute('hidden');
-        winCard.style.display = 'flex';
-        winCard.style.opacity = '1';
-        winCard.style.visibility = 'visible';
-      }
-
-      if (heroDlBtn) {
-        const iconPath = heroDlBtn.querySelector('.cta-icon path');
-        if (iconPath) iconPath.setAttribute('d', WIN_ICON_PATH);
-        const mainText = heroDlBtn.querySelector('.cta-main');
-        const subText = heroDlBtn.querySelector('.cta-sub');
-        if (mainText) mainText.textContent = `Tải ViTai v${APP_VERSION} (Windows)`;
-        if (subText) subText.textContent = 'Bản 64-bit chạy ngay, không cần cài đặt';
-        heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
-        heroDlBtn.removeAttribute('download');
-      }
-
-      if (heroSecondaryBtn) {
-        const iconPath = heroSecondaryBtn.querySelector('.cta-icon path');
-        if (iconPath) iconPath.setAttribute('d', LINUX_ICON_PATH);
-        const mainText = heroSecondaryBtn.querySelector('.cta-main');
-        const subText = heroSecondaryBtn.querySelector('.cta-sub');
-        if (mainText) mainText.textContent = 'Bản Linux';
-        if (subText) subText.textContent = 'Ubuntu, Fedora, Arch';
-      }
-
-      if (drawerDlBtn) {
-        drawerDlBtn.textContent = 'Tải về cho Windows x64';
-        drawerDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
-      }
-    }
+  if (winCard) {
+    winCard.hidden = false;
+    winCard.removeAttribute('hidden');
+    winCard.style.display = 'flex';
+    winCard.style.opacity = '1';
+    winCard.style.visibility = 'visible';
   }
 
-  // Set initial OS view based on client detection
-  setDownloadOS(isLinux ? 'linux' : 'windows');
-
-  // Manual switch event handlers
-  if (switchToLinuxBtn) {
-    switchToLinuxBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      setDownloadOS('linux');
-    });
+  if (heroDlBtn) {
+    const iconPath = heroDlBtn.querySelector('.cta-icon path');
+    if (iconPath) iconPath.setAttribute('d', WIN_ICON_PATH);
+    const mainText = heroDlBtn.querySelector('.cta-main');
+    const subText = heroDlBtn.querySelector('.cta-sub');
+    if (mainText) mainText.textContent = `Tải ViTai v${APP_VERSION} (Windows)`;
+    if (subText) subText.textContent = 'Bản 64-bit chạy ngay, không cần cài đặt';
+    heroDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
+    heroDlBtn.removeAttribute('download');
   }
 
-  if (switchToWinBtn) {
-    switchToWinBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      setDownloadOS('windows');
-    });
+  if (drawerDlBtn) {
+    drawerDlBtn.textContent = 'Tải về cho Windows x64';
+    drawerDlBtn.href = `https://github.com/namtacozz/ViTai-Releases/releases/download/v${APP_VERSION}/ViTai-Windows-x64.zip`;
   }
 }
 
