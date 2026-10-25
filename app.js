@@ -1,10 +1,10 @@
 /**
- * ViTai v4.2.0 - Interactive Landing Page Engine
+ * ViTai v4.2.1 - Interactive Landing Page Engine
  * Incorporates Bencho UI Image Compare Slider, Scrollspy, VietQR modal, and OS detection.
  * Zero-dependency, modern ES6 vanilla JavaScript
  */
 
-const APP_VERSION = "4.2.0";
+const APP_VERSION = "4.2.1";
 const DISCLAIMER_STORAGE_KEY = "vitai_disclaimer_accepted";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileDrawer();
   initHeaderScroll();
   detectUserOS();
+  initVideoFacades();
 });
 
 /**
@@ -487,6 +488,51 @@ function detectUserOS() {
 }
 
 /* --------------------------------------------------------------------------
+   YOUTUBE VIDEO FACADE PATTERN (Enhanced Privacy & Lazy Loading)
+   Loads iframe on-demand using youtube-nocookie.com domain with zero upfront tracking.
+   -------------------------------------------------------------------------- */
+function loadVideoIframe(container, videoId, videoTitle) {
+  if (!container || !videoId || container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`);
+  iframe.setAttribute('title', videoTitle || 'ViTai video');
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  iframe.setAttribute('allowfullscreen', 'true');
+  iframe.classList.add('guide-video-iframe');
+
+  // Replace thumbnail and play button with active iframe
+  container.innerHTML = '';
+  container.appendChild(iframe);
+}
+
+function initVideoFacades() {
+  const facades = document.querySelectorAll('.guide-video-facade');
+  if (!facades.length) return;
+
+  facades.forEach((facade) => {
+    const videoId = facade.getAttribute('data-video-id');
+    const videoTitle = facade.getAttribute('data-video-title');
+    const playBtn = facade.querySelector('.guide-play-btn');
+
+    const handlePlay = (e) => {
+      e.preventDefault();
+      loadVideoIframe(facade, videoId, videoTitle);
+    };
+
+    if (playBtn) {
+      playBtn.addEventListener('click', handlePlay);
+    }
+
+    facade.addEventListener('click', (e) => {
+      if (e.target.closest('.guide-play-btn')) return;
+      handlePlay(e);
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
    Native Smooth Scrolling Engine (100% reliable across all hardware & browsers)
    -------------------------------------------------------------------------- */
 function initSmoothScroll() {
@@ -606,6 +652,24 @@ function initSubtleAnimations() {
           clearProps: 'all',
         });
       }
+    });
+  }
+
+  // --- C2. GUIDE VIDEO CARDS ---
+  const guideCards = document.querySelectorAll('.guide-video-card');
+  if (guideCards.length && typeof ScrollTrigger !== 'undefined') {
+    gsap.from(guideCards, {
+      opacity: 0,
+      y: 20,
+      duration: 0.55,
+      stagger: 0.1,
+      ease: 'power2.out',
+      clearProps: 'all',
+      scrollTrigger: {
+        trigger: guideCards[0].parentElement,
+        start: 'top 85%',
+        once: true,
+      },
     });
   }
 
