@@ -2014,6 +2014,15 @@ button {
 }
 
 @media (max-width: 768px) {
+  .guide-video-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .guide-video-card {
+    padding: 18px;
+  }
+
   .pricing-referral-banner {
     flex-direction: column;
     text-align: center;
