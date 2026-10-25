@@ -156,15 +156,15 @@
 
     <article class="legal-card">
       <header class="legal-header">
-        <span class="legal-kicker">MINH BẠCH & BẢO MẬT DỮ LIỆU</span>
+        <span class="legal-kicker">BẢO MẬT DỮ LIỆU</span>
         <h1 class="legal-title">Chính sách quyền riêng tư</h1>
         <p class="legal-meta">Hiệu lực từ ngày 10/10/2026 • Bản cập nhật cho ViTai v4.2.1</p>
       </header>
 
       <section class="legal-section">
-        <h2>1. Cam kết cốt lõi</h2>
+        <h2>1. Nguyên tắc bảo mật</h2>
         <p>
-          ViTai được thiết kế theo triết lý bảo vệ tối đa quyền riêng tư và quyền tự chủ dữ liệu của người dùng. Mọi tác vụ suy luận nội dung, tra cứu tài liệu học tập và quản lý API key cá nhân đều được ưu tiên xử lý cục bộ trên máy tính của bạn.
+          ViTai ưu tiên xử lý dữ liệu trực tiếp trên máy tính của bạn. Dữ liệu giáo trình học tập và API key cá nhân được lưu trữ cục bộ, không gửi về máy chủ của chúng tôi.
         </p>
       </section>
 
@@ -174,19 +174,19 @@
         <ul>
           <li><strong>Tên đăng nhập (Username):</strong> Do bạn tạo khi đăng ký để định danh người dùng.</li>
           <li><strong>Mật khẩu đã băm (Password Hash):</strong> Mật khẩu của bạn được băm an toàn bằng thuật toán mã hóa tiêu chuẩn (PBKDF2-HMAC-SHA256 với 100.000 vòng lặp) trước khi gửi hoặc lưu. Hệ thống không thể dịch ngược lại mật khẩu gốc của bạn.</li>
-          <li><strong>Địa chỉ MAC / Mã nhận diện phần cứng:</strong> Được thu thập để thực hiện chính sách khóa bản quyền 1 license / 1 thiết bị, ngăn chặn việc chia sẻ trái phép.</li>
+          <li><strong>Mã định danh thiết bị:</strong> Dùng để xác thực phiên đăng nhập hiện tại theo cơ chế một thiết bị hoạt động tại một thời điểm (Single Active Device).</li>
           <li><strong>Lịch sử giao dịch thanh toán:</strong> Mã đơn hàng (order code), số tiền, gói dịch vụ và thời gian giao dịch qua cổng VietQR/SePay để cấp và gia hạn thời hạn sử dụng.</li>
         </ul>
       </section>
 
       <section class="legal-section">
-        <h2>3. Dữ liệu ViTai TUYỆT ĐỐI KHÔNG thu thập</h2>
-        <p><span class="legal-badge-safe">Cam kết 100% Cục bộ & Trực tiếp</span></p>
+        <h2>3. Dữ liệu ViTai không thu thập</h2>
+        <p><span class="legal-badge-safe">Xử lý trực tiếp trên máy tính</span></p>
         <ul>
-          <li><strong>Nội dung câu hỏi & văn bản bạn bôi đen:</strong> Toàn bộ câu hỏi, từ khóa hoặc đoạn văn bạn bôi đen được gửi trực tiếp từ ứng dụng trên máy của bạn đến máy chủ nhà cung cấp AI mà bạn cấu hình (OpenAI, Google Gemini, DeepSeek, 9Router). Máy chủ của ViTai không đứng giữa đọc trộm hay ghi lại nội dung này.</li>
-          <li><strong>Tệp tài liệu học tập (RAG Knowledge Base):</strong> Các tệp PDF, DOCX, TXT, MD bạn nạp vào mục Tri thức được nhúng và tra cứu 100% bằng thuật toán BM25 cục bộ ngay trên RAM/ổ cứng của bạn, không bao giờ được tải lên bất kỳ máy chủ đám mây nào.</li>
-          <li><strong>Ảnh chụp màn hình (Region Vision):</strong> Khi bạn chụp vùng màn hình để giải câu hỏi hình ảnh, ảnh được mã hóa base64 gửi thẳng đến API AI do bạn chỉ định. Không lưu lại trên máy chủ của bên thứ ba nào khác.</li>
-          <li><strong>Khóa API (API Key) & Token AI cá nhân:</strong> Các token truy cập AI của bạn được mã hóa an toàn trên máy tính của bạn và chỉ dùng khi gửi request trực tiếp đến nhà cung cấp dịch vụ AI.</li>
+          <li><strong>Nội dung câu hỏi và văn bản bôi đen:</strong> Đoạn văn bản bạn bôi đen được gửi trực tiếp từ máy tính đến API của nhà cung cấp AI (Google, OpenAI). Máy chủ của ViTai không trung gian lưu trữ hay đọc lại nội dung này.</li>
+          <li><strong>File tài liệu học tập (kho RAG):</strong> Các file PDF, DOCX, TXT, MD được đọc và tra cứu trực tiếp trên ổ cứng bằng thuật toán BM25, không gửi lên mạng.</li>
+          <li><strong>Ảnh chụp màn hình:</strong> Ảnh kéo chọn vùng màn hình được gửi thẳng đến API AI bạn chọn để nhận diện câu hỏi, không lưu trên máy chủ trung gian.</li>
+          <li><strong>Khóa API cá nhân:</strong> Khóa API được lưu trên máy của bạn và chỉ dùng khi gửi yêu cầu trực tiếp đến nhà cung cấp dịch vụ AI.</li>
         </ul>
       </section>
 
@@ -202,7 +202,7 @@
         <p>Bạn có toàn quyền đối với dữ liệu của mình, bao gồm:</p>
         <ul>
           <li>Yêu cầu xóa vĩnh viễn tài khoản và mọi thông tin liên kết thiết bị khỏi hệ thống (không giới hạn thời gian).</li>
-          <li>Yêu cầu gỡ liên kết địa chỉ MAC khi bạn nâng cấp hoặc chuyển sang máy tính mới (không giới hạn thời gian).</li>
+          <li>Tự động chuyển phiên làm việc khi đăng nhập trên máy tính mới mà không cần thao tác gỡ liên kết thủ công.</li>
           <li>Liên hệ yêu cầu hỗ trợ qua kênh Discord chính thức và duy nhất: <a href="https://discord.gg/nSqdh2Q5q" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 700; text-decoration: underline;">https://discord.gg/nSqdh2Q5q</a>.</li>
         </ul>
       </section>

@@ -510,7 +510,7 @@
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progress-fill"></div>
       </div>
-      <div class="progress-type-tag" id="progress-tag">Dạng 1 — Code chữ</div>
+      <div class="progress-type-tag" id="progress-tag">Dạng 1 - Code chữ</div>
     </div>
 
     <!-- Active Question Card Content -->
@@ -538,7 +538,7 @@
       // 1. Dạng 1: Code dạng chữ (C pointer arithmetic - 6 options)
       {
         id: 1,
-        typeLabel: "Dạng 1 — Code dạng chữ",
+        typeLabel: "Dạng 1 - Code dạng chữ",
         subject: "Kỹ thuật lập trình C",
         title: "Câu 1: Cho đoạn mã nguồn C sau đây:",
         prompt: "Quan sát đoạn mã xử lý con trỏ và toán tử tăng giảm trên mảng:",
@@ -573,7 +573,7 @@ int main() {
       // 2. Dạng 2: Code dạng ảnh canvas (Python Generator - 5 options)
       {
         id: 2,
-        typeLabel: "Dạng 2 — Code dạng ảnh (Canvas)",
+        typeLabel: "Dạng 2 - Code dạng ảnh (Canvas)",
         subject: "Python Core",
         title: "Câu 2: Đoạn mã Python sau đây được dựng dạng hình ảnh:",
         prompt: "Đoạn code nằm trong Canvas hình ảnh (không thể bôi đen chữ). Dùng phím tắt Alt+S (Vision Mode) của ViTai để khoanh vùng ảnh:",
@@ -604,7 +604,7 @@ print(result)`,
       // 3. Dạng 3: Lý thuyết CSDL đa đáp án đúng (6 options)
       {
         id: 3,
-        typeLabel: "Dạng 3 — Lý thuyết (Đa đáp án)",
+        typeLabel: "Dạng 3 - Lý thuyết (Đa đáp án)",
         subject: "Cơ sở dữ liệu",
         title: "Câu 3: Các tính chất của Transaction trong mô hình ACID",
         prompt: "Trong hệ quản trị cơ sở dữ liệu quan hệ (RDBMS), xét các đặc điểm của một Giao dịch (Transaction) theo chuẩn ACID. Chọn các phát biểu ĐÚNG dưới đây (có thể có nhiều đáp án đúng):",
@@ -627,7 +627,7 @@ print(result)`,
       // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn (6 options - all wrong)
       {
         id: 4,
-        typeLabel: "Dạng 4 — Không có đáp án đúng (NONE)",
+        typeLabel: "Dạng 4 - Không có đáp án đúng (NONE)",
         subject: "Cấu trúc dữ liệu & Thuật toán",
         title: "Câu 4: Độ phức tạp thuật toán QuickSort",
         prompt: "Trong trường hợp tốt nhất (Best-case scenario), độ phức tạp thời gian của thuật toán sắp xếp nhanh (QuickSort) khi phần tử chốt (pivot) luôn chia mảng thành hai nửa bằng nhau là bao nhiêu?",
@@ -650,7 +650,7 @@ print(result)`,
       // 5. Dạng 5: Không có phương án nào để chọn (kỳ vọng NONE)
       {
         id: 5,
-        typeLabel: "Dạng 5 — Không có phương án (NONE)",
+        typeLabel: "Dạng 5 - Không có phương án (NONE)",
         subject: "Lập trình hướng đối tượng (OOP)",
         title: "Câu 5: Nguyên lý Đóng gói trong OOP",
         prompt: "Trong lập trình hướng đối tượng (OOP), hãy nêu tên tính chất cho phép ẩn giấu thông tin và dữ liệu nội tại của đối tượng, ngăn chặn truy cập trực tiếp từ bên ngoài và chỉ cho phép tương tác thông qua các phương thức công khai (getter/setter).",
@@ -667,7 +667,7 @@ print(result)`,
       // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static - 6 options)
       {
         id: 6,
-        typeLabel: "Dạng 1' — Code dạng chữ (Biến thể)",
+        typeLabel: "Dạng 1' - Code dạng chữ (Biến thể)",
         subject: "Kỹ thuật lập trình C++",
         title: "Câu 6: Cho đoạn mã nguồn C++ sau đây:",
         prompt: "Quan sát hàm đệ quy có sử dụng biến tĩnh (static variable):",
@@ -703,7 +703,7 @@ int main() {
       // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động - 5 options)
       {
         id: 7,
-        typeLabel: "Dạng 2' — Code dạng ảnh (Canvas)",
+        typeLabel: "Dạng 2' - Code dạng ảnh (Canvas)",
         subject: "Kỹ thuật lập trình C",
         title: "Câu 7: Quản lý bộ nhớ động và con trỏ cấp 2 trong C:",
         prompt: "Hình ảnh mã nguồn được kết xuất trên Canvas (không có text DOM). Dùng Alt+S để quét vùng ảnh:",
@@ -740,7 +740,7 @@ int main() {
       // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface - 6 options)
       {
         id: 8,
-        typeLabel: "Dạng 3' — Lý thuyết (Đa đáp án)",
+        typeLabel: "Dạng 3' - Lý thuyết (Đa đáp án)",
         subject: "Lập trình hướng đối tượng Java",
         title: "Câu 8: So sánh Abstract Class và Interface trong Java",
         prompt: "Trong ngôn ngữ Java (từ Java 8 trở lên), xét các quy tắc về Lớp trừu tượng (Abstract Class) và Giao diện (Interface). Chọn các phát biểu ĐÚNG (có thể có nhiều đáp án đúng):",
@@ -763,7 +763,7 @@ int main() {
       // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL - 6 options all wrong)
       {
         id: 9,
-        typeLabel: "Dạng 4' — Không có đáp án đúng (NONE)",
+        typeLabel: "Dạng 4' - Không có đáp án đúng (NONE)",
         subject: "Cơ sở dữ liệu quan hệ",
         title: "Câu 9: Chuẩn hóa quan hệ và dạng chuẩn cao nhất",
         prompt: "Xét lược đồ quan hệ R(A, B, C, D) với tập phụ thuộc hàm F = { A -> B, B -> C, C -> D }. Biết A là khóa chính duy nhất của R. Lược đồ R đạt mức dạng chuẩn cao nhất là dạng chuẩn nào?",
@@ -786,7 +786,7 @@ int main() {
       // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice - 6 options)
       {
         id: 10,
-        typeLabel: "Dạng 1'' — Code dạng chữ (Biến thể)",
+        typeLabel: "Dạng 1'' - Code dạng chữ (Biến thể)",
         subject: "Python Thuật toán & Mảng",
         title: "Câu 10: Xử lý ma trận bằng List Comprehension trong Python:",
         prompt: "Cho đoạn mã nguồn Python sau đây:",
