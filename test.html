@@ -2,94 +2,98 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ViTai Benchmark - Kiểm thử độ chính xác AI (10 câu tương tác)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ViTai Benchmark - Kiểm thử độ chính xác AI</title>
   <link rel="icon" type="image/x-icon" href="assets/icon.ico">
   
-  <!-- Typography matching ViTai baseline -->
+  <!-- Typography matching ViTai & Java baseline -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       ViTai Interactive Benchmark Suite - High Contrast Examination Layout
-       Tương thích trắc nghiệm: Ô vuông chọn đáp án, Viền Xanh/Đỏ & Tag Đúng/Sai
+       ViTai Interactive Benchmark Suite - Vertical Portrait Layout (TikTok Ready)
+       Design tokens matching ViTai theme & F:\AppMaking\java reference:
+       - Background: #F8FAFC (Clean off-white slate)
+       - Accent: #E0562D / #FF5722 (Signature coral orange)
+       - Vertical single-column stack optimized for 9:16 mobile / portrait recording
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #FFFFFF;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #F8FAFC;
       color: #0F172A;
       line-height: 1.6;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
-    /* Top Fixed Header */
-    .test-header {
-      position: fixed;
+    /* Top Navigation Header (Compact, branded) */
+    .top-header {
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-      height: 64px;
-      background: #FFFFFF;
+      width: 100%;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid #E2E8F0;
+      z-index: 50;
+    }
+
+    .top-header-inner {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 28px;
-      z-index: 100;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
     }
 
     .brand-tag {
       font-family: 'Instrument Sans', sans-serif;
       font-weight: 800;
-      font-size: 17px;
+      font-size: 16px;
       color: #E0562D;
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
       gap: 8px;
+      text-decoration: none;
     }
 
-    .test-mode-pill {
-      background: #F1F5F9;
-      color: #475569;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 9999px;
-      border: 1px solid #CBD5E1;
+    .brand-logo-img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      object-fit: cover;
     }
 
     .btn-return-home {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #F8FAFC;
-      color: #334155;
+      gap: 6px;
+      background: #FFFFFF;
+      color: #475569;
       border: 1px solid #CBD5E1;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13.5px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 12.5px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
     .btn-return-home:hover {
@@ -98,43 +102,32 @@
       border-color: #0F172A;
     }
 
-    /* Main Benchmark Area */
-    .test-container {
-      flex: 1;
-      max-width: 780px;
+    /* Fixed Progress Bar Header (Matches F:\AppMaking\java) */
+    .top-progress-container {
       width: 100%;
-      margin: 64px auto 0;
-      padding: 36px 24px 130px;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 14px 16px 6px;
     }
 
     .progress-track-wrapper {
-      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
+      width: 100%;
     }
 
     .progress-label {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
-      color: #E0562D;
-      font-family: 'Instrument Sans', sans-serif;
-    }
-
-    .progress-type-tag {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #475569;
-      background: #F1F5F9;
-      padding: 4px 10px;
-      border-radius: 6px;
-      border: 1px solid #E2E8F0;
+      color: #64748B;
+      min-width: 86px;
+      white-space: nowrap;
     }
 
     .progress-bar-bg {
       flex: 1;
-      height: 6px;
+      height: 8px;
       background: #E2E8F0;
       border-radius: 9999px;
       overflow: hidden;
@@ -144,17 +137,54 @@
       height: 100%;
       background: #E0562D;
       width: 10%;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 9999px;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Card Wrapper */
+    .progress-type-tag {
+      font-size: 12px;
+      font-weight: 700;
+      background: #FFF7ED;
+      color: #E0562D;
+      border: 1px solid #FFEDD5;
+      padding: 3px 12px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+
+    /* Vertical Container (Tối ưu quay dọc TikTok 9:16) */
+    .test-container {
+      flex: 1;
+      max-width: 580px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 16px 110px;
+      box-sizing: border-box;
+    }
+
+    @keyframes cardTransitionIn {
+      0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Question Card: Clean White Card */
     .question-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      border-radius: 16px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.03);
-      padding: 34px 30px;
-      margin-bottom: 28px;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 8px 30px -4px rgba(15, 23, 42, 0.07);
+      margin-bottom: 0;
+    }
+
+    .question-card.animating-in {
+      animation: cardTransitionIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .question-subject-badge {
@@ -164,7 +194,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #64748B;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .question-title {
@@ -172,167 +202,191 @@
       font-weight: 700;
       color: #0F172A;
       line-height: 1.5;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
     }
 
     .question-prompt {
+      font-size: 14.5px;
+      color: #475569;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .question-subtext {
       font-size: 15px;
-      color: #334155;
-      margin-bottom: 18px;
+      font-weight: 700;
+      color: #0F172A;
+      margin: 14px 0 12px;
     }
 
     /* Code Container */
     .code-box {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 10px;
-      padding: 18px 20px;
-      margin: 16px 0 22px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 10px 0 14px;
       overflow-x: auto;
     }
 
     .code-box pre {
       margin: 0;
-      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
       font-size: 13.5px;
       line-height: 1.6;
       color: #0F172A;
+      white-space: pre;
+      word-break: normal;
     }
 
-    /* Canvas Display (Question 2 & 7) */
+    /* Canvas Wrapper (Q2 & Q7 Image simulation) */
     .canvas-wrapper {
-      margin: 16px 0 22px;
+      margin: 10px 0 14px;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #F8FAFC;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: #FAFAFA;
-      border: 1px dashed #CBD5E1;
-      border-radius: 12px;
-      padding: 16px;
-      user-select: none;
-      -webkit-user-select: none;
+      padding: 12px;
     }
 
     .canvas-notice {
-      font-size: 12.5px;
-      color: #E0562D;
-      font-weight: 600;
-      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #E0562D;
+      margin-bottom: 10px;
+      text-align: center;
     }
 
-    canvas.benchmark-canvas {
-      display: block;
+    .benchmark-canvas {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      background: #FFFFFF;
-      user-select: none;
-      -webkit-user-select: none;
-      cursor: crosshair;
     }
 
-    /* Options List & Interactive Checkbox Boxes */
+    /* Options Prompt Header */
+    .options-header-prompt {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-top: 18px;
+      margin-bottom: 12px;
+      line-height: 1.45;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .options-header-prompt svg {
+      color: #E0562D;
+      flex-shrink: 0;
+    }
+
+    /* Options List */
     .options-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 10px;
     }
 
     .option-row {
       position: relative;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      background: #F8FAFC;
+      gap: 12px;
+      padding: 12px 14px;
+      min-height: 50px;
+      background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
-      border-radius: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       font-size: 14.5px;
       color: #1E293B;
-      line-height: 1.5;
-      cursor: pointer;
-      user-select: text;
-      -webkit-user-select: text;
-      transition: all 0.18s ease;
+      line-height: 1.45;
     }
 
-    .option-row:hover {
-      background: #FFFFFF;
+    .option-row:not(.verified-correct):not(.verified-wrong):not(.verified-neutral-wrong):hover {
       border-color: #CBD5E1;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      background: #F8FAFC;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateX(4px);
     }
 
-    /* Checked State */
+    /* Selected State */
     .option-row.is-selected {
       background: #FFF7ED;
       border-color: #E0562D;
     }
 
-    /* Square Checkbox [ ] */
-    .option-checkbox-box {
-      width: 22px;
-      height: 22px;
-      border-radius: 5px;
-      border: 2px solid #94A3B8;
+    /* Option Badge (shows [A] or [✓] when selected) */
+    .option-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
       background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      color: #0F172A;
+      font-weight: 700;
+      font-size: 13.5px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       transition: all 0.15s ease;
-      color: transparent;
+      font-family: 'Inter', sans-serif;
     }
 
-    .option-row.is-selected .option-checkbox-box {
+    .option-row:hover .option-badge {
+      border-color: #94A3B8;
+    }
+
+    @keyframes badgePop {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+
+    .option-row.is-selected .option-badge {
       background: #E0562D;
       border-color: #E0562D;
       color: #FFFFFF;
-    }
-
-    .option-checkbox-box svg {
-      width: 14px;
-      height: 14px;
-      stroke-width: 3;
-    }
-
-    /* Option Letter Badge (A, B, C, D, E, F) */
-    .option-letter-badge {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      background: #FFFFFF;
-      border: 1px solid #CBD5E1;
-      color: #0F172A;
-      font-weight: 700;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .option-row.is-selected .option-letter-badge {
-      border-color: #E0562D;
-      color: #E0562D;
+      font-weight: 800;
+      animation: badgePop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .option-text {
       flex: 1;
-      padding-right: 70px;
       user-select: text;
       -webkit-user-select: text;
+      padding-right: 8px;
+      word-break: break-word;
     }
 
-    /* Verdict Badge in Top-Right Corner (Đúng / Sai) */
+    @keyframes verdictPopIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      70% {
+        transform: scale(1.12);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Verdict Badge in Right Edge (ĐÚNG ✓ / SAI ✗) */
     .verdict-tag {
-      position: absolute;
-      top: 10px;
-      right: 14px;
       font-size: 11.5px;
       font-weight: 700;
       padding: 3px 10px;
@@ -340,21 +394,48 @@
       text-transform: uppercase;
       letter-spacing: 0.03em;
       display: none;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    @keyframes correctPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+        transform: scale(1.015);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        transform: scale(1);
+      }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
     }
 
     /* Highlighted States after Verification */
     .option-row.verified-correct {
       border: 2px solid #10B981 !important;
       background: #ECFDF5 !important;
+      animation: correctPulse 0.45s ease-out;
     }
 
     .option-row.verified-correct .verdict-tag {
       display: inline-block;
       background: #10B981;
       color: #FFFFFF;
+      animation: verdictPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .option-row.verified-correct .option-checkbox-box {
+    .option-row.verified-correct .option-badge {
       border-color: #10B981 !important;
       background: #10B981 !important;
       color: #FFFFFF !important;
@@ -363,148 +444,214 @@
     .option-row.verified-wrong {
       border: 2px solid #EF4444 !important;
       background: #FEF2F2 !important;
+      animation: wrongShake 0.38s ease-in-out;
     }
 
     .option-row.verified-wrong .verdict-tag {
       display: inline-block;
       background: #EF4444;
       color: #FFFFFF;
+      animation: verdictPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .option-row.verified-wrong .option-badge {
+      border-color: #EF4444 !important;
+      background: #EF4444 !important;
+      color: #FFFFFF !important;
+    }
+
+    .option-row.verified-correct,
+    .option-row.verified-wrong,
+    .option-row.verified-neutral-wrong {
+      cursor: default;
     }
 
     .option-row.verified-neutral-wrong {
       border-color: #E2E8F0;
-      opacity: 0.75;
+      opacity: 0.55;
     }
 
     .option-row.verified-neutral-wrong .verdict-tag {
-      display: inline-block;
-      background: #F1F5F9;
-      color: #64748B;
-      border: 1px solid #CBD5E1;
-    }
-
-    /* Explanation Callout */
-    .explanation-callout {
-      margin-top: 24px;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #CBD5E1;
-      background: #F8FAFC;
       display: none;
-      animation: fadeIn 0.25s ease;
     }
 
-    .explanation-callout.show {
-      display: block;
+    .option-row.verified-neutral-wrong .option-badge {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      color: #94A3B8;
     }
 
-    .explanation-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .explanation-body {
-      font-size: 14px;
-      color: #334155;
-      line-height: 1.6;
-    }
-
-    /* Banner for Question 5 (No Options) */
-    .no-options-banner {
-      background: #FEF3C7;
-      border: 1px solid #FDE68A;
-      color: #92400E;
-      padding: 16px 20px;
+    /* Inline Notice Boxes (For NONE / No options questions) */
+    .result-notice-box {
+      margin-top: 14px;
+      padding: 12px 14px;
       border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      margin: 18px 0;
+      font-size: 13.5px;
+      line-height: 1.5;
+      display: none;
     }
 
-    /* Fixed Bottom Action Bar */
-    .test-footer-bar {
+    .result-notice-box.show {
+      display: block;
+      animation: cardTransitionIn 0.25s ease-out;
+    }
+
+    .result-notice-box.verified-info {
+      background: #FFFBEB;
+      border: 1px solid #FCD34D;
+      color: #92400E;
+    }
+
+    .result-notice-box.verified-correct {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+    }
+
+    .no-options-banner {
+      background: #FFFBEB;
+      border: 1px dashed #F59E0B;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: #B45309;
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 12px 0;
+    }
+
+    /* Fixed Bottom Action Bar (Centered with max-width: 580px) */
+    .test-actions-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 72px;
-      background: #FFFFFF;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid #E2E8F0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 32px;
-      z-index: 100;
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+      z-index: 99;
+      padding: 12px 16px;
     }
 
+    .test-actions-inner {
+      max-width: 580px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .secondary-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Circle Action Buttons */
+    .btn-circle-action {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      color: #0F172A;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .btn-circle-action:hover:not(:disabled) {
+      background: #F1F5F9;
+      color: #0F172A;
+      border-color: #CBD5E1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
+    }
+
+    .btn-circle-action:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .btn-circle-action.is-muted {
+      color: #94A3B8;
+      background: #F8FAFC;
+    }
+
+    /* Next / Verify Main Button */
     .btn-next-question {
       background: #E0562D;
       color: #FFFFFF;
       font-family: 'Inter', sans-serif;
       font-size: 14.5px;
       font-weight: 700;
-      padding: 12px 28px;
+      height: 46px;
+      padding: 0 24px;
       border-radius: 9999px;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 14px rgba(224, 86, 45, 0.35);
+      box-shadow: 0 4px 16px rgba(224, 86, 45, 0.4), 0 2px 4px rgba(0, 0, 0, 0.08);
       transition: all 0.2s ease;
+      box-sizing: border-box;
+      flex: 1;
+      max-width: 240px;
     }
 
-    .btn-next-question:hover {
+    .btn-next-question:hover:not(:disabled) {
       background: #FF5722;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(224, 86, 45, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(224, 86, 45, 0.5);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    .btn-next-question:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      pointer-events: none;
     }
 
-    @media (max-width: 640px) {
-      .test-header { padding: 0 16px; }
-      .test-footer-bar { padding: 0 16px; }
-      .hint-footer-text { display: none; }
-      .question-card { padding: 22px 16px; }
-      .test-container { padding: 24px 16px 120px; }
-      .option-text { padding-right: 50px; font-size: 13.5px; }
+    @media (max-width: 480px) {
+      .question-card { padding: 20px 14px; }
+      .test-container { padding: 10px 12px 105px; }
+      .btn-next-question { padding: 0 16px; font-size: 14px; }
+      .btn-circle-action { width: 42px; height: 42px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
-  <header class="test-header">
-    <div class="header-left">
-      <div class="brand-tag">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-        </svg>
+  <!-- TOP BRAND HEADER -->
+  <header class="top-header">
+    <div class="top-header-inner">
+      <a href="index.html" class="brand-tag">
+        <img src="assets/logo.png" alt="ViTai Logo" class="brand-logo-img" onerror="this.src='assets/icon.ico'">
         <span>ViTai Benchmark</span>
-      </div>
+      </a>
+      <a href="index.html" class="btn-return-home">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Về trang chủ</span>
+      </a>
     </div>
-
-    <a href="index.html" class="btn-return-home">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      <span>Về trang chủ</span>
-    </a>
   </header>
 
-  <!-- MAIN TEST AREA -->
-  <main class="test-container">
-    <!-- Progress Indicator -->
+  <!-- TOP PROGRESS TRACKER (Matches F:\AppMaking\java) -->
+  <div class="top-progress-container">
     <div class="progress-track-wrapper">
       <div class="progress-label" id="progress-text">Câu 1 / 10</div>
       <div class="progress-bar-bg">
@@ -512,7 +659,10 @@
       </div>
       <div class="progress-type-tag" id="progress-tag">Dạng 1 - Code chữ</div>
     </div>
+  </div>
 
+  <!-- MAIN TEST AREA (VERTICAL 9:16 LAYOUT) -->
+  <main class="test-container">
     <!-- Active Question Card Content -->
     <div class="question-card" id="question-card">
       <!-- Injected by JS -->
@@ -520,25 +670,250 @@
   </main>
 
   <!-- FIXED BOTTOM NAVIGATION BAR -->
-  <footer class="test-footer-bar">
-    <button type="button" class="btn-next-question" id="btn-main-action">
-      <span id="btn-action-text">Xác nhận</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="btn-action-icon">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-    </button>
+  <footer class="test-actions-bar">
+    <div class="test-actions-inner">
+      <div class="secondary-controls">
+        <!-- Previous Question Button -->
+        <button type="button" class="btn-circle-action" id="btn-prev-question" title="Câu trước" aria-label="Câu trước">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+
+        <!-- Sound Toggle Button -->
+        <button type="button" class="btn-circle-action" id="btn-sound-toggle" title="Bật/Tắt âm thanh" aria-label="Bật/Tắt âm thanh">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="sound-toggle-icon">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Reset Exam Button -->
+        <button type="button" class="btn-circle-action" id="btn-reset-exam" title="Làm lại từ đầu" aria-label="Làm lại từ đầu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Primary Action: Xác nhận / Câu tiếp theo -->
+      <button type="button" class="btn-next-question" id="btn-main-action">
+        <span id="btn-action-text">Xác nhận</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="btn-action-icon">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
   </footer>
 
   <script>
     /* ==========================================================================
-       ViTai 10-Question Interactive Benchmark Suite
-       Each question expanded to 5-6 options with Checkboxes & Verification logic
+       SoundFX Web Audio API Synthesizer (Zero External Audio Files)
+       ========================================================================== */
+    const SoundFX = (() => {
+      let ctx = null;
+      let masterGain = null;
+      let isMuted = false;
+
+      function getAudioContext() {
+        if (!ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            ctx = new AudioCtx();
+            masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.85, ctx.currentTime);
+            masterGain.connect(ctx.destination);
+          }
+        }
+        if (ctx && ctx.state === 'suspended') {
+          ctx.resume().catch(() => {});
+        }
+        return ctx;
+      }
+
+      function playTone(opts) {
+        if (isMuted) return;
+        const ac = getAudioContext();
+        if (!ac || !masterGain) return;
+
+        try {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = opts.type || 'sine';
+          const now = ac.currentTime;
+
+          if (opts.freqRamp) {
+            osc.frequency.setValueAtTime(opts.freqRamp.start, now);
+            osc.frequency.exponentialRampToValueAtTime(
+              Math.max(1, opts.freqRamp.end),
+              now + opts.freqRamp.duration
+            );
+          } else if (opts.frequency) {
+            osc.frequency.setValueAtTime(opts.frequency, now);
+          }
+
+          const vol = opts.volume !== undefined ? opts.volume : 0.75;
+          gain.gain.setValueAtTime(vol, now);
+          const decay = opts.decay || 0.1;
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+          osc.connect(gain);
+          gain.connect(masterGain);
+
+          osc.start(now);
+          osc.stop(now + decay + 0.05);
+        } catch (err) {}
+      }
+
+      return {
+        get isMuted() { return isMuted; },
+        toggleMute() {
+          isMuted = !isMuted;
+          const btn = document.getElementById('btn-sound-toggle');
+          const icon = document.getElementById('sound-toggle-icon');
+          if (btn && icon) {
+            if (isMuted) {
+              btn.classList.add('is-muted');
+              icon.innerHTML = `<line x1="1" y1="1" x2="23" y2="23"></line><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>`;
+            } else {
+              btn.classList.remove('is-muted');
+              icon.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+              this.boop();
+            }
+          }
+          return isMuted;
+        },
+        boop() {
+          if (isMuted) return;
+          playTone({
+            type: 'sine',
+            freqRamp: { start: 360, end: 540, duration: 0.075 },
+            decay: 0.075,
+            volume: 0.75
+          });
+        },
+        click() {
+          if (isMuted) return;
+          playTone({
+            type: 'triangle',
+            freqRamp: { start: 650, end: 220, duration: 0.035 },
+            decay: 0.038,
+            volume: 0.80
+          });
+        },
+        correct() {
+          if (isMuted) return;
+          const ac = getAudioContext();
+          if (!ac || !masterGain) return;
+          try {
+            const now = ac.currentTime;
+            const osc1 = ac.createOscillator();
+            const gain1 = ac.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(659.25, now);
+            gain1.gain.setValueAtTime(0.8, now);
+            gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+            osc1.connect(gain1);
+            gain1.connect(masterGain);
+            osc1.start(now);
+            osc1.stop(now + 0.3);
+
+            const t2 = now + 0.11;
+            const osc2 = ac.createOscillator();
+            const gain2 = ac.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(987.77, t2);
+            gain2.gain.setValueAtTime(0.85, t2);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, t2 + 0.42);
+            osc2.connect(gain2);
+            gain2.connect(masterGain);
+            osc2.start(t2);
+            osc2.stop(t2 + 0.45);
+          } catch (e) {}
+        },
+        wrong() {
+          if (isMuted) return;
+          const ac = getAudioContext();
+          if (!ac || !masterGain) return;
+          try {
+            const now = ac.currentTime;
+            const osc = ac.createOscillator();
+            const gain = ac.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(210, now);
+            osc.frequency.linearRampToValueAtTime(140, now + 0.16);
+            gain.gain.setValueAtTime(0.7, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+            osc.connect(gain);
+            gain.connect(masterGain);
+            osc.start(now);
+            osc.stop(now + 0.18);
+          } catch (e) {}
+        }
+      };
+    })();
+
+    /* Confetti Particle Burst for Correct Verification */
+    function triggerConfettiBurst(originElem) {
+      const rect = originElem ? originElem.getBoundingClientRect() : null;
+      const startX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+      const startY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+
+      const container = document.createElement('div');
+      container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+      document.body.appendChild(container);
+
+      const colors = ['#10B981', '#34D399', '#F59E0B', '#E0562D', '#3B82F6', '#8B5CF6'];
+      const count = 16;
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        const angle = (i / count) * 2 * Math.PI + (Math.random() * 0.4 - 0.2);
+        const dist = 60 + Math.random() * 70;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = 6 + Math.random() * 5;
+
+        dot.style.cssText = `
+          position: absolute;
+          left: ${startX}px;
+          top: ${startY}px;
+          width: ${size}px;
+          height: ${size}px;
+          background: ${color};
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-out;
+          opacity: 1;
+        `;
+        container.appendChild(dot);
+
+        requestAnimationFrame(() => {
+          const targetX = Math.cos(angle) * dist;
+          const targetY = Math.sin(angle) * dist - 20;
+          dot.style.transform = `translate(calc(-50% + ${targetX}px), calc(-50% + ${targetY}px)) scale(0.6)`;
+          dot.style.opacity = '0';
+        });
+      }
+
+      setTimeout(() => {
+        container.remove();
+      }, 700);
+    }
+
+    /* Checkmark SVG Icon for Option Badge */
+    const CHECK_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+    /* ==========================================================================
+       ViTai 10-Question Benchmark Data
        ========================================================================== */
     const BENCHMARK_QUESTIONS = [
       // 1. Dạng 1: Code dạng chữ (C pointer arithmetic - 6 options)
       {
         id: 1,
-        typeLabel: "Dạng 1 - Code dạng chữ",
+        typeLabel: "Dạng 1 - Code chữ",
         subject: "Kỹ thuật lập trình C",
         title: "Câu 1: Cho đoạn mã nguồn C sau đây:",
         prompt: "Quan sát đoạn mã xử lý con trỏ và toán tử tăng giảm trên mảng:",
@@ -557,47 +932,43 @@ int main() {
 }`,
         questionText: "Kết quả in ra màn hình của chương trình là gì?",
         isCanvas: false,
+        isMultiple: false,
         correctAnswers: ["B"],
-        expectedSummary: "Đáp án đúng là: B (10, 21, 30)",
-        explanation: "*ptr++ lấy giá trị a = 10 rồi mới tăng ptr lên trỏ &arr[1]. ++*ptr tăng trực tiếp giá trị của arr[1] từ 20 lên 21 và gán b = 21. *++ptr tăng ptr lên trỏ &arr[2] trước rồi lấy giá trị 30 gán cho c. Kết quả in ra: 10, 21, 30.",
         options: [
           { label: "A", text: "10, 20, 30" },
           { label: "B", text: "10, 21, 30" },
           { label: "C", text: "11, 21, 40" },
           { label: "D", text: "10, 21, 40" },
-          { label: "E", text: "10, 20, 40" },
-          { label: "F", text: "11, 20, 30" }
+          { label: "E", text: "11, 20, 30" },
+          { label: "F", text: "20, 21, 30" }
         ]
       },
 
       // 2. Dạng 2: Code dạng ảnh canvas (Python Generator - 5 options)
       {
         id: 2,
-        typeLabel: "Dạng 2 - Code dạng ảnh (Canvas)",
+        typeLabel: "Dạng 2 - Code ảnh (Canvas)",
         subject: "Python Core",
         title: "Câu 2: Đoạn mã Python sau đây được dựng dạng hình ảnh:",
-        prompt: "Đoạn code nằm trong Canvas hình ảnh (không thể bôi đen chữ). Dùng phím tắt Alt+S (Vision Mode) của ViTai để khoanh vùng ảnh:",
-        code: `def number_stream(n):
-    for i in range(1, n + 1):
-        if i % 2 == 0:
-            yield i * 2
-        else:
-            yield i + 1
+        prompt: "Đoạn code nằm trong Canvas hình ảnh (không thể bôi đen chữ). Dùng phím tắt Alt + S (Vision Mode) của ViTai để khoanh vùng ảnh:",
+        code: `def num_generator():
+    for i in range(1, 10):
+        if i % 2 != 0:
+            yield i
 
-gen = number_stream(4)
-result = [next(gen) for _ in range(3)]
+filtered = [x for x in num_generator()]
+result = sum(filtered[::2])
 print(result)`,
-        questionText: "Kết quả in ra khi chạy chương trình là gì?",
+        questionText: "Giá trị của biến result được in ra màn hình là gì?",
         isCanvas: true,
-        correctAnswers: ["C"],
-        expectedSummary: "Đáp án đúng là: C ([2, 4, 4])",
-        explanation: "Vòng lặp chạy: i=1 (lẻ) -> yield 1 + 1 = 2; i=2 (chẵn) -> yield 2 * 2 = 4; i=3 (lẻ) -> yield 3 + 1 = 4. Danh sách 3 phần tử lấy qua next() là [2, 4, 4].",
+        isMultiple: false,
+        correctAnswers: ["B"],
         options: [
-          { label: "A", text: "[2, 4, 6]" },
-          { label: "B", text: "[1, 4, 3]" },
-          { label: "C", text: "[2, 4, 4]" },
-          { label: "D", text: "[2, 4, 8]" },
-          { label: "E", text: "[1, 2, 3]" }
+          { label: "A", text: "25" },
+          { label: "B", text: "15" },
+          { label: "C", text: "10" },
+          { label: "D", text: "16" },
+          { label: "E", text: "21" }
         ]
       },
 
@@ -611,174 +982,168 @@ print(result)`,
         code: null,
         questionText: null,
         isCanvas: false,
-        correctAnswers: ["A", "B", "D", "F"],
-        expectedSummary: "Đáp án đúng là: A, B, D, F",
-        explanation: "A (Atomicity), B (Isolation), D (Durability) và F (Consistency) là các phát biểu đúng theo chuẩn ACID. C sai vì transaction không được phép vi phạm ràng buộc toàn vẹn sau khi commit. E sai vì mức Read Uncommitted vẫn có thể xảy ra Dirty Read.",
+        isMultiple: true,
+        correctAnswers: ["A", "B", "C", "D"],
         options: [
-          { label: "A", text: "Tính nguyên tố (Atomicity): Toàn bộ các thao tác trong giao dịch phải hoàn tất thành công, hoặc nếu lỗi thì phải hoàn tác (rollback) toàn bộ về trạng thái ban đầu." },
-          { label: "B", text: "Tính cô lập (Isolation): Các transaction thực thi đồng thời không được can thiệp vào nhau và không nhìn thấy dữ liệu trung gian chưa commit của transaction khác." },
-          { label: "C", text: "Tính nhất quán (Consistency): Cho phép tạm thời bỏ qua các ràng buộc khóa ngoại trong suốt quá trình ghi dữ liệu mà không cần kiểm tra lại trước khi commit." },
-          { label: "D", text: "Tính bền vững (Durability): Đảm bảo các thay đổi của transaction đã commit sẽ được lưu trữ vĩnh viễn trong hệ thống ngay cả khi xảy ra sự cố sập nguồn hoặc mất điện." },
-          { label: "E", text: "Mức cô lập Read Uncommitted loại bỏ hoàn toàn hiện tượng Đọc dữ liệu rác (Dirty Read) giữa các transaction đồng thời." },
-          { label: "F", text: "Tính nhất quán (Consistency): Đảm bảo cơ sở dữ liệu chuyển từ một trạng thái hợp lệ sang một trạng thái hợp lệ khác thỏa mãn toàn bộ các ràng buộc nghiệp vụ." }
+          { label: "A", text: "Atomicity: Toàn bộ thao tác thành công hoặc toàn bộ bị hủy bỏ (All or Nothing)." },
+          { label: "B", text: "Consistency: Dữ liệu chuyển từ trạng thái hợp lệ này sang trạng thái hợp lệ khác." },
+          { label: "C", text: "Isolation: Các giao dịch diễn ra đồng thời không can thiệp kết quả của nhau." },
+          { label: "D", text: "Durability: Dữ liệu đã commit sẽ được lưu bền vững trên ổ cứng ngay cả khi mất điện." },
+          { label: "E", text: "Atomicity cho phép một giao dịch lưu lại một phần dữ liệu khi gặp sự cố." },
+          { label: "F", text: "Isolation yêu cầu tất cả giao dịch phải được thực thi tuần tự lần lượt từng giao dịch." }
         ]
       },
 
       // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn (6 options - all wrong)
       {
         id: 4,
-        typeLabel: "Dạng 4 - Không có đáp án đúng (NONE)",
+        typeLabel: "Dạng 4 - Không có đáp án (NONE)",
         subject: "Cấu trúc dữ liệu & Thuật toán",
         title: "Câu 4: Độ phức tạp thuật toán QuickSort",
         prompt: "Trong trường hợp tốt nhất (Best-case scenario), độ phức tạp thời gian của thuật toán sắp xếp nhanh (QuickSort) khi phần tử chốt (pivot) luôn chia mảng thành hai nửa bằng nhau là bao nhiêu?",
         code: null,
-        questionText: "Chọn một phương án chính xác nhất trong các phương án sau:",
+        questionText: "Chọn phương án đúng nhất:",
         isCanvas: false,
+        isMultiple: false,
         correctAnswers: ["NONE"],
-        expectedSummary: "Đáp án đúng là: NONE (Không có phương án nào đúng)",
-        explanation: "Trường hợp tốt nhất của QuickSort khi chia đều mảng là O(n log n). Cả 6 phương án đưa ra (O(1), O(n²), O(2ⁿ), O(n³), O(n!), O(√n)) đều sai. ViTai được thiết kế để phát hiện và trả về NONE.",
         options: [
           { label: "A", text: "O(1)" },
-          { label: "B", text: "O(n²)" },
-          { label: "C", text: "O(2ⁿ)" },
-          { label: "D", text: "O(n³)" },
-          { label: "E", text: "O(n!)" },
-          { label: "F", text: "O(√n)" }
+          { label: "B", text: "O(n)" },
+          { label: "C", text: "O(n^2)" },
+          { label: "D", text: "O(2^n)" },
+          { label: "E", text: "O(log n)" },
+          { label: "F", text: "O(n!)" }
         ]
       },
 
       // 5. Dạng 5: Không có phương án nào để chọn (kỳ vọng NONE)
       {
         id: 5,
-        typeLabel: "Dạng 5 - Không có phương án (NONE)",
+        typeLabel: "Dạng 5 - Không có phương án",
         subject: "Lập trình hướng đối tượng (OOP)",
         title: "Câu 5: Nguyên lý Đóng gói trong OOP",
         prompt: "Trong lập trình hướng đối tượng (OOP), hãy nêu tên tính chất cho phép ẩn giấu thông tin và dữ liệu nội tại của đối tượng, ngăn chặn truy cập trực tiếp từ bên ngoài và chỉ cho phép tương tác thông qua các phương thức công khai (getter/setter).",
         code: null,
         questionText: null,
         isCanvas: false,
+        isMultiple: false,
         isNoOptions: true,
         correctAnswers: ["NONE"],
-        expectedSummary: "Kỳ vọng AI trả về: NONE",
-        explanation: "Câu hỏi này hoàn toàn không cung cấp danh sách phương án trắc nghiệm A-F. ViTai nhận diện đây là câu hỏi không có lựa chọn để chọn và trả về kết quả NONE. Thuật ngữ đúng của câu hỏi là Tính Đóng gói (Encapsulation).",
         options: []
       },
 
       // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static - 6 options)
       {
         id: 6,
-        typeLabel: "Dạng 1' - Code dạng chữ (Biến thể)",
+        typeLabel: "Dạng 1' - Code chữ biến thể",
         subject: "Kỹ thuật lập trình C++",
         title: "Câu 6: Cho đoạn mã nguồn C++ sau đây:",
         prompt: "Quan sát hàm đệ quy có sử dụng biến tĩnh (static variable):",
         code: `#include <iostream>
 using namespace std;
 
-int calc(int n) {
-    static int factor = 1;
-    if (n <= 1) return factor;
-    factor += n;
-    return calc(n - 1) * 2;
+int func(int n) {
+    static int count = 0;
+    count += n;
+    if (n <= 1) return count;
+    return func(n - 1) + func(n - 2);
 }
 
 int main() {
-    cout << calc(3);
+    cout << func(3);
     return 0;
 }`,
-        questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
+        questionText: "Giá trị in ra màn hình console là bao nhiêu?",
         isCanvas: false,
-        correctAnswers: ["A"],
-        expectedSummary: "Đáp án đúng là: A (24)",
-        explanation: "Biến static factor duy trì giá trị qua các lần gọi đệ quy: calc(3) cộng n=3 vào factor (factor=4), trả về calc(2)*2. calc(2) cộng n=2 vào factor (factor=6), trả về calc(1)*2. calc(1) gặp điều kiện dừng trả về factor=6. Thu được 6 * 2 * 2 = 24.",
+        isMultiple: false,
+        correctAnswers: ["B"],
         options: [
-          { label: "A", text: "24" },
-          { label: "B", text: "12" },
-          { label: "C", text: "18" },
-          { label: "D", text: "36" },
-          { label: "E", text: "16" },
-          { label: "F", text: "48" }
+          { label: "A", text: "12" },
+          { label: "B", text: "16" },
+          { label: "C", text: "8" },
+          { label: "D", text: "14" },
+          { label: "E", text: "18" },
+          { label: "F", text: "20" }
         ]
       },
 
       // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động - 5 options)
       {
         id: 7,
-        typeLabel: "Dạng 2' - Code dạng ảnh (Canvas)",
+        typeLabel: "Dạng 2' - Code ảnh biến thể",
         subject: "Kỹ thuật lập trình C",
         title: "Câu 7: Quản lý bộ nhớ động và con trỏ cấp 2 trong C:",
-        prompt: "Hình ảnh mã nguồn được kết xuất trên Canvas (không có text DOM). Dùng Alt+S để quét vùng ảnh:",
+        prompt: "Hình ảnh mã nguồn được kết xuất trên Canvas (không có text DOM). Dùng Alt + S để quét vùng ảnh:",
         code: `#include <stdio.h>
 #include <stdlib.h>
 
-void allocate(int **p, int val) {
-    *p = (int*)malloc(sizeof(int));
-    **p = val * 3;
+void modify(int **ptr) {
+    **ptr += 5;
+    *ptr = (int *)malloc(sizeof(int));
+    **ptr = 20;
 }
 
 int main() {
-    int *ptr = NULL;
-    allocate(&ptr, 5);
-    int result = *ptr + 7;
-    printf("%d", result);
-    free(ptr);
+    int x = 10;
+    int *p = &x;
+    modify(&p);
+    printf("%d, %d", x, *p);
+    free(p);
     return 0;
 }`,
-        questionText: "Giá trị in ra của chương trình trên là bao nhiêu?",
+        questionText: "Chương trình sẽ in ra màn hình kết quả nào?",
         isCanvas: true,
-        correctAnswers: ["D"],
-        expectedSummary: "Đáp án đúng là: D (22)",
-        explanation: "Hàm allocate nhận địa chỉ con trỏ ptr, cấp phát động và gán **p = 5 * 3 = 15. Sau khi gọi hàm, *ptr có giá trị 15. Biến result = 15 + 7 = 22. In ra 22.",
+        isMultiple: false,
+        correctAnswers: ["C"],
         options: [
-          { label: "A", text: "15" },
-          { label: "B", text: "12" },
-          { label: "C", text: "7" },
-          { label: "D", text: "22" },
-          { label: "E", text: "35" }
+          { label: "A", text: "10, 20" },
+          { label: "B", text: "20, 20" },
+          { label: "C", text: "15, 20" },
+          { label: "D", text: "15, 10" },
+          { label: "E", text: "Lỗi Segmentation Fault" }
         ]
       },
 
       // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface - 6 options)
       {
         id: 8,
-        typeLabel: "Dạng 3' - Lý thuyết (Đa đáp án)",
+        typeLabel: "Dạng 3' - Lý thuyết Java đa đáp án",
         subject: "Lập trình hướng đối tượng Java",
         title: "Câu 8: So sánh Abstract Class và Interface trong Java",
         prompt: "Trong ngôn ngữ Java (từ Java 8 trở lên), xét các quy tắc về Lớp trừu tượng (Abstract Class) và Giao diện (Interface). Chọn các phát biểu ĐÚNG (có thể có nhiều đáp án đúng):",
         code: null,
         questionText: null,
         isCanvas: false,
-        correctAnswers: ["B", "C", "F"],
-        expectedSummary: "Đáp án đúng là: B, C, F",
-        explanation: "B đúng vì Java 8+ cho phép default và static method trong Interface. C đúng vì cả hai đều là kiểu trừu tượng, không thể tạo instance bằng new. F đúng vì Java hỗ trợ đa triển khai interface. A sai (Java chỉ hỗ trợ đơn kế thừa class), D sai (biến trong interface là public static final), E sai (chỉ bắt buộc override abstract method).",
+        isMultiple: true,
+        correctAnswers: ["A", "B", "D", "E"],
         options: [
-          { label: "A", text: "Một lớp thông thường có thể đồng thời kế thừa (extends) từ nhiều Abstract Class khác nhau." },
-          { label: "B", text: "Interface có thể chứa phương thức có phần thân xử lý thông qua từ khóa default hoặc static." },
-          { label: "C", text: "Cả Abstract Class và Interface đều không thể khởi tạo đối tượng trực tiếp bằng toán tử new." },
-          { label: "D", text: "Tất cả các biến khai báo trong Interface mặc định đều có phạm vi truy cập là private static final." },
-          { label: "E", text: "Một lớp con kế thừa từ Abstract Class bắt buộc phải override lại toàn bộ phương thức dù phương thức đó đã có mã cài đặt sẵn ở lớp cha." },
-          { label: "F", text: "Một lớp có thể triển khai (implements) đồng thời nhiều Interface khác nhau." }
+          { label: "A", text: "Một class chỉ có thể kế thừa tối đa một abstract class nhưng có thể implement nhiều interface." },
+          { label: "B", text: "Interface từ Java 8 có thể chứa phương thức có phần thân xử lý thông qua từ khóa default." },
+          { label: "C", text: "Abstract class không thể chứa hàm dựng (constructor), chỉ interface mới có constructor." },
+          { label: "D", text: "Các biến khai báo trong Interface mặc định luôn là public static final." },
+          { label: "E", text: "Abstract class có thể chứa các biến non-static và non-final với mọi access modifier." },
+          { label: "F", text: "Không thể tạo bất kỳ phương thức static nào bên trong một Interface." }
         ]
       },
 
       // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL - 6 options all wrong)
       {
         id: 9,
-        typeLabel: "Dạng 4' - Không có đáp án đúng (NONE)",
+        typeLabel: "Dạng 4' - Không có đáp án (NONE)",
         subject: "Cơ sở dữ liệu quan hệ",
         title: "Câu 9: Chuẩn hóa quan hệ và dạng chuẩn cao nhất",
         prompt: "Xét lược đồ quan hệ R(A, B, C, D) với tập phụ thuộc hàm F = { A -> B, B -> C, C -> D }. Biết A là khóa chính duy nhất của R. Lược đồ R đạt mức dạng chuẩn cao nhất là dạng chuẩn nào?",
         code: null,
-        questionText: "Chọn mức dạng chuẩn cao nhất mà quan hệ R đạt được:",
+        questionText: "Chọn mức dạng chuẩn cao nhất mà lược đồ R thỏa mãn:",
         isCanvas: false,
+        isMultiple: false,
         correctAnswers: ["NONE"],
-        expectedSummary: "Đáp án đúng là: NONE (Không có phương án nào đúng)",
-        explanation: "Quan hệ R có khóa chính A. Phụ thuộc hàm A->B->C->D chứa phụ thuộc bắc cầu A->C và A->D với B, C không phải siêu khóa. Do đó R chỉ đạt chuẩn 2 (2NF), không đạt chuẩn 3 (3NF). Cả 6 lựa chọn (3NF, BCNF, 4NF, 5NF, DKNF, 6NF) đều sai.",
         options: [
           { label: "A", text: "Dạng chuẩn 3 (3NF)" },
           { label: "B", text: "Dạng chuẩn Boyce-Codd (BCNF)" },
           { label: "C", text: "Dạng chuẩn 4 (4NF)" },
           { label: "D", text: "Dạng chuẩn 5 (5NF)" },
-          { label: "E", text: "Dạng chuẩn miền - khóa (DKNF)" },
+          { label: "E", text: "Dạng chuẩn miền/khóa (DKNF)" },
           { label: "F", text: "Dạng chuẩn 6 (6NF)" }
         ]
       },
@@ -786,19 +1151,23 @@ int main() {
       // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice - 6 options)
       {
         id: 10,
-        typeLabel: "Dạng 1'' - Code dạng chữ (Biến thể)",
+        typeLabel: "Dạng 1'' - Code chữ biến thể",
         subject: "Python Thuật toán & Mảng",
         title: "Câu 10: Xử lý ma trận bằng List Comprehension trong Python:",
         prompt: "Cho đoạn mã nguồn Python sau đây:",
-        code: `matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-filtered = [val for row in matrix for val in row if val % 2 != 0]
-result = sum(filtered[::2])
-print(result)`,
-        questionText: "Kết quả in ra màn hình khi chạy chương trình là gì?",
+        code: `matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+flatten = [val for row in matrix for val in row if val % 2 != 0]
+res = sum(flatten[::2])
+print(res)`,
+        questionText: "Kết quả in ra màn hình của đoạn code là gì?",
         isCanvas: false,
+        isMultiple: false,
         correctAnswers: ["B"],
-        expectedSummary: "Đáp án đúng là: B (15)",
-        explanation: "filtered lọc ra danh sách các số lẻ: [1, 3, 5, 7, 9]. filtered[::2] lấy các phần tử ở chỉ số chẵn 0, 2, 4 là [1, 5, 9]. Tổng sum([1, 5, 9]) = 1 + 5 + 9 = 15.",
         options: [
           { label: "A", text: "25" },
           { label: "B", text: "15" },
@@ -814,6 +1183,43 @@ print(result)`,
     let isAnswerVerified = false;
     // Map to store user selected options per question id: { 1: Set(['B']), ... }
     const userSelections = {};
+    const questionStatus = {}; // { 1: 'correct' | 'wrong' | 'unanswered' }
+
+    function getOptionEvaluation(q, label, isSelected) {
+      const correctSet = new Set(q.correctAnswers || []);
+      const isCorrectOption = correctSet.has(label);
+
+      if (q.correctAnswers.includes("NONE")) {
+        // All options are wrong
+        if (isSelected) {
+          return { rowClass: 'verified-wrong', verdictText: 'Sai ✗', badgeContent: CHECK_SVG };
+        } else {
+          return { rowClass: 'verified-neutral-wrong', verdictText: '', badgeContent: label };
+        }
+      }
+
+      if (q.isMultiple) {
+        if (isCorrectOption && isSelected) {
+          return { rowClass: 'verified-correct', verdictText: 'Đúng ✓', badgeContent: CHECK_SVG };
+        } else if (isCorrectOption && !isSelected) {
+          return { rowClass: 'verified-wrong', verdictText: 'Thiếu ✗', badgeContent: label };
+        } else if (!isCorrectOption && isSelected) {
+          return { rowClass: 'verified-wrong', verdictText: 'Thừa ✗', badgeContent: CHECK_SVG };
+        } else {
+          return { rowClass: 'verified-neutral-wrong', verdictText: '', badgeContent: label };
+        }
+      } else {
+        if (isSelected && isCorrectOption) {
+          return { rowClass: 'verified-correct', verdictText: 'Đúng ✓', badgeContent: CHECK_SVG };
+        } else if (isSelected && !isCorrectOption) {
+          return { rowClass: 'verified-wrong', verdictText: 'Sai ✗', badgeContent: CHECK_SVG };
+        } else if (!isSelected && isCorrectOption) {
+          return { rowClass: 'verified-correct', verdictText: 'Đúng ✓', badgeContent: label };
+        } else {
+          return { rowClass: 'verified-neutral-wrong', verdictText: '', badgeContent: label };
+        }
+      }
+    }
 
     function renderCurrentQuestion() {
       const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
@@ -821,21 +1227,28 @@ print(result)`,
       const progressText = document.getElementById('progress-text');
       const progressFill = document.getElementById('progress-fill');
       const progressTag = document.getElementById('progress-tag');
+      const btnPrev = document.getElementById('btn-prev-question');
 
       // Ensure a Set exists for current question
       if (!userSelections[q.id]) {
         userSelections[q.id] = new Set();
       }
 
+      const isAlreadyVerified = Boolean(questionStatus[q.id]);
+
       // Update Header Progress
-      progressText.textContent = `Câu ${currentQuestionIndex + 1} / ${BENCHMARK_QUESTIONS.length}`;
-      progressFill.style.width = `${((currentQuestionIndex + 1) / BENCHMARK_QUESTIONS.length) * 100}%`;
-      progressTag.textContent = q.typeLabel;
+      if (progressText) progressText.textContent = `Câu ${currentQuestionIndex + 1} / ${BENCHMARK_QUESTIONS.length}`;
+      if (progressFill) progressFill.style.width = `${((currentQuestionIndex + 1) / BENCHMARK_QUESTIONS.length) * 100}%`;
+      if (progressTag) progressTag.textContent = q.typeLabel;
+
+      if (btnPrev) {
+        btnPrev.disabled = (currentQuestionIndex === 0);
+      }
 
       let html = `
-        <div class="question-subject-badge">${q.subject}</div>
-        <h2 class="question-title">${q.title}</h2>
-        <p class="question-prompt">${q.prompt}</p>
+        <div class="question-subject-badge">${escapeHtml(q.subject)}</div>
+        <h2 class="question-title">${escapeHtml(q.title)}</h2>
+        <p class="question-prompt">${escapeHtml(q.prompt)}</p>
       `;
 
       // Canvas Question (Q2 & Q7)
@@ -843,12 +1256,12 @@ print(result)`,
         html += `
           <div class="canvas-wrapper">
             <div class="canvas-notice">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
-              <span>Vùng hình ảnh Canvas (Không thể bôi đen chữ) • Dùng phím tắt Alt + S của ViTai để khoanh vùng:</span>
+              <span>Vùng ảnh Canvas (Không bôi đen) • Dùng phím Alt + S để khoanh vùng:</span>
             </div>
             <canvas id="benchmark-canvas-element" class="benchmark-canvas"></canvas>
           </div>
@@ -862,56 +1275,92 @@ print(result)`,
       }
 
       if (q.questionText) {
-        html += `<p class="question-prompt" style="font-weight: 600; color: #0F172A; margin-top: 14px;">${q.questionText}</p>`;
+        html += `<p class="question-subtext">${escapeHtml(q.questionText)}</p>`;
       }
 
-      // Render Options with square checkboxes
+      // Options header prompt
+      const promptLabel = q.isMultiple ? "Chọn các phương án đúng:" : "Chọn một phương án đúng nhất:";
+      if (!q.isNoOptions) {
+        html += `
+          <div class="options-header-prompt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            <span>${escapeHtml(promptLabel)}</span>
+          </div>
+        `;
+      }
+
+      // Render Options
       if (q.isNoOptions) {
         html += `
           <div class="no-options-banner">
-            ⚠️ <strong>Lưu ý:</strong> Câu hỏi này không cung cấp các phương án A, B, C, D... để chọn. Hãy thử dùng <strong>Alt + Q</strong> của ViTai để kiểm tra khả năng trả về <strong>NONE</strong>.
+            ⚠️ <strong>Câu hỏi tự luận không có phương án:</strong> Hãy dùng phím tắt <strong>Alt + Q</strong> của ViTai để kiểm tra khả năng nhận diện và trả về <strong>NONE</strong>.
+          </div>
+          <div class="result-notice-box verified-correct" id="none-notice-box">
+            <strong>Kết quả đối chiếu:</strong> ViTai kỳ vọng trả về kết quả <strong>NONE</strong> (vì câu hỏi này không có các phương án lựa chọn A, B, C, D).
           </div>
         `;
       } else if (q.options && q.options.length) {
         html += `<div class="options-list" id="options-container">`;
         q.options.forEach(opt => {
           const isSelected = userSelections[q.id].has(opt.label);
+          let rowClasses = ['option-row'];
+          let verdictText = '';
+          let badgeHtml = isSelected ? CHECK_SVG : opt.label;
+
+          if (isSelected) {
+            rowClasses.push('is-selected');
+          }
+
+          if (isAlreadyVerified) {
+            const evalResult = getOptionEvaluation(q, opt.label, isSelected);
+            rowClasses.push(evalResult.rowClass);
+            verdictText = evalResult.verdictText;
+            badgeHtml = evalResult.badgeContent;
+          }
+
+          const cleanText = opt.text.replace(/^[A-Ga-g]\.\s*/, '');
           html += `
-            <div class="option-row ${isSelected ? 'is-selected' : ''}" data-label="${opt.label}">
-              <div class="option-checkbox-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+            <div class="${rowClasses.join(' ')}" data-label="${opt.label}">
+              <div class="option-badge" id="badge-${opt.label}">
+                ${badgeHtml}
               </div>
-              <div class="option-letter-badge">${opt.label}</div>
-              <div class="option-text">${escapeHtml(opt.text)}</div>
-              <span class="verdict-tag" id="verdict-${opt.label}"></span>
+              <div class="option-text">${escapeHtml(cleanText)}</div>
+              <span class="verdict-tag" id="verdict-${opt.label}">${verdictText}</span>
             </div>
           `;
         });
         html += `</div>`;
-      }
 
-      // Explanation callout (shown after clicking "Xác nhận")
-      html += `
-        <div class="explanation-callout" id="explanation-box">
-          <div class="explanation-title" id="explanation-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span id="explanation-heading">Kết quả đối chiếu</span>
-          </div>
-          <div class="explanation-body" id="explanation-text"></div>
-        </div>
-      `;
+        // Notice for NONE questions (Q4 & Q9)
+        if (q.correctAnswers.includes("NONE")) {
+          html += `
+            <div class="result-notice-box verified-info" id="none-all-wrong-box">
+              ⚠️ <strong>Lưu ý:</strong> Tất cả phương án hiển thị ở trên đều là phương án SAI. ViTai cần nhận diện và trả về kết quả <strong>NONE</strong>.
+            </div>
+          `;
+        }
+      }
 
       card.innerHTML = html;
 
-      // Reset footer button to "Xác nhận" state for current question
-      isAnswerVerified = false;
+      // Re-trigger card animation
+      card.classList.remove('animating-in');
+      void card.offsetWidth;
+      card.classList.add('animating-in');
+
+      isAnswerVerified = isAlreadyVerified;
       updateMainActionButtonState();
+
+      // Show notice if already verified
+      if (isAlreadyVerified) {
+        const noneNotice = document.getElementById('none-notice-box');
+        if (noneNotice) noneNotice.classList.add('show');
+        const noneWrong = document.getElementById('none-all-wrong-box');
+        if (noneWrong) noneWrong.classList.add('show');
+      }
 
       // Draw canvas if needed
       if (q.isCanvas) {
@@ -927,7 +1376,7 @@ print(result)`,
     }
 
     /**
-     * Binds click handlers to toggle checkbox square on each option
+     * Binds click handlers on each option row
      */
     function bindOptionClickEvents(q) {
       const container = document.getElementById('options-container');
@@ -936,31 +1385,46 @@ print(result)`,
       const rows = container.querySelectorAll('.option-row');
       rows.forEach(row => {
         row.addEventListener('click', (e) => {
-          // If user was selecting/highlighting text for ViTai (Alt+Q), do not toggle checkbox
+          // If answer was already verified, lock options
+          if (isAnswerVerified) return;
+
+          // If user was selecting/highlighting text for ViTai, do not toggle
           const selection = window.getSelection();
           if (selection && selection.toString().trim().length > 0) {
             return;
           }
 
+          SoundFX.boop();
+
           const label = row.getAttribute('data-label');
+          const badge = document.getElementById(`badge-${label}`);
+
           if (userSelections[q.id].has(label)) {
             userSelections[q.id].delete(label);
             row.classList.remove('is-selected');
+            if (badge) badge.textContent = label;
           } else {
+            // If single-choice question, clear other selections
+            if (!q.isMultiple) {
+              userSelections[q.id].clear();
+              rows.forEach(r => {
+                r.classList.remove('is-selected');
+                const b = r.querySelector('.option-badge');
+                if (b) b.textContent = r.getAttribute('data-label');
+              });
+            }
             userSelections[q.id].add(label);
             row.classList.add('is-selected');
+            if (badge) badge.innerHTML = CHECK_SVG;
           }
         });
       });
     }
 
     /**
-     * Binds "Xác nhận kết quả" and "Bỏ chọn lại"
-     */
-    /**
      * Updates the unified footer action button:
      * - !isAnswerVerified: label "Xác nhận", checkmark icon
-     * - isAnswerVerified: label "Tiếp theo" (or "Hoàn tất & Về trang chủ" on last question), arrow icon
+     * - isAnswerVerified: label "Câu tiếp theo →" (or "Hoàn tất & Về trang chủ →" on last question)
      */
     function updateMainActionButtonState() {
       const btnText = document.getElementById('btn-action-text');
@@ -974,7 +1438,7 @@ print(result)`,
         if (currentQuestionIndex === BENCHMARK_QUESTIONS.length - 1) {
           btnText.textContent = "Hoàn tất & Về trang chủ";
         } else {
-          btnText.textContent = "Tiếp theo";
+          btnText.textContent = "Câu tiếp theo";
         }
         btnIcon.innerHTML = `<line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>`;
       }
@@ -982,26 +1446,43 @@ print(result)`,
 
     /**
      * Executes verification for the current question:
-     * Highlights options (green for correct, red for picked wrong), displays explanation callout.
+     * Highlights options (green for correct, red for picked wrong), plays sound, triggers confetti.
+     * Absolutely NO quotes, NO timers, NO proof images.
      */
     function verifyCurrentQuestion() {
       const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
       const selectedSet = userSelections[q.id] || new Set();
-      const correctSet = new Set(q.correctAnswers);
-      const explanationBox = document.getElementById('explanation-box');
-      const explanationHeading = document.getElementById('explanation-heading');
-      const explanationText = document.getElementById('explanation-text');
+      const correctSet = new Set(q.correctAnswers || []);
 
       // If no options question (Q5)
       if (q.isNoOptions) {
-        if (explanationBox) {
-          explanationBox.classList.add('show');
-          explanationHeading.textContent = "Kết quả: " + q.expectedSummary;
-          explanationText.innerHTML = `<strong>Giải thích:</strong> ${q.explanation}`;
-        }
+        questionStatus[q.id] = 'correct';
+        SoundFX.correct();
+        triggerConfettiBurst(document.getElementById('btn-main-action'));
+        const noneNotice = document.getElementById('none-notice-box');
+        if (noneNotice) noneNotice.classList.add('show');
         isAnswerVerified = true;
         updateMainActionButtonState();
         return;
+      }
+
+      // Check correctness
+      let isCorrect = false;
+      if (q.correctAnswers.includes("NONE")) {
+        // Correct if user didn't pick any of the wrong options, or flagged NONE
+        isCorrect = (selectedSet.size === 0);
+      } else {
+        isCorrect = (selectedSet.size === correctSet.size) &&
+                    ([...selectedSet].every(item => correctSet.has(item)));
+      }
+
+      questionStatus[q.id] = isCorrect ? 'correct' : 'wrong';
+
+      if (isCorrect) {
+        SoundFX.correct();
+        triggerConfettiBurst(document.getElementById('btn-main-action'));
+      } else {
+        SoundFX.wrong();
       }
 
       // Evaluate each option row
@@ -1009,45 +1490,25 @@ print(result)`,
       rows.forEach(row => {
         const label = row.getAttribute('data-label');
         const isUserPicked = selectedSet.has(label);
-        const isCorrectOption = correctSet.has(label);
+        const evalResult = getOptionEvaluation(q, label, isUserPicked);
         const verdictSpan = document.getElementById(`verdict-${label}`);
+        const badge = document.getElementById(`badge-${label}`);
 
-        // Reset previous classes
         row.classList.remove('verified-correct', 'verified-wrong', 'verified-neutral-wrong');
+        row.classList.add(evalResult.rowClass);
 
-        if (isCorrectOption) {
-          // Tô viền xanh nếu đúng
-          row.classList.add('verified-correct');
-          if (verdictSpan) {
-            verdictSpan.textContent = "Đúng ✓";
-          }
-        } else {
-          // Option is wrong
-          if (isUserPicked) {
-            // User picked wrong option -> Tô viền đỏ
-            row.classList.add('verified-wrong');
-            if (verdictSpan) {
-              verdictSpan.textContent = "Sai ✗";
-            }
-          } else {
-            row.classList.add('verified-neutral-wrong');
-            if (verdictSpan) {
-              verdictSpan.textContent = "Sai ✗";
-            }
-          }
+        if (verdictSpan) {
+          verdictSpan.textContent = evalResult.verdictText;
+        }
+        if (badge) {
+          badge.innerHTML = evalResult.badgeContent;
         }
       });
 
-      // Show explanation box
-      if (explanationBox) {
-        explanationBox.classList.add('show');
-        if (q.correctAnswers.includes("NONE")) {
-          explanationHeading.innerHTML = `<span style="color: #E0562D;">⚠️ Lưu ý: ${q.expectedSummary}</span>`;
-          explanationText.innerHTML = `Tất cả các phương án hiển thị ở trên đều là phương án SAI. ViTai cần nhận diện và trả về kết quả <strong>NONE</strong>.<br><br><strong>Chi tiết:</strong> ${q.explanation}`;
-        } else {
-          explanationHeading.textContent = q.expectedSummary;
-          explanationText.innerHTML = `<strong>Giải thích chi tiết:</strong> ${q.explanation}`;
-        }
+      // Show notice for NONE questions (Q4 & Q9)
+      if (q.correctAnswers.includes("NONE")) {
+        const noneWrong = document.getElementById('none-all-wrong-box');
+        if (noneWrong) noneWrong.classList.add('show');
       }
 
       isAnswerVerified = true;
@@ -1056,7 +1517,7 @@ print(result)`,
 
     /**
      * Handles clicking the unified action button:
-     * 1st click: verifies answer & changes label to "Tiếp theo"
+     * 1st click: verifies answer & changes label to "Câu tiếp theo"
      * 2nd click: advances to next question or finishes to index.html
      */
     function handleMainAction() {
@@ -1081,10 +1542,13 @@ print(result)`,
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 2;
 
+      const card = document.getElementById('question-card');
+      const maxW = card ? Math.min(500, card.clientWidth - 40) : 460;
+      const logicalWidth = Math.max(300, maxW);
+
       const codeLines = q.code ? q.code.split('\n') : [];
-      const logicalWidth = Math.min(680, window.innerWidth - 80);
-      const codeBoxHeight = (codeLines.length * 22) + 36;
-      const logicalHeight = 60 + codeBoxHeight + 20;
+      const codeBoxHeight = (codeLines.length * 21) + 32;
+      const logicalHeight = 44 + codeBoxHeight + 16;
 
       canvas.width = logicalWidth * dpr;
       canvas.height = logicalHeight * dpr;
@@ -1102,7 +1566,7 @@ print(result)`,
       ctx.lineWidth = 1;
       ctx.strokeRect(0, 0, logicalWidth, logicalHeight);
 
-      // Top title bar simulation
+      // Top macOS-style bar
       ctx.fillStyle = '#F8FAFC';
       ctx.fillRect(0, 0, logicalWidth, 34);
       ctx.strokeStyle = '#E2E8F0';
@@ -1116,17 +1580,17 @@ print(result)`,
       // Window title
       ctx.fillStyle = '#64748B';
       ctx.font = '600 12px "Inter", sans-serif';
-      ctx.fillText(`${q.subject} - Code Image (Quét bằng Alt+S)`, 68, 21);
+      ctx.fillText(`${q.subject} - Code Image (Alt + S)`, 66, 21);
 
       // Code block background
       ctx.fillStyle = '#0F172A';
-      ctx.fillRect(16, 48, logicalWidth - 32, codeBoxHeight);
+      ctx.fillRect(12, 42, logicalWidth - 24, codeBoxHeight);
 
       // Code text
       ctx.fillStyle = '#F8FAFC';
-      ctx.font = '500 13px "JetBrains Mono", Consolas, monospace';
+      ctx.font = '500 12.5px "JetBrains Mono", Consolas, monospace';
       codeLines.forEach((line, idx) => {
-        ctx.fillText(line, 32, 74 + (idx * 22));
+        ctx.fillText(line, 24, 66 + (idx * 21));
       });
     }
 
@@ -1144,10 +1608,61 @@ print(result)`,
     document.addEventListener('DOMContentLoaded', () => {
       renderCurrentQuestion();
 
+      // Action button
       const btnMainAction = document.getElementById('btn-main-action');
       if (btnMainAction) {
         btnMainAction.addEventListener('click', handleMainAction);
       }
+
+      // Prev question
+      const btnPrev = document.getElementById('btn-prev-question');
+      if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+          if (currentQuestionIndex > 0) {
+            SoundFX.click();
+            currentQuestionIndex--;
+            renderCurrentQuestion();
+          }
+        });
+      }
+
+      // Sound toggle
+      const btnSound = document.getElementById('btn-sound-toggle');
+      if (btnSound) {
+        btnSound.addEventListener('click', () => {
+          SoundFX.toggleMute();
+        });
+      }
+
+      // Reset exam
+      const btnReset = document.getElementById('btn-reset-exam');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          SoundFX.click();
+          if (confirm('Làm lại bài kiểm thử từ Câu 1?')) {
+            currentQuestionIndex = 0;
+            for (let k in userSelections) delete userSelections[k];
+            for (let k in questionStatus) delete questionStatus[k];
+            renderCurrentQuestion();
+          }
+        });
+      }
+
+      // Keyboard shortcuts (ArrowLeft: Prev, ArrowRight/Enter: Next)
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          if (currentQuestionIndex > 0) {
+            SoundFX.click();
+            currentQuestionIndex--;
+            renderCurrentQuestion();
+          }
+        } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+          // If not typing in input
+          if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            handleMainAction();
+          }
+        }
+      });
 
       window.addEventListener('resize', () => {
         const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
