@@ -13,11 +13,10 @@
 
   <style>
     /* ==========================================================================
-       ViTai Interactive Benchmark Suite - Vertical Portrait Layout (TikTok Ready)
-       Design tokens matching ViTai theme & F:\AppMaking\java reference:
-       - Background: #F8FAFC (Clean off-white slate)
-       - Accent: #E0562D / #FF5722 (Signature coral orange)
-       - Vertical single-column stack optimized for 9:16 mobile / portrait recording
+       ViTai Interactive Benchmark Suite - 100vh No-Scroll Vertical Layout
+       Tối ưu hoàn hảo cho quay TikTok (9:16 Portrait / Không cần cuộn chuột)
+       Mọi nội dung (Đề bài, Code/Canvas, 4 đáp án A-B-C-D, Nút điều hướng)
+       nằm trọn 100% trong màn hình!
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -26,146 +25,116 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden; /* Cố định 1 màn hình, triệt tiêu thanh cuộn */
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #F8FAFC;
       color: #0F172A;
-      line-height: 1.6;
-      min-height: 100vh;
-      min-height: 100dvh;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
     }
 
-    /* Top Navigation Header (Compact, branded) */
-    .top-header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background: rgba(248, 250, 252, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+    /* Top Bar Tinh Gọn (Brand + Progress Bar trong 1 hàng duy nhất) */
+    .top-header-bar {
+      flex-shrink: 0;
+      height: 44px;
+      background: rgba(248, 250, 252, 0.98);
       border-bottom: 1px solid #E2E8F0;
       z-index: 50;
     }
 
     .top-header-inner {
-      max-width: 580px;
+      max-width: 540px;
+      height: 100%;
       margin: 0 auto;
-      padding: 10px 16px;
+      padding: 0 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
     }
 
     .brand-tag {
       font-family: 'Instrument Sans', sans-serif;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 14.5px;
       color: #E0562D;
-      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .brand-logo-img {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
       object-fit: cover;
     }
 
-    .btn-return-home {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #FFFFFF;
-      color: #475569;
-      border: 1px solid #CBD5E1;
-      padding: 5px 12px;
-      border-radius: 9999px;
-      font-size: 12.5px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .btn-return-home:hover {
-      background: #0F172A;
-      color: #FFFFFF;
-      border-color: #0F172A;
-    }
-
-    /* Fixed Progress Bar Header (Matches F:\AppMaking\java) */
-    .top-progress-container {
-      width: 100%;
-      max-width: 580px;
-      margin: 0 auto;
-      padding: 14px 16px 6px;
-    }
-
-    .progress-track-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-    }
-
     .progress-label {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #64748B;
-      min-width: 86px;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .progress-bar-bg {
       flex: 1;
-      height: 8px;
+      height: 6px;
       background: #E2E8F0;
       border-radius: 9999px;
       overflow: hidden;
+      min-width: 50px;
     }
 
     .progress-bar-fill {
       height: 100%;
       background: #E0562D;
-      width: 10%;
+      width: 14.3%;
       border-radius: 9999px;
       transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .progress-type-tag {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       background: #FFF7ED;
       color: #E0562D;
       border: 1px solid #FFEDD5;
-      padding: 3px 12px;
+      padding: 2px 10px;
       border-radius: 9999px;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Vertical Container (Tối ưu quay dọc TikTok 9:16) */
-    .test-container {
+    /* Main Container: Chiếm toàn bộ khoảng trống còn lại giữa Top & Bottom */
+    .test-main-container {
       flex: 1;
-      max-width: 580px;
+      min-height: 0; /* Quan trọng để flex child không tràn chiều cao */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      max-width: 540px;
       width: 100%;
       margin: 0 auto;
-      padding: 12px 16px 110px;
-      box-sizing: border-box;
     }
 
-    @keyframes cardTransitionIn {
+    @keyframes cardFadeIn {
       0% {
         opacity: 0;
-        transform: translateY(12px) scale(0.99);
+        transform: translateY(8px) scale(0.99);
       }
       100% {
         opacity: 1;
@@ -173,115 +142,113 @@
       }
     }
 
-    /* Question Card: Clean White Card */
+    /* Card Câu Hỏi Bo Tròn Gọn Gàng */
     .question-card {
+      width: 100%;
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      border-radius: 20px;
-      padding: 24px 20px;
-      box-shadow: 0 8px 30px -4px rgba(15, 23, 42, 0.07);
-      margin-bottom: 0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
     }
 
     .question-card.animating-in {
-      animation: cardTransitionIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: cardFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .question-subject-badge {
-      display: inline-block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #64748B;
-      margin-bottom: 8px;
+      margin-bottom: 3px;
     }
 
     .question-title {
-      font-size: 18px;
+      font-size: 15.5px;
       font-weight: 700;
       color: #0F172A;
-      line-height: 1.5;
-      margin-bottom: 10px;
-      white-space: pre-wrap;
+      line-height: 1.35;
+      margin-bottom: 5px;
     }
 
     .question-prompt {
-      font-size: 14.5px;
+      font-size: 13px;
       color: #475569;
-      line-height: 1.55;
-      margin-bottom: 12px;
+      line-height: 1.4;
+      margin-bottom: 6px;
     }
 
     .question-subtext {
-      font-size: 15px;
+      font-size: 13.5px;
       font-weight: 700;
       color: #0F172A;
-      margin: 14px 0 12px;
+      margin: 6px 0 6px;
     }
 
-    /* Code Container */
+    /* Code Box Tinh Gọn */
     .code-box {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin: 10px 0 14px;
+      border-radius: 9px;
+      padding: 8px 12px;
+      margin: 4px 0 6px;
       overflow-x: auto;
     }
 
     .code-box pre {
       margin: 0;
       font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
-      font-size: 13.5px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.38;
       color: #0F172A;
       white-space: pre;
-      word-break: normal;
     }
 
-    /* Canvas Wrapper (Q2 & Q7 Image simulation) */
+    /* Canvas Code Image (Q2 & Q5) */
     .canvas-wrapper {
-      margin: 10px 0 14px;
+      margin: 4px 0 6px;
       border: 1px solid #E2E8F0;
-      border-radius: 12px;
+      border-radius: 9px;
       overflow: hidden;
       background: #F8FAFC;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 12px;
+      padding: 6px;
     }
 
     .canvas-notice {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 12px;
+      gap: 5px;
+      font-size: 11px;
       font-weight: 600;
       color: #E0562D;
-      margin-bottom: 10px;
-      text-align: center;
+      margin-bottom: 5px;
     }
 
     .benchmark-canvas {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     /* Options Prompt Header */
     .options-header-prompt {
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
       color: #0F172A;
-      margin-top: 18px;
-      margin-bottom: 12px;
-      line-height: 1.45;
+      margin-top: 6px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .options-header-prompt svg {
@@ -289,36 +256,35 @@
       flex-shrink: 0;
     }
 
-    /* Options List */
+    /* Danh sách 4 Đáp án A - B - C - D */
     .options-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
     }
 
     .option-row {
       position: relative;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      min-height: 50px;
+      gap: 10px;
+      padding: 7px 12px;
+      min-height: 38px;
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       user-select: none;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      font-size: 14.5px;
+      transition: all 0.15s ease;
+      font-size: 13.5px;
       color: #1E293B;
-      line-height: 1.45;
+      line-height: 1.35;
     }
 
     .option-row:not(.verified-correct):not(.verified-wrong):not(.verified-neutral-wrong):hover {
       border-color: #CBD5E1;
       background: #F8FAFC;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
 
     /* Selected State */
@@ -327,32 +293,21 @@
       border-color: #E0562D;
     }
 
-    /* Option Badge (shows [A] or [✓] when selected) */
     .option-badge {
-      width: 30px;
-      height: 30px;
-      border-radius: 7px;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
       background: #FFFFFF;
       border: 1.5px solid #CBD5E1;
       color: #0F172A;
       font-weight: 700;
-      font-size: 13.5px;
+      font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.15s ease;
+      transition: all 0.12s ease;
       font-family: 'Inter', sans-serif;
-    }
-
-    .option-row:hover .option-badge {
-      border-color: #94A3B8;
-    }
-
-    @keyframes badgePop {
-      0% { transform: scale(0.8); }
-      50% { transform: scale(1.18); }
-      100% { transform: scale(1); }
     }
 
     .option-row.is-selected .option-badge {
@@ -360,79 +315,43 @@
       border-color: #E0562D;
       color: #FFFFFF;
       font-weight: 800;
-      animation: badgePop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .option-text {
       flex: 1;
       user-select: text;
       -webkit-user-select: text;
-      padding-right: 8px;
+      padding-right: 6px;
       word-break: break-word;
     }
 
     @keyframes verdictPopIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.5);
-      }
-      70% {
-        transform: scale(1.12);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      0% { opacity: 0; transform: scale(0.6); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
-    /* Verdict Badge in Right Edge (ĐÚNG ✓ / SAI ✗) */
     .verdict-tag {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 2px 8px;
       border-radius: 9999px;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
       display: none;
       flex-shrink: 0;
       margin-left: auto;
     }
 
-    @keyframes correctPulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-        transform: scale(1.015);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-        transform: scale(1);
-      }
-    }
-
-    @keyframes wrongShake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-6px); }
-      40% { transform: translateX(6px); }
-      60% { transform: translateX(-4px); }
-      80% { transform: translateX(4px); }
-    }
-
-    /* Highlighted States after Verification */
+    /* Trạng thái xác nhận ĐÚNG / SAI */
     .option-row.verified-correct {
       border: 2px solid #10B981 !important;
       background: #ECFDF5 !important;
-      animation: correctPulse 0.45s ease-out;
     }
 
     .option-row.verified-correct .verdict-tag {
       display: inline-block;
       background: #10B981;
       color: #FFFFFF;
-      animation: verdictPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: verdictPopIn 0.2s ease-out;
     }
 
     .option-row.verified-correct .option-badge {
@@ -444,14 +363,13 @@
     .option-row.verified-wrong {
       border: 2px solid #EF4444 !important;
       background: #FEF2F2 !important;
-      animation: wrongShake 0.38s ease-in-out;
     }
 
     .option-row.verified-wrong .verdict-tag {
       display: inline-block;
       background: #EF4444;
       color: #FFFFFF;
-      animation: verdictPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: verdictPopIn 0.2s ease-out;
     }
 
     .option-row.verified-wrong .option-badge {
@@ -468,7 +386,7 @@
 
     .option-row.verified-neutral-wrong {
       border-color: #E2E8F0;
-      opacity: 0.55;
+      opacity: 0.5;
     }
 
     .option-row.verified-neutral-wrong .verdict-tag {
@@ -481,77 +399,37 @@
       color: #94A3B8;
     }
 
-    /* Inline Notice Boxes (For NONE / No options questions) */
-    .result-notice-box {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 13.5px;
-      line-height: 1.5;
-      display: none;
-    }
-
-    .result-notice-box.show {
-      display: block;
-      animation: cardTransitionIn 0.25s ease-out;
-    }
-
-    .result-notice-box.verified-info {
-      background: #FFFBEB;
-      border: 1px solid #FCD34D;
-      color: #92400E;
-    }
-
-    .result-notice-box.verified-correct {
-      background: #ECFDF5;
-      border: 1px solid #A7F3D0;
-      color: #065F46;
-    }
-
-    .no-options-banner {
-      background: #FFFBEB;
-      border: 1px dashed #F59E0B;
-      padding: 14px 16px;
-      border-radius: 12px;
-      color: #B45309;
-      font-size: 14px;
-      line-height: 1.55;
-      margin: 12px 0;
-    }
-
-    /* Fixed Bottom Action Bar (Centered with max-width: 580px) */
-    .test-actions-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(248, 250, 252, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+    /* Fixed Bottom Action Bar Gọn Nhẹ */
+    .bottom-actions-bar {
+      flex-shrink: 0;
+      height: 52px;
+      background: rgba(248, 250, 252, 0.98);
       border-top: 1px solid #E2E8F0;
-      z-index: 99;
-      padding: 12px 16px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
     }
 
-    .test-actions-inner {
-      max-width: 580px;
+    .bottom-actions-inner {
+      max-width: 540px;
+      width: 100%;
       margin: 0 auto;
+      padding: 0 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
     }
 
     .secondary-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
-    /* Circle Action Buttons */
     .btn-circle-action {
-      width: 46px;
-      height: 46px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
@@ -560,25 +438,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
-      transition: all 0.2s ease;
-      box-sizing: border-box;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+      transition: all 0.15s ease;
       flex-shrink: 0;
     }
 
     .btn-circle-action:hover:not(:disabled) {
       background: #F1F5F9;
-      color: #0F172A;
-      border-color: #CBD5E1;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
+      transform: translateY(-1px);
     }
 
     .btn-circle-action:disabled {
-      opacity: 0.35;
+      opacity: 0.3;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
       pointer-events: none;
     }
 
@@ -587,111 +459,91 @@
       background: #F8FAFC;
     }
 
-    /* Next / Verify Main Button */
+    /* Nút Chính Cam "Xác nhận" / "Tiếp theo" */
     .btn-next-question {
       background: #E0562D;
       color: #FFFFFF;
       font-family: 'Inter', sans-serif;
-      font-size: 14.5px;
+      font-size: 13.5px;
       font-weight: 700;
-      height: 46px;
-      padding: 0 24px;
+      height: 38px;
+      padding: 0 20px;
       border-radius: 9999px;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(224, 86, 45, 0.4), 0 2px 4px rgba(0, 0, 0, 0.08);
-      transition: all 0.2s ease;
-      box-sizing: border-box;
+      gap: 6px;
+      box-shadow: 0 3px 12px rgba(224, 86, 45, 0.35);
+      transition: all 0.15s ease;
       flex: 1;
-      max-width: 240px;
+      max-width: 210px;
     }
 
     .btn-next-question:hover:not(:disabled) {
       background: #FF5722;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(224, 86, 45, 0.5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(224, 86, 45, 0.45);
     }
 
     .btn-next-question:disabled {
       opacity: 0.45;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
       pointer-events: none;
-    }
-
-    @media (max-width: 480px) {
-      .question-card { padding: 20px 14px; }
-      .test-container { padding: 10px 12px 105px; }
-      .btn-next-question { padding: 0 16px; font-size: 14px; }
-      .btn-circle-action { width: 42px; height: 42px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP BRAND HEADER -->
-  <header class="top-header">
+  <!-- TOP BAR (TÍCH HỢP BRAND + TIẾN TRÌNH TRÊN 1 DÒNG) -->
+  <header class="top-header-bar">
     <div class="top-header-inner">
-      <a href="index.html" class="brand-tag">
+      <a href="index.html" class="brand-tag" title="Về trang chủ ViTai">
         <img src="assets/logo.png" alt="ViTai Logo" class="brand-logo-img" onerror="this.src='assets/icon.ico'">
-        <span>ViTai Benchmark</span>
+        <span>ViTai</span>
       </a>
-      <a href="index.html" class="btn-return-home">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        <span>Về trang chủ</span>
-      </a>
-    </div>
-  </header>
 
-  <!-- TOP PROGRESS TRACKER (Matches F:\AppMaking\java) -->
-  <div class="top-progress-container">
-    <div class="progress-track-wrapper">
-      <div class="progress-label" id="progress-text">Câu 1 / 10</div>
+      <span class="progress-label" id="progress-text">Câu 1 / 7</span>
+
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progress-fill"></div>
       </div>
+
       <div class="progress-type-tag" id="progress-tag">Dạng 1 - Code chữ</div>
     </div>
-  </div>
+  </header>
 
-  <!-- MAIN TEST AREA (VERTICAL 9:16 LAYOUT) -->
-  <main class="test-container">
-    <!-- Active Question Card Content -->
+  <!-- MAIN VIEWPORT CONTAINER (CỐ ĐỊNH TRONG 1 MÀN HÌNH) -->
+  <main class="test-main-container">
     <div class="question-card" id="question-card">
       <!-- Injected by JS -->
     </div>
   </main>
 
-  <!-- FIXED BOTTOM NAVIGATION BAR -->
-  <footer class="test-actions-bar">
-    <div class="test-actions-inner">
+  <!-- BOTTOM BAR (ĐIỀU HƯỚNG GỌN NHẸ) -->
+  <footer class="bottom-actions-bar">
+    <div class="bottom-actions-inner">
       <div class="secondary-controls">
-        <!-- Previous Question Button -->
+        <!-- Previous Question -->
         <button type="button" class="btn-circle-action" id="btn-prev-question" title="Câu trước" aria-label="Câu trước">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
         </button>
 
-        <!-- Sound Toggle Button -->
+        <!-- Sound Toggle -->
         <button type="button" class="btn-circle-action" id="btn-sound-toggle" title="Bật/Tắt âm thanh" aria-label="Bật/Tắt âm thanh">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="sound-toggle-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="sound-toggle-icon">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
         </button>
 
-        <!-- Reset Exam Button -->
+        <!-- Reset Exam -->
         <button type="button" class="btn-circle-action" id="btn-reset-exam" title="Làm lại từ đầu" aria-label="Làm lại từ đầu">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -699,10 +551,10 @@
         </button>
       </div>
 
-      <!-- Primary Action: Xác nhận / Câu tiếp theo -->
+      <!-- Primary Action: Xác nhận / Tiếp theo -->
       <button type="button" class="btn-next-question" id="btn-main-action">
         <span id="btn-action-text">Xác nhận</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="btn-action-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="btn-action-icon">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </button>
@@ -711,7 +563,7 @@
 
   <script>
     /* ==========================================================================
-       SoundFX Web Audio API Synthesizer (Zero External Audio Files)
+       SoundFX Web Audio API Synthesizer (Không tải tệp âm thanh ngoài)
        ========================================================================== */
     const SoundFX = (() => {
       let ctx = null;
@@ -856,7 +708,7 @@
       };
     })();
 
-    /* Confetti Particle Burst for Correct Verification */
+    /* Confetti Particle Burst Khi Đúng */
     function triggerConfettiBurst(originElem) {
       const rect = originElem ? originElem.getBoundingClientRect() : null;
       const startX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
@@ -866,15 +718,15 @@
       container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
       document.body.appendChild(container);
 
-      const colors = ['#10B981', '#34D399', '#F59E0B', '#E0562D', '#3B82F6', '#8B5CF6'];
-      const count = 16;
+      const colors = ['#10B981', '#34D399', '#F59E0B', '#E0562D', '#3B82F6'];
+      const count = 14;
 
       for (let i = 0; i < count; i++) {
         const dot = document.createElement('div');
         const angle = (i / count) * 2 * Math.PI + (Math.random() * 0.4 - 0.2);
-        const dist = 60 + Math.random() * 70;
+        const dist = 50 + Math.random() * 60;
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const size = 6 + Math.random() * 5;
+        const size = 5 + Math.random() * 4;
 
         dot.style.cssText = `
           position: absolute;
@@ -885,52 +737,43 @@
           background: ${color};
           border-radius: 50%;
           transform: translate(-50%, -50%);
-          transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-out;
+          transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-out;
           opacity: 1;
         `;
         container.appendChild(dot);
 
         requestAnimationFrame(() => {
           const targetX = Math.cos(angle) * dist;
-          const targetY = Math.sin(angle) * dist - 20;
+          const targetY = Math.sin(angle) * dist - 15;
           dot.style.transform = `translate(calc(-50% + ${targetX}px), calc(-50% + ${targetY}px)) scale(0.6)`;
           dot.style.opacity = '0';
         });
       }
 
-      setTimeout(() => {
-        container.remove();
-      }, 700);
+      setTimeout(() => { container.remove(); }, 600);
     }
 
-    /* Checkmark SVG Icon for Option Badge */
-    const CHECK_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    const CHECK_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
 
     /* ==========================================================================
-       ViTai 10-Question Benchmark Data
+       Dữ Liệu 7 Câu Hỏi Chuẩn Hoá (Chỉ giữ câu có đáp án, chuẩn 4 phương án A-B-C-D)
        ========================================================================== */
     const BENCHMARK_QUESTIONS = [
-      // 1. Dạng 1: Code dạng chữ (C pointer arithmetic - 6 options)
+      // 1. Dạng 1: Code chữ - C pointer arithmetic
       {
         id: 1,
         typeLabel: "Dạng 1 - Code chữ",
         subject: "Kỹ thuật lập trình C",
-        title: "Câu 1: Cho đoạn mã nguồn C sau đây:",
-        prompt: "Quan sát đoạn mã xử lý con trỏ và toán tử tăng giảm trên mảng:",
+        title: "Câu 1: Đoạn mã nguồn C sau đây:",
+        prompt: "Quan sát toán tử con trỏ và tăng giảm trên mảng:",
         code: `#include <stdio.h>
-
 int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int *ptr = arr;
-    
-    int a = *ptr++;
-    int b = ++*ptr;
-    int c = *++ptr;
-    
+    int arr[] = {10, 20, 30, 40, 50}, *ptr = arr;
+    int a = *ptr++, b = ++*ptr, c = *++ptr;
     printf("%d, %d, %d", a, b, c);
     return 0;
 }`,
-        questionText: "Kết quả in ra màn hình của chương trình là gì?",
+        questionText: "Kết quả in ra màn hình là gì?",
         isCanvas: false,
         isMultiple: false,
         correctAnswers: ["B"],
@@ -938,28 +781,25 @@ int main() {
           { label: "A", text: "10, 20, 30" },
           { label: "B", text: "10, 21, 30" },
           { label: "C", text: "11, 21, 40" },
-          { label: "D", text: "10, 21, 40" },
-          { label: "E", text: "11, 20, 30" },
-          { label: "F", text: "20, 21, 30" }
+          { label: "D", text: "10, 21, 40" }
         ]
       },
 
-      // 2. Dạng 2: Code dạng ảnh canvas (Python Generator - 5 options)
+      // 2. Dạng 2: Code ảnh Canvas - Python Generator
       {
         id: 2,
         typeLabel: "Dạng 2 - Code ảnh (Canvas)",
         subject: "Python Core",
-        title: "Câu 2: Đoạn mã Python sau đây được dựng dạng hình ảnh:",
-        prompt: "Đoạn code nằm trong Canvas hình ảnh (không thể bôi đen chữ). Dùng phím tắt Alt + S (Vision Mode) của ViTai để khoanh vùng ảnh:",
+        title: "Câu 2: Đoạn mã Python kết xuất dạng ảnh:",
+        prompt: "Dùng phím tắt Alt + S (Vision) của ViTai để khoanh vùng ảnh:",
         code: `def num_generator():
     for i in range(1, 10):
-        if i % 2 != 0:
-            yield i
+        if i % 2 != 0: yield i
 
 filtered = [x for x in num_generator()]
 result = sum(filtered[::2])
 print(result)`,
-        questionText: "Giá trị của biến result được in ra màn hình là gì?",
+        questionText: "Giá trị của biến result in ra là gì?",
         isCanvas: true,
         isMultiple: false,
         correctAnswers: ["B"],
@@ -967,88 +807,45 @@ print(result)`,
           { label: "A", text: "25" },
           { label: "B", text: "15" },
           { label: "C", text: "10" },
-          { label: "D", text: "16" },
-          { label: "E", text: "21" }
+          { label: "D", text: "16" }
         ]
       },
 
-      // 3. Dạng 3: Lý thuyết CSDL đa đáp án đúng (6 options)
+      // 3. Dạng 3: Lý thuyết CSDL ACID - Đa đáp án
       {
         id: 3,
         typeLabel: "Dạng 3 - Lý thuyết (Đa đáp án)",
         subject: "Cơ sở dữ liệu",
         title: "Câu 3: Các tính chất của Transaction trong mô hình ACID",
-        prompt: "Trong hệ quản trị cơ sở dữ liệu quan hệ (RDBMS), xét các đặc điểm của một Giao dịch (Transaction) theo chuẩn ACID. Chọn các phát biểu ĐÚNG dưới đây (có thể có nhiều đáp án đúng):",
+        prompt: "Xét các đặc điểm của Giao dịch (Transaction). Chọn các phát biểu ĐÚNG:",
         code: null,
         questionText: null,
         isCanvas: false,
         isMultiple: true,
         correctAnswers: ["A", "B", "C", "D"],
         options: [
-          { label: "A", text: "Atomicity: Toàn bộ thao tác thành công hoặc toàn bộ bị hủy bỏ (All or Nothing)." },
-          { label: "B", text: "Consistency: Dữ liệu chuyển từ trạng thái hợp lệ này sang trạng thái hợp lệ khác." },
-          { label: "C", text: "Isolation: Các giao dịch diễn ra đồng thời không can thiệp kết quả của nhau." },
-          { label: "D", text: "Durability: Dữ liệu đã commit sẽ được lưu bền vững trên ổ cứng ngay cả khi mất điện." },
-          { label: "E", text: "Atomicity cho phép một giao dịch lưu lại một phần dữ liệu khi gặp sự cố." },
-          { label: "F", text: "Isolation yêu cầu tất cả giao dịch phải được thực thi tuần tự lần lượt từng giao dịch." }
+          { label: "A", text: "Atomicity: Toàn bộ thao tác thành công hoặc toàn bộ bị hủy bỏ." },
+          { label: "B", text: "Consistency: Dữ liệu chuyển từ trạng thái hợp lệ này sang trạng thái khác." },
+          { label: "C", text: "Isolation: Các giao dịch đồng thời không can thiệp kết quả của nhau." },
+          { label: "D", text: "Durability: Dữ liệu đã commit được lưu bền vững ngay cả khi mất điện." }
         ]
       },
 
-      // 4. Dạng 4: Không có đáp án đúng trong các lựa chọn (6 options - all wrong)
+      // 4. Dạng 4: C++ Static variable recursion
       {
         id: 4,
-        typeLabel: "Dạng 4 - Không có đáp án (NONE)",
-        subject: "Cấu trúc dữ liệu & Thuật toán",
-        title: "Câu 4: Độ phức tạp thuật toán QuickSort",
-        prompt: "Trong trường hợp tốt nhất (Best-case scenario), độ phức tạp thời gian của thuật toán sắp xếp nhanh (QuickSort) khi phần tử chốt (pivot) luôn chia mảng thành hai nửa bằng nhau là bao nhiêu?",
-        code: null,
-        questionText: "Chọn phương án đúng nhất:",
-        isCanvas: false,
-        isMultiple: false,
-        correctAnswers: ["NONE"],
-        options: [
-          { label: "A", text: "O(1)" },
-          { label: "B", text: "O(n)" },
-          { label: "C", text: "O(n^2)" },
-          { label: "D", text: "O(2^n)" },
-          { label: "E", text: "O(log n)" },
-          { label: "F", text: "O(n!)" }
-        ]
-      },
-
-      // 5. Dạng 5: Không có phương án nào để chọn (kỳ vọng NONE)
-      {
-        id: 5,
-        typeLabel: "Dạng 5 - Không có phương án",
-        subject: "Lập trình hướng đối tượng (OOP)",
-        title: "Câu 5: Nguyên lý Đóng gói trong OOP",
-        prompt: "Trong lập trình hướng đối tượng (OOP), hãy nêu tên tính chất cho phép ẩn giấu thông tin và dữ liệu nội tại của đối tượng, ngăn chặn truy cập trực tiếp từ bên ngoài và chỉ cho phép tương tác thông qua các phương thức công khai (getter/setter).",
-        code: null,
-        questionText: null,
-        isCanvas: false,
-        isMultiple: false,
-        isNoOptions: true,
-        correctAnswers: ["NONE"],
-        options: []
-      },
-
-      // 6. Dạng 1': Biến thể code dạng chữ (C++ Đệ quy & Static - 6 options)
-      {
-        id: 6,
-        typeLabel: "Dạng 1' - Code chữ biến thể",
+        typeLabel: "Dạng 4 - C++ Đệ quy",
         subject: "Kỹ thuật lập trình C++",
-        title: "Câu 6: Cho đoạn mã nguồn C++ sau đây:",
-        prompt: "Quan sát hàm đệ quy có sử dụng biến tĩnh (static variable):",
+        title: "Câu 4: Hàm đệ quy C++ có biến tĩnh (static):",
+        prompt: "Quan sát giá trị tích lũy của biến static:",
         code: `#include <iostream>
 using namespace std;
-
 int func(int n) {
     static int count = 0;
     count += n;
     if (n <= 1) return count;
     return func(n - 1) + func(n - 2);
 }
-
 int main() {
     cout << func(3);
     return 0;
@@ -1061,31 +858,26 @@ int main() {
           { label: "A", text: "12" },
           { label: "B", text: "16" },
           { label: "C", text: "8" },
-          { label: "D", text: "14" },
-          { label: "E", text: "18" },
-          { label: "F", text: "20" }
+          { label: "D", text: "14" }
         ]
       },
 
-      // 7. Dạng 2': Biến thể code dạng ảnh canvas (C cấp phát động - 5 options)
+      // 5. Dạng 5: C cấp phát động con trỏ cấp 2 (Canvas)
       {
-        id: 7,
-        typeLabel: "Dạng 2' - Code ảnh biến thể",
+        id: 5,
+        typeLabel: "Dạng 5 - C Con trỏ (Canvas)",
         subject: "Kỹ thuật lập trình C",
-        title: "Câu 7: Quản lý bộ nhớ động và con trỏ cấp 2 trong C:",
-        prompt: "Hình ảnh mã nguồn được kết xuất trên Canvas (không có text DOM). Dùng Alt + S để quét vùng ảnh:",
+        title: "Câu 5: Quản lý bộ nhớ động và con trỏ cấp 2 trong C:",
+        prompt: "Mã nguồn dạng hình ảnh. Dùng Alt + S để quét vùng ảnh:",
         code: `#include <stdio.h>
 #include <stdlib.h>
-
 void modify(int **ptr) {
     **ptr += 5;
     *ptr = (int *)malloc(sizeof(int));
     **ptr = 20;
 }
-
 int main() {
-    int x = 10;
-    int *p = &x;
+    int x = 10, *p = &x;
     modify(&p);
     printf("%d, %d", x, *p);
     free(p);
@@ -1099,68 +891,42 @@ int main() {
           { label: "A", text: "10, 20" },
           { label: "B", text: "20, 20" },
           { label: "C", text: "15, 20" },
-          { label: "D", text: "15, 10" },
-          { label: "E", text: "Lỗi Segmentation Fault" }
+          { label: "D", text: "15, 10" }
         ]
       },
 
-      // 8. Dạng 3': Biến thể lý thuyết đa đáp án (Java Abstract vs Interface - 6 options)
+      // 6. Dạng 6: Java Abstract vs Interface - Đa đáp án
       {
-        id: 8,
-        typeLabel: "Dạng 3' - Lý thuyết Java đa đáp án",
+        id: 6,
+        typeLabel: "Dạng 6 - Java Interface (Đa đáp án)",
         subject: "Lập trình hướng đối tượng Java",
-        title: "Câu 8: So sánh Abstract Class và Interface trong Java",
-        prompt: "Trong ngôn ngữ Java (từ Java 8 trở lên), xét các quy tắc về Lớp trừu tượng (Abstract Class) và Giao diện (Interface). Chọn các phát biểu ĐÚNG (có thể có nhiều đáp án đúng):",
+        title: "Câu 6: So sánh Abstract Class và Interface trong Java",
+        prompt: "Xét các quy tắc trong Java (từ Java 8 trở lên). Chọn các phát biểu ĐÚNG:",
         code: null,
         questionText: null,
         isCanvas: false,
         isMultiple: true,
-        correctAnswers: ["A", "B", "D", "E"],
+        correctAnswers: ["A", "B", "D"],
         options: [
-          { label: "A", text: "Một class chỉ có thể kế thừa tối đa một abstract class nhưng có thể implement nhiều interface." },
-          { label: "B", text: "Interface từ Java 8 có thể chứa phương thức có phần thân xử lý thông qua từ khóa default." },
-          { label: "C", text: "Abstract class không thể chứa hàm dựng (constructor), chỉ interface mới có constructor." },
-          { label: "D", text: "Các biến khai báo trong Interface mặc định luôn là public static final." },
-          { label: "E", text: "Abstract class có thể chứa các biến non-static và non-final với mọi access modifier." },
-          { label: "F", text: "Không thể tạo bất kỳ phương thức static nào bên trong một Interface." }
+          { label: "A", text: "Một class chỉ kế thừa tối đa 1 abstract class nhưng có thể implement nhiều interface." },
+          { label: "B", text: "Interface từ Java 8 có thể chứa phương thức default có phần thân xử lý." },
+          { label: "C", text: "Abstract class không thể chứa hàm dựng (constructor)." },
+          { label: "D", text: "Các biến khai báo trong Interface mặc định luôn là public static final." }
         ]
       },
 
-      // 9. Dạng 4': Biến thể không có đáp án đúng (Chuẩn hóa CSDL - 6 options all wrong)
+      // 7. Dạng 7: Python List Comprehension matrix slicing
       {
-        id: 9,
-        typeLabel: "Dạng 4' - Không có đáp án (NONE)",
-        subject: "Cơ sở dữ liệu quan hệ",
-        title: "Câu 9: Chuẩn hóa quan hệ và dạng chuẩn cao nhất",
-        prompt: "Xét lược đồ quan hệ R(A, B, C, D) với tập phụ thuộc hàm F = { A -> B, B -> C, C -> D }. Biết A là khóa chính duy nhất của R. Lược đồ R đạt mức dạng chuẩn cao nhất là dạng chuẩn nào?",
-        code: null,
-        questionText: "Chọn mức dạng chuẩn cao nhất mà lược đồ R thỏa mãn:",
-        isCanvas: false,
-        isMultiple: false,
-        correctAnswers: ["NONE"],
-        options: [
-          { label: "A", text: "Dạng chuẩn 3 (3NF)" },
-          { label: "B", text: "Dạng chuẩn Boyce-Codd (BCNF)" },
-          { label: "C", text: "Dạng chuẩn 4 (4NF)" },
-          { label: "D", text: "Dạng chuẩn 5 (5NF)" },
-          { label: "E", text: "Dạng chuẩn miền/khóa (DKNF)" },
-          { label: "F", text: "Dạng chuẩn 6 (6NF)" }
-        ]
-      },
-
-      // 10. Dạng 1'': Biến thể code dạng chữ (Python List Comprehension & Slice - 6 options)
-      {
-        id: 10,
-        typeLabel: "Dạng 1'' - Code chữ biến thể",
+        id: 7,
+        typeLabel: "Dạng 7 - Python Thuật toán",
         subject: "Python Thuật toán & Mảng",
-        title: "Câu 10: Xử lý ma trận bằng List Comprehension trong Python:",
-        prompt: "Cho đoạn mã nguồn Python sau đây:",
+        title: "Câu 7: Xử lý ma trận bằng List Comprehension:",
+        prompt: "Quan sát đoạn lọc số lẻ và bước nhảy slice:",
         code: `matrix = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
 ]
-
 flatten = [val for row in matrix for val in row if val % 2 != 0]
 res = sum(flatten[::2])
 print(res)`,
@@ -1172,31 +938,19 @@ print(res)`,
           { label: "A", text: "25" },
           { label: "B", text: "15" },
           { label: "C", text: "10" },
-          { label: "D", text: "16" },
-          { label: "E", text: "21" },
-          { label: "F", text: "9" }
+          { label: "D", text: "16" }
         ]
       }
     ];
 
     let currentQuestionIndex = 0;
     let isAnswerVerified = false;
-    // Map to store user selected options per question id: { 1: Set(['B']), ... }
     const userSelections = {};
-    const questionStatus = {}; // { 1: 'correct' | 'wrong' | 'unanswered' }
+    const questionStatus = {};
 
     function getOptionEvaluation(q, label, isSelected) {
       const correctSet = new Set(q.correctAnswers || []);
       const isCorrectOption = correctSet.has(label);
-
-      if (q.correctAnswers.includes("NONE")) {
-        // All options are wrong
-        if (isSelected) {
-          return { rowClass: 'verified-wrong', verdictText: 'Sai ✗', badgeContent: CHECK_SVG };
-        } else {
-          return { rowClass: 'verified-neutral-wrong', verdictText: '', badgeContent: label };
-        }
-      }
 
       if (q.isMultiple) {
         if (isCorrectOption && isSelected) {
@@ -1229,14 +983,13 @@ print(res)`,
       const progressTag = document.getElementById('progress-tag');
       const btnPrev = document.getElementById('btn-prev-question');
 
-      // Ensure a Set exists for current question
       if (!userSelections[q.id]) {
         userSelections[q.id] = new Set();
       }
 
       const isAlreadyVerified = Boolean(questionStatus[q.id]);
 
-      // Update Header Progress
+      // Cập nhật Header
       if (progressText) progressText.textContent = `Câu ${currentQuestionIndex + 1} / ${BENCHMARK_QUESTIONS.length}`;
       if (progressFill) progressFill.style.width = `${((currentQuestionIndex + 1) / BENCHMARK_QUESTIONS.length) * 100}%`;
       if (progressTag) progressTag.textContent = q.typeLabel;
@@ -1251,17 +1004,17 @@ print(res)`,
         <p class="question-prompt">${escapeHtml(q.prompt)}</p>
       `;
 
-      // Canvas Question (Q2 & Q7)
+      // Canvas / Code
       if (q.isCanvas) {
         html += `
           <div class="canvas-wrapper">
             <div class="canvas-notice">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
-              <span>Vùng ảnh Canvas (Không bôi đen) • Dùng phím Alt + S để khoanh vùng:</span>
+              <span>Vùng ảnh Canvas • Dùng phím Alt + S để quét vùng ảnh:</span>
             </div>
             <canvas id="benchmark-canvas-element" class="benchmark-canvas"></canvas>
           </div>
@@ -1278,75 +1031,53 @@ print(res)`,
         html += `<p class="question-subtext">${escapeHtml(q.questionText)}</p>`;
       }
 
-      // Options header prompt
+      // Nhãn Chọn phương án
       const promptLabel = q.isMultiple ? "Chọn các phương án đúng:" : "Chọn một phương án đúng nhất:";
-      if (!q.isNoOptions) {
-        html += `
-          <div class="options-header-prompt">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 11 12 14 22 4"></polyline>
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-            </svg>
-            <span>${escapeHtml(promptLabel)}</span>
-          </div>
-        `;
-      }
+      html += `
+        <div class="options-header-prompt">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>${escapeHtml(promptLabel)}</span>
+        </div>
+      `;
 
-      // Render Options
-      if (q.isNoOptions) {
-        html += `
-          <div class="no-options-banner">
-            ⚠️ <strong>Câu hỏi tự luận không có phương án:</strong> Hãy dùng phím tắt <strong>Alt + Q</strong> của ViTai để kiểm tra khả năng nhận diện và trả về <strong>NONE</strong>.
-          </div>
-          <div class="result-notice-box verified-correct" id="none-notice-box">
-            <strong>Kết quả đối chiếu:</strong> ViTai kỳ vọng trả về kết quả <strong>NONE</strong> (vì câu hỏi này không có các phương án lựa chọn A, B, C, D).
-          </div>
-        `;
-      } else if (q.options && q.options.length) {
-        html += `<div class="options-list" id="options-container">`;
-        q.options.forEach(opt => {
-          const isSelected = userSelections[q.id].has(opt.label);
-          let rowClasses = ['option-row'];
-          let verdictText = '';
-          let badgeHtml = isSelected ? CHECK_SVG : opt.label;
+      // Render đúng 4 options A, B, C, D
+      html += `<div class="options-list" id="options-container">`;
+      q.options.forEach(opt => {
+        const isSelected = userSelections[q.id].has(opt.label);
+        let rowClasses = ['option-row'];
+        let verdictText = '';
+        let badgeHtml = isSelected ? CHECK_SVG : opt.label;
 
-          if (isSelected) {
-            rowClasses.push('is-selected');
-          }
-
-          if (isAlreadyVerified) {
-            const evalResult = getOptionEvaluation(q, opt.label, isSelected);
-            rowClasses.push(evalResult.rowClass);
-            verdictText = evalResult.verdictText;
-            badgeHtml = evalResult.badgeContent;
-          }
-
-          const cleanText = opt.text.replace(/^[A-Ga-g]\.\s*/, '');
-          html += `
-            <div class="${rowClasses.join(' ')}" data-label="${opt.label}">
-              <div class="option-badge" id="badge-${opt.label}">
-                ${badgeHtml}
-              </div>
-              <div class="option-text">${escapeHtml(cleanText)}</div>
-              <span class="verdict-tag" id="verdict-${opt.label}">${verdictText}</span>
-            </div>
-          `;
-        });
-        html += `</div>`;
-
-        // Notice for NONE questions (Q4 & Q9)
-        if (q.correctAnswers.includes("NONE")) {
-          html += `
-            <div class="result-notice-box verified-info" id="none-all-wrong-box">
-              ⚠️ <strong>Lưu ý:</strong> Tất cả phương án hiển thị ở trên đều là phương án SAI. ViTai cần nhận diện và trả về kết quả <strong>NONE</strong>.
-            </div>
-          `;
+        if (isSelected) {
+          rowClasses.push('is-selected');
         }
-      }
+
+        if (isAlreadyVerified) {
+          const evalResult = getOptionEvaluation(q, opt.label, isSelected);
+          rowClasses.push(evalResult.rowClass);
+          verdictText = evalResult.verdictText;
+          badgeHtml = evalResult.badgeContent;
+        }
+
+        const cleanText = opt.text.replace(/^[A-Da-d]\.\s*/, '');
+        html += `
+          <div class="${rowClasses.join(' ')}" data-label="${opt.label}">
+            <div class="option-badge" id="badge-${opt.label}">
+              ${badgeHtml}
+            </div>
+            <div class="option-text">${escapeHtml(cleanText)}</div>
+            <span class="verdict-tag" id="verdict-${opt.label}">${verdictText}</span>
+          </div>
+        `;
+      });
+      html += `</div>`;
 
       card.innerHTML = html;
 
-      // Re-trigger card animation
+      // Hiệu ứng chuyển động mượt mà
       card.classList.remove('animating-in');
       void card.offsetWidth;
       card.classList.add('animating-in');
@@ -1354,30 +1085,13 @@ print(res)`,
       isAnswerVerified = isAlreadyVerified;
       updateMainActionButtonState();
 
-      // Show notice if already verified
-      if (isAlreadyVerified) {
-        const noneNotice = document.getElementById('none-notice-box');
-        if (noneNotice) noneNotice.classList.add('show');
-        const noneWrong = document.getElementById('none-all-wrong-box');
-        if (noneWrong) noneWrong.classList.add('show');
-      }
-
-      // Draw canvas if needed
       if (q.isCanvas) {
-        setTimeout(() => {
-          renderCanvasCodeOnly(q);
-        }, 10);
+        setTimeout(() => { renderCanvasCodeOnly(q); }, 10);
       }
 
-      // Bind interactive click handlers on options
       bindOptionClickEvents(q);
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /**
-     * Binds click handlers on each option row
-     */
     function bindOptionClickEvents(q) {
       const container = document.getElementById('options-container');
       if (!container) return;
@@ -1385,10 +1099,9 @@ print(res)`,
       const rows = container.querySelectorAll('.option-row');
       rows.forEach(row => {
         row.addEventListener('click', (e) => {
-          // If answer was already verified, lock options
           if (isAnswerVerified) return;
 
-          // If user was selecting/highlighting text for ViTai, do not toggle
+          // Nếu người dùng đang bôi đen chữ để test Alt+Q thì không kích hoạt chọn
           const selection = window.getSelection();
           if (selection && selection.toString().trim().length > 0) {
             return;
@@ -1404,7 +1117,6 @@ print(res)`,
             row.classList.remove('is-selected');
             if (badge) badge.textContent = label;
           } else {
-            // If single-choice question, clear other selections
             if (!q.isMultiple) {
               userSelections[q.id].clear();
               rows.forEach(r => {
@@ -1421,11 +1133,6 @@ print(res)`,
       });
     }
 
-    /**
-     * Updates the unified footer action button:
-     * - !isAnswerVerified: label "Xác nhận", checkmark icon
-     * - isAnswerVerified: label "Câu tiếp theo →" (or "Hoàn tất & Về trang chủ →" on last question)
-     */
     function updateMainActionButtonState() {
       const btnText = document.getElementById('btn-action-text');
       const btnIcon = document.getElementById('btn-action-icon');
@@ -1444,37 +1151,13 @@ print(res)`,
       }
     }
 
-    /**
-     * Executes verification for the current question:
-     * Highlights options (green for correct, red for picked wrong), plays sound, triggers confetti.
-     * Absolutely NO quotes, NO timers, NO proof images.
-     */
     function verifyCurrentQuestion() {
       const q = BENCHMARK_QUESTIONS[currentQuestionIndex];
       const selectedSet = userSelections[q.id] || new Set();
       const correctSet = new Set(q.correctAnswers || []);
 
-      // If no options question (Q5)
-      if (q.isNoOptions) {
-        questionStatus[q.id] = 'correct';
-        SoundFX.correct();
-        triggerConfettiBurst(document.getElementById('btn-main-action'));
-        const noneNotice = document.getElementById('none-notice-box');
-        if (noneNotice) noneNotice.classList.add('show');
-        isAnswerVerified = true;
-        updateMainActionButtonState();
-        return;
-      }
-
-      // Check correctness
-      let isCorrect = false;
-      if (q.correctAnswers.includes("NONE")) {
-        // Correct if user didn't pick any of the wrong options, or flagged NONE
-        isCorrect = (selectedSet.size === 0);
-      } else {
-        isCorrect = (selectedSet.size === correctSet.size) &&
-                    ([...selectedSet].every(item => correctSet.has(item)));
-      }
+      const isCorrect = (selectedSet.size === correctSet.size) &&
+                        ([...selectedSet].every(item => correctSet.has(item)));
 
       questionStatus[q.id] = isCorrect ? 'correct' : 'wrong';
 
@@ -1485,7 +1168,6 @@ print(res)`,
         SoundFX.wrong();
       }
 
-      // Evaluate each option row
       const rows = document.querySelectorAll('.option-row');
       rows.forEach(row => {
         const label = row.getAttribute('data-label');
@@ -1505,21 +1187,10 @@ print(res)`,
         }
       });
 
-      // Show notice for NONE questions (Q4 & Q9)
-      if (q.correctAnswers.includes("NONE")) {
-        const noneWrong = document.getElementById('none-all-wrong-box');
-        if (noneWrong) noneWrong.classList.add('show');
-      }
-
       isAnswerVerified = true;
       updateMainActionButtonState();
     }
 
-    /**
-     * Handles clicking the unified action button:
-     * 1st click: verifies answer & changes label to "Câu tiếp theo"
-     * 2nd click: advances to next question or finishes to index.html
-     */
     function handleMainAction() {
       if (!isAnswerVerified) {
         verifyCurrentQuestion();
@@ -1533,9 +1204,7 @@ print(res)`,
       }
     }
 
-    /**
-     * Renders crisp 2x Canvas for image questions (Code block only, options are interactive DOM)
-     */
+    /* Vẽ Canvas Sắc Nét 2x Nhỏ Gọn (Q2 & Q5) */
     function renderCanvasCodeOnly(q) {
       const canvas = document.getElementById('benchmark-canvas-element');
       if (!canvas) return;
@@ -1543,12 +1212,12 @@ print(res)`,
       const dpr = window.devicePixelRatio || 2;
 
       const card = document.getElementById('question-card');
-      const maxW = card ? Math.min(500, card.clientWidth - 40) : 460;
-      const logicalWidth = Math.max(300, maxW);
+      const maxW = card ? Math.min(480, card.clientWidth - 32) : 420;
+      const logicalWidth = Math.max(280, maxW);
 
       const codeLines = q.code ? q.code.split('\n') : [];
-      const codeBoxHeight = (codeLines.length * 21) + 32;
-      const logicalHeight = 44 + codeBoxHeight + 16;
+      const codeBoxHeight = (codeLines.length * 17) + 20;
+      const logicalHeight = 32 + codeBoxHeight + 10;
 
       canvas.width = logicalWidth * dpr;
       canvas.height = logicalHeight * dpr;
@@ -1557,40 +1226,40 @@ print(res)`,
 
       ctx.scale(dpr, dpr);
 
-      // Clean background
+      // Nền trắng
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, logicalWidth, logicalHeight);
 
-      // Outer border
+      // Viền ngoài
       ctx.strokeStyle = '#E2E8F0';
       ctx.lineWidth = 1;
       ctx.strokeRect(0, 0, logicalWidth, logicalHeight);
 
-      // Top macOS-style bar
+      // Thanh tiêu đề macOS mô phỏng
       ctx.fillStyle = '#F8FAFC';
-      ctx.fillRect(0, 0, logicalWidth, 34);
+      ctx.fillRect(0, 0, logicalWidth, 28);
       ctx.strokeStyle = '#E2E8F0';
-      ctx.strokeRect(0, 0, logicalWidth, 34);
+      ctx.strokeRect(0, 0, logicalWidth, 28);
 
-      // Window dots
-      ctx.fillStyle = '#EF4444'; ctx.beginPath(); ctx.arc(16, 17, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#F59E0B'; ctx.beginPath(); ctx.arc(32, 17, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.arc(48, 17, 5, 0, Math.PI * 2); ctx.fill();
+      // Nút đỏ, vàng, xanh
+      ctx.fillStyle = '#EF4444'; ctx.beginPath(); ctx.arc(14, 14, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#F59E0B'; ctx.beginPath(); ctx.arc(28, 14, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.arc(42, 14, 4, 0, Math.PI * 2); ctx.fill();
 
-      // Window title
+      // Tiêu đề
       ctx.fillStyle = '#64748B';
-      ctx.font = '600 12px "Inter", sans-serif';
-      ctx.fillText(`${q.subject} - Code Image (Alt + S)`, 66, 21);
+      ctx.font = '600 11px "Inter", sans-serif';
+      ctx.fillText(`${q.subject} - Code Image (Alt + S)`, 58, 18);
 
-      // Code block background
+      // Khối code tối
       ctx.fillStyle = '#0F172A';
-      ctx.fillRect(12, 42, logicalWidth - 24, codeBoxHeight);
+      ctx.fillRect(8, 32, logicalWidth - 16, codeBoxHeight);
 
-      // Code text
+      // Chữ code
       ctx.fillStyle = '#F8FAFC';
-      ctx.font = '500 12.5px "JetBrains Mono", Consolas, monospace';
+      ctx.font = '500 11.5px "JetBrains Mono", Consolas, monospace';
       codeLines.forEach((line, idx) => {
-        ctx.fillText(line, 24, 66 + (idx * 21));
+        ctx.fillText(line, 18, 50 + (idx * 17));
       });
     }
 
@@ -1604,17 +1273,14 @@ print(res)`,
         .replace(/'/g, "&#039;");
     }
 
-    // App initialization
     document.addEventListener('DOMContentLoaded', () => {
       renderCurrentQuestion();
 
-      // Action button
       const btnMainAction = document.getElementById('btn-main-action');
       if (btnMainAction) {
         btnMainAction.addEventListener('click', handleMainAction);
       }
 
-      // Prev question
       const btnPrev = document.getElementById('btn-prev-question');
       if (btnPrev) {
         btnPrev.addEventListener('click', () => {
@@ -1626,7 +1292,6 @@ print(res)`,
         });
       }
 
-      // Sound toggle
       const btnSound = document.getElementById('btn-sound-toggle');
       if (btnSound) {
         btnSound.addEventListener('click', () => {
@@ -1634,7 +1299,6 @@ print(res)`,
         });
       }
 
-      // Reset exam
       const btnReset = document.getElementById('btn-reset-exam');
       if (btnReset) {
         btnReset.addEventListener('click', () => {
@@ -1648,7 +1312,6 @@ print(res)`,
         });
       }
 
-      // Keyboard shortcuts (ArrowLeft: Prev, ArrowRight/Enter: Next)
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
           if (currentQuestionIndex > 0) {
@@ -1657,7 +1320,6 @@ print(res)`,
             renderCurrentQuestion();
           }
         } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
-          // If not typing in input
           if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
             handleMainAction();
           }
