@@ -811,10 +811,10 @@ print(result)`,
         ]
       },
 
-      // 3. Dạng 3: Lý thuyết CSDL ACID - Đa đáp án
+      // 3. Dạng 3: Lý thuyết CSDL ACID - Đa đáp án (3 đáp án đúng)
       {
         id: 3,
-        typeLabel: "Dạng 3 - Lý thuyết (Đa đáp án)",
+        typeLabel: "Dạng 3 - CSDL ACID (3 đúng)",
         subject: "Cơ sở dữ liệu",
         title: "Câu 3: Các tính chất của Transaction trong mô hình ACID",
         prompt: "Xét các đặc điểm của Giao dịch (Transaction). Chọn các phát biểu ĐÚNG:",
@@ -822,12 +822,12 @@ print(result)`,
         questionText: null,
         isCanvas: false,
         isMultiple: true,
-        correctAnswers: ["A", "B", "C", "D"],
+        correctAnswers: ["A", "B", "C"],
         options: [
           { label: "A", text: "Atomicity: Toàn bộ thao tác thành công hoặc toàn bộ bị hủy bỏ." },
           { label: "B", text: "Consistency: Dữ liệu chuyển từ trạng thái hợp lệ này sang trạng thái khác." },
           { label: "C", text: "Isolation: Các giao dịch đồng thời không can thiệp kết quả của nhau." },
-          { label: "D", text: "Durability: Dữ liệu đã commit được lưu bền vững ngay cả khi mất điện." }
+          { label: "D", text: "Atomicity cho phép lưu lại một phần dữ liệu nếu xảy ra lỗi giữa chừng." }
         ]
       },
 
@@ -895,10 +895,10 @@ int main() {
         ]
       },
 
-      // 6. Dạng 6: Java Abstract vs Interface - Đa đáp án
+      // 6. Dạng 6: Java Abstract vs Interface - Đa đáp án (2 đáp án đúng)
       {
         id: 6,
-        typeLabel: "Dạng 6 - Java Interface (Đa đáp án)",
+        typeLabel: "Dạng 6 - Java Interface (2 đúng)",
         subject: "Lập trình hướng đối tượng Java",
         title: "Câu 6: So sánh Abstract Class và Interface trong Java",
         prompt: "Xét các quy tắc trong Java (từ Java 8 trở lên). Chọn các phát biểu ĐÚNG:",
@@ -906,12 +906,12 @@ int main() {
         questionText: null,
         isCanvas: false,
         isMultiple: true,
-        correctAnswers: ["A", "B", "D"],
+        correctAnswers: ["A", "B"],
         options: [
           { label: "A", text: "Một class chỉ kế thừa tối đa 1 abstract class nhưng có thể implement nhiều interface." },
           { label: "B", text: "Interface từ Java 8 có thể chứa phương thức default có phần thân xử lý." },
           { label: "C", text: "Abstract class không thể chứa hàm dựng (constructor)." },
-          { label: "D", text: "Các biến khai báo trong Interface mặc định luôn là public static final." }
+          { label: "D", text: "Không thể khai báo bất kỳ phương thức static nào bên trong một Interface." }
         ]
       },
 
