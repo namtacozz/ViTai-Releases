@@ -1,10 +1,10 @@
 /**
- * ViTai v4.2.1 - Interactive Landing Page Engine
+ * ViTai v4.2.2 - Interactive Landing Page Engine
  * Incorporates Bencho UI Image Compare Slider, Scrollspy, VietQR modal, and OS detection.
  * Zero-dependency, modern ES6 vanilla JavaScript
  */
 
-const APP_VERSION = "4.2.1";
+const APP_VERSION = "4.2.2";
 const DISCLAIMER_STORAGE_KEY = "vitai_disclaimer_accepted";
 
 document.addEventListener('DOMContentLoaded', () => {
