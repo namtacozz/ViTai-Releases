@@ -748,19 +748,19 @@
               <span class="price-amount">20.000</span>
               <span class="price-curr">VNĐ / Tuần</span>
             </div>
-            <p class="plan-duration">Hoặc <strong>60.000 VNĐ / Tháng</strong> (30 ngày) cho 1 máy tính</p>
+            <p class="plan-duration">Hoặc <strong>50.000 VNĐ / Tháng</strong> (30 ngày) cho 1 tài khoản</p>
           </div>
 
           <ul class="plan-checklist">
-            <li>- Bảng điều khiển theo dõi hạn ngạch thời gian thực</li>
-            <li>- Khung đáp án nổi mỏng nhẹ và quét chụp màn hình</li>
-            <li>- Chỉnh màu sắc chữ, cỡ chữ và phím tắt</li>
-            <li>- Kết nối 1 tài khoản AI (ChatGPT, Gemini hoặc Claude)</li>
-            <li>- Lưu trữ và xem lại câu hỏi đã tra cứu trong Nhật ký</li>
+            <li>- Lấy đáp án nhanh bằng bôi đen (<code>Alt+Q</code>) &amp; chụp ảnh Vision (<code>Alt+S</code>)</li>
+            <li>- Trí nhớ (Cache câu hỏi trùng lặp, phản hồi 0ms)</li>
+            <li>- Tùy biến màu chữ, lớp phủ nền, cỡ chữ &amp; phím tắt chuột/bàn phím</li>
+            <li>- Kết nối <strong>1 tài khoản AI</strong> (ChatGPT, Gemini, Claude...)</li>
+            <li>- Lưu trữ Nhật ký &amp; phím Thoát khẩn cấp (<code>Alt+K</code>)</li>
             <li>- <strong>Ưu đãi mã giới thiệu:</strong> Giảm trực tiếp 10.000 VNĐ khi đăng ký</li>
-            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Chuỗi dự phòng AI Failover đa tài khoản</li>
-            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Cấu hình chuyên sâu (Tốc độ, Trí nhớ AI, Đồng bộ Desktop)</li>
-            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Kho tài liệu RAG BM25, Tùy biến giao diện chuyên sâu & Thư viện Ảnh học tập</li>
+            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Chuỗi dự phòng AI Failover đa tài khoản &amp; Tốc độ tự động</li>
+            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Kho tài liệu RAG BM25 &amp; Thư viện Ảnh đã chụp</li>
+            <li class="plan-disabled" style="opacity: 0.55; text-decoration: line-through;">- Ngụy trang tiến trình, Chống ghi hình OBS/Discord &amp; Tự hủy dấu vết</li>
           </ul>
 
           <a href="#download" class="btn-pricing">
@@ -783,12 +783,12 @@
 
           <ul class="plan-checklist">
             <li>- <strong>Mở khóa toàn bộ tính năng của phần mềm ViTai</strong></li>
-            <li>- Chuỗi dự phòng AI Failover tự chuyển tài khoản khi quá tải</li>
-            <li>- Kho tài liệu RAG BM25 phân nhóm theo môn học và chủ đề</li>
-            <li>- Cấu hình nâng cao: Tối ưu Tốc độ, Trí nhớ ngữ cảnh và Đồng bộ Desktop</li>
-            <li>- Mở khóa Tùy biến giao diện chuyên sâu & Thư viện Ảnh học tập</li>
-            <li>- <strong>Ưu đãi mã giới thiệu:</strong> Giảm trực tiếp 10.000 VNĐ khi đăng ký</li>
-            <li>- Hỗ trợ kỹ thuật và giải đáp thắc mắc qua Discord</li>
+            <li>- <strong>Chuỗi AI Failover:</strong> Xoay vòng đa tài khoản, tự đổi khi hết quota/lỗi</li>
+            <li>- <strong>Kho tài liệu RAG BM25:</strong> Nhúng giáo trình, đề cương PDF/DOCX theo môn</li>
+            <li>- <strong>Thư viện Ảnh đã chụp:</strong> Lưu lịch sử, xem lại &amp; hỏi AI giải thích</li>
+            <li>- <strong>Ngụy trang &amp; Tàng hình:</strong> Đổi tên tiến trình Windows (<code>RuntimeBroker.exe</code>), chống quay màn hình OBS/Discord, đồng bộ Virtual Desktop</li>
+            <li>- <strong>Tốc độ &amp; Bảo mật:</strong> Tự động giải ngay khi bôi đen &amp; Tự hủy xóa dấu vết khi thoát khẩn cấp</li>
+            <li>- <strong>Ưu đãi mã giới thiệu:</strong> Giảm trực tiếp 10.000 VNĐ + Hỗ trợ Discord</li>
           </ul>
 
           <a href="#download" class="btn-pricing primary-action">
@@ -796,6 +796,97 @@
           </a>
         </div>
 
+      </div>
+
+      <!-- Bảng So Sánh Chi Tiết Quyền Lợi Gói Vỏ vs Gói Lõi -->
+      <div class="tier-compare-wrap" id="tier-comparison">
+        <div class="tier-compare-header">
+          <h3>So sánh chi tiết Gói Vỏ vs Gói Lõi</h3>
+          <p>Đối chiếu đầy đủ từng tính năng thực tế trong ứng dụng để bạn chọn đúng gói phù hợp nhu cầu.</p>
+        </div>
+        <div class="tier-compare-scroll">
+          <table class="tier-compare-table">
+            <thead>
+              <tr>
+                <th>Tính năng / Tiêu chí</th>
+                <th>Gói Vỏ (Cơ bản)</th>
+                <th class="col-core">Gói Lõi (Core / Pro)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mức giá linh hoạt</strong></td>
+                <td>20.000đ/tuần • 50.000đ/tháng</td>
+                <td class="col-core">30.000đ/tuần • 60.000đ/tháng • <strong>420.000đ/trọn đời</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Lấy đáp án nhanh (Alt+Q)</strong></td>
+                <td><span class="tier-badge tier-badge-yes">Có</span> Bôi đen câu hỏi, hiện ngay cạnh chuột</td>
+                <td class="col-core"><span class="tier-badge tier-badge-yes">Có</span> Bôi đen câu hỏi, hiện ngay cạnh chuột</td>
+              </tr>
+              <tr>
+                <td><strong>Chụp ảnh Vision (Alt+S)</strong></td>
+                <td><span class="tier-badge tier-badge-yes">Có</span> Chụp vùng hoặc toàn màn hình</td>
+                <td class="col-core"><span class="tier-badge tier-badge-yes">Có</span> Chụp vùng hoặc toàn màn hình</td>
+              </tr>
+              <tr>
+                <td><strong>Trí nhớ (Cache trùng lặp)</strong></td>
+                <td><span class="tier-badge tier-badge-yes">Có</span> Tự lưu đáp án cũ, phản hồi 0ms</td>
+                <td class="col-core"><span class="tier-badge tier-badge-yes">Có</span> Tự lưu đáp án cũ, phản hồi 0ms</td>
+              </tr>
+              <tr>
+                <td><strong>Tùy biến giao diện &amp; Phím tắt</strong></td>
+                <td><span class="tier-badge tier-badge-yes">Có</span> Màu chữ, lớp phủ nền, độ mờ, phím tắt chuột/phím</td>
+                <td class="col-core"><span class="tier-badge tier-badge-yes">Có</span> Đầy đủ tùy biến + Khởi động ẩn cùng Windows</td>
+              </tr>
+              <tr>
+                <td><strong>Số lượng tài khoản AI</strong></td>
+                <td>1 tài khoản (Chế độ đơn tiêu chuẩn)</td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Đa tài khoản</span> Xoay vòng không giới hạn tài khoản</td>
+              </tr>
+              <tr>
+                <td><strong>Chuỗi dự phòng (AI Failover)</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span> Hết lượt/nghẽn phải đổi tay</td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Tự động chuyển tài khoản dự phòng khi lỗi/hết quota</td>
+              </tr>
+              <tr>
+                <td><strong>Tốc độ (Tự động khi nhả chuột)</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span> Nhấn phím tắt để kích hoạt</td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Tự động giải ngay sau khi bôi đen</td>
+              </tr>
+              <tr>
+                <td><strong>Kho tài liệu RAG BM25</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span></td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Nhúng giáo trình, đề cương PDF/DOCX/MD theo môn</td>
+              </tr>
+              <tr>
+                <td><strong>Thư viện Ảnh đã chụp</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span> Không lưu lịch sử ảnh</td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Lưu lịch sử ảnh chụp, xem lại &amp; hỏi AI giải thích</td>
+              </tr>
+              <tr>
+                <td><strong>Ngụy trang tiến trình (Trang phục)</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span></td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Giả lập tiến trình Windows (<code>RuntimeBroker.exe</code>, <code>taskhostw.exe</code>...)</td>
+              </tr>
+              <tr>
+                <td><strong>Chống ghi hình (Screen Affinity)</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span></td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Ẩn khỏi OBS, Discord, Share Screen</td>
+              </tr>
+              <tr>
+                <td><strong>Đồng bộ Virtual Desktop (BETA)</strong></td>
+                <td><span class="tier-badge tier-badge-no">Không</span></td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Có</span> Tự động bám theo màn hình ảo Windows</td>
+              </tr>
+              <tr>
+                <td><strong>Thoát khẩn cấp &amp; Tự hủy dấu vết</strong></td>
+                <td>Thoát khẩn cấp (<code>Alt+K</code>)</td>
+                <td class="col-core"><span class="tier-badge tier-badge-core">Đầy đủ</span> Thoát khẩn cấp + Tự hủy xóa lịch sử ảnh &amp; tệp</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
